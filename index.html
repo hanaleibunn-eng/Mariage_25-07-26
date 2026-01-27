@@ -259,7 +259,7 @@
 
         row.innerHTML = `
           <label class="checkbox-container">
-            <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleItem('${id}', ${item.done}, '${item.text}', '${item.place || ''}', '${item.owner || ''}')">
+            <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleItem('${id}', ${item.done}, '${item.text.replace(/'/g, "\\'")}', '${(item.place || '').replace(/'/g, "\\'")}', '${(item.owner || '').replace(/'/g, "\\'")}', '${item.moment}')">
             <span class="checkmark"></span>
           </label>
           <div class="item-content">
@@ -283,14 +283,15 @@
     }
 
     // Fonctions globales pour Firebase
-    window.toggleItem = (id, currentStatus, text, place, owner) => {
+    window.toggleItem = (id, currentStatus, text, place, owner, moment) => {
       set(ref(db, "items/" + id), {
-        text: text,
-        place: place,
-        owner: owner,
-        done: !currentStatus
-      });
-    };
+      text: text,
+      place: place,
+      owner: owner,
+      moment: moment, // <--- On rajoute cette ligne pour ne pas perdre la couleur
+      done: !currentStatus
+    });
+  };
 
     window.deleteItem = (id, text) => {
       if (confirm(`Supprimer "${text}" ?`)) remove(ref(db, "items/" + id));
