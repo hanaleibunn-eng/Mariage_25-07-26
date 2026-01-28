@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checklist Mariage</title>
+  <title>Checklist 25/07</title>
   <style>
     :root {
       --primary: #086972;
@@ -154,7 +154,7 @@
     list-style: none; 
     padding: 0; 
     border-left: 2px dashed #dfe6e9; 
-    margin-left: 75px; /* On se place juste après la fin des 70px de l'heure */
+    margin-left: 65px; /* On se place juste après la fin des 60px de l'heure */
     padding-left: 15px; 
   }
 
@@ -169,14 +169,14 @@
     color: var(--primary); 
     font-weight: 800; 
     font-size: 16px;
-    width: 70px;               /* Largeur fixe pour la colonne des heures */
+    width: 60px;               /* Largeur fixe pour la colonne des heures */
     flex-shrink: 0;            /* Empêche l'heure de rétrécir */
   }
 
   .desc { 
     font-size: 15px; 
     line-height: 1.4;          /* Espace un peu les lignes pour la lecture */
-    color: #2d3436;
+    color: var(--primary);
   }
 
   .desc-container {
@@ -188,7 +188,7 @@
   .note {
     font-size: 13px;       /* Plus petit que le texte principal */
     font-style: italic;    /* En italique */
-    color: #636e72;        /* Un gris plus doux */
+    color: #000000;        /* Un gris plus doux */
     margin-top: 4px;       /* Un petit espace avec la ligne du dessus */
   }
 
@@ -248,7 +248,7 @@
 </head>
 <body>
 
-  <h1>Checklist Mariage 25/07</h1>
+  <h1>Mariage 25/07/26</h1>
 
   <div class="tabs">
     <button class="tab-btn active" onclick="showTab('checklist')">📋 Checklist</button>
@@ -297,7 +297,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
     import { 
-      getDatabase, ref, onValue, push, set, remove 
+      getDatabase, ref, onValue, push, set, remove, update 
     } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js";
 
     // TA CONFIGURATION (Gardée de ton code précédent)
@@ -352,7 +352,7 @@
 
     // Fonctions globales pour Firebase
     window.toggleItem = (id, currentStatus, text, place, owner, moment) => {
-      set(ref(db, "items/" + id), {
+      update(ref(db, "items/" + id), {
       text: text,
       place: place,
       owner: owner,
@@ -390,9 +390,9 @@
 
     onValue(ref(db, "items"), snap => {
       const data = snap.val() || {};
-  
-      // --- PARTIE COMPTEUR (On la garde) ---
       const entries = Object.entries(data);
+
+      // --- PARTIE COMPTEUR ---
       const total = entries.length;
       const completed = entries.filter(item => item[1].done).length;
       if(document.getElementById("total-count")) {
@@ -400,32 +400,31 @@
         document.getElementById("completed-count").innerText = completed;
       }
 
-      // --- NOUVELLE LOGIQUE DE TRI ---
+      // --- LOGIQUE DE TRI (Les faites tout en bas) ---
       const sortedItems = entries.sort((a, b) => {
         const itemA = a[1];
         const itemB = b[1];
 
-        // 1. TRI PAR MOMENT (Jour J en haut, Veille en bas)
-        // 'jourj' vient avant 'veille' alphabétiquement, mais pour être sûr :
-        const momentOrder = { 'veille': 1, 'jourj': 2 };
-        const orderA = momentOrder[itemA.moment] || 3;
-        const orderB = momentOrder[itemB.moment] || 3;
-    
-        if (orderA !== orderB) {
-          return orderA - orderB;
-        }
-
-        // 2. TRI PAR STATUT (À faire avant Fait) à l'intérieur du groupe
+        // PRIORITÉ 1 : Le statut "Fait"
+        // Si l'un est fait et l'autre non, le fait va en bas (false < true)
         if (itemA.done !== itemB.done) {
           return itemA.done - itemB.done;
         }
 
-        // 3. TRI CHRONOLOGIQUE (Le plus récent en haut) à l'intérieur du groupe
-        return (itemB.createdAt || 0) - (itemA.createdAt || 0);
+        // PRIORITÉ 2 : Le Moment (seulement si le statut 'done' est le même)
+        const momentOrder = { 'veille': 1, 'jourj': 2 };
+        const orderA = momentOrder[itemA.moment] || 3;
+        const orderB = momentOrder[itemB.moment] || 3;
+      
+        if (orderA !== orderB) {
+          return orderA - orderB;
+        }
+
+        // PRIORITÉ 3 : Alphabétique (pour la stabilité)
+        return itemA.text.localeCompare(itemB.text);
       });
 
-      const finalObj = Object.fromEntries(sortedItems);
-      render(finalObj);
+      render(Object.fromEntries(sortedItems));
     });
   
   window.filterTasks = function() {
@@ -486,71 +485,71 @@
         <li>
           <span class="time">13:30</span>
 	  <div class="desc-container">
-	    <span class="desc">Coiffure et Maquillage</span>
-            <span class="note">Larressingle</span>
+	    <span class="desc"><strong>Coiffure et Maquillage</strong></span>
+            <span class="note">📍 Larressingle<br>Présence de Laetitia, Fanny, Maman, Léandra</span>
 	  </div>
         </li>
         <li>
           <span class="time">15:30</span>
 	  <div class="desc-container">
-            <span class="desc">Habillage, arrivée des Dem. d'honneur et témoins à la maison</span>
-	    <span class="note">Larressingle</span>
+            <span class="desc"><strong>Habillage, arrivée des Dem. d'honneur et témoins à la maison</strong></span>
+	    <span class="note">📍 Larressingle<br>Photographe présent pour les derniers préparatifs (à vérifier)</span>
 	  </div>
         </li>
         <li>
 	  <span class="time">16:00</span>
 	  <div class="desc-container">
-	    <span class="desc">Cérémonie Civile</span>
- 	    <span class="note">Larressingle, arrivée de la mariée vers 16h15</span>
+	    <span class="desc"><strong>Cérémonie Civile</strong></span>
+ 	    <span class="note">📍 Larressingle<br>Distribution d'éventails et ombrelles à l'arrivée des invités si nécessaire. Arrivée de la mariée vers 16h15</span>
           </div>
         </li>
         <li>
           <span class="time">17:00</span>
 	  <div class="desc-container">
-	    <span class="desc">Photos des mariés au château de Larressingle.<br><strong>📞 Contact photographe :</strong> David - 06 84 36 67 12</span>
+	    <span class="desc"><strong>Photos des mariés au château de Larressingle</strong><br>📞 Contact photographe : David - 06 84 36 67 12</span>
  	    <span class="note">Les invités rejoignent la Palombière d'Henri à Moncrabeau</span>
           </div>
         </li>
         <li>
           <span class="time">18:00</span>
 	  <div class="desc-container">
-	    <span class="desc">Cérémonie Laïque</span>
- 	    <span class="note">Animation par Tony, discours des témoins et des parents, échange des alliances et voeux</span>
+	    <span class="desc"><strong>Cérémonie Laïque</strong></span>
+ 	    <span class="note">📍 Palombière d'Henri<br>Animation par Tony, discours des témoins et des parents, échange des alliances et voeux</span>
           </div>
         </li>
         <li>
           <span class="time">18:45</span>
 	  <div class="desc-container">
-	    <span class="desc">Vin d'honneur.<br><strong>📞 Contact saxophoniste :</strong> Pierre - 07 80 23 94 09</span>
- 	    <span class="note">Cocktail & bouchées (4 serveurs)</span>
+	    <span class="desc"><strong>Vin d'honneur</strong><br>📞 Contact saxophoniste : Pierre - 07 80 23 94 09</span>
+ 	    <span class="note">Cocktail & bouchées (4 serveurs)<br>Activités : photos de groupe, pétanque, mur des invités, polaroïd</span>
           </div>
         </li>
         <li>
           <span class="time">21:00</span>
 	  <div class="desc-container">
-	    <span class="desc">Dîner.<br><strong>📞 Contact traiteur :</strong> M. Ducousseau - 06 87 12 94 68</span>
- 	    <span class="note">Plat + Assiette de fromage, Discours des Dem. d'honneur et jeux</span>
+	    <span class="desc"><strong>Dîner</strong><br>📞 Contact traiteur : M. Ducousseau - 06 87 12 94 68</span>
+ 	    <span class="note">Plat + Assiette de fromage<br>Discours plus fun des amis et jeux</span>
           </div>
         </li>
         <li>
           <span class="time">22:30</span>
 	  <div class="desc-container">
-	    <span class="desc">Ouvertre de bal</span>
- 	    <span class="note">Valse papa et Adil</span>
+	    <span class="desc"><strong>Ouvertre de bal</strong></span>
+ 	    <span class="note">Valse papa et Adil<br>Responsable musique : Léandra</span>
           </div>
         </li>
         <li>
           <span class="time">22:45</span>
 	  <div class="desc-container">
-	    <span class="desc">Pièces-montée.<br><strong>📞 Contact Pâtisserie :</strong> C. Garnier - 05 62 28 11 33</span>
+	    <span class="desc"><strong>Pièces-montée</strong><br>📞 Contact Pâtisserie : C. Garnier - 05 62 28 11 33</span>
  	    <span class="note">Livraison par le patissier directement</span>
           </div>
         </li>
         <li>
           <span class="time">23:15</span>
 	  <div class="desc-container">
-	    <span class="desc">Soirée</span>
- 	    <span class="note">Surprise des Dem. d'honneur</span>
+	    <span class="desc"><strong>Soirée</strong></span>
+ 	    <span class="note">Surprise des Dem. d'honneur, Playlist de soirée</span>
           </div>
         </li>
       </ul>
