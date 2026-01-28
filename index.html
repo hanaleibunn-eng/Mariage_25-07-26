@@ -237,15 +237,19 @@
     </div>
 
     <div style="display: flex; justify-content: space-around; padding: 10px; background: #f1f2f6; border-radius: 8px; margin-top: 5px;">
-      <label><input type="radio" name="moment" value="veille" checked> Veille</label>
-      <label><input type="radio" name="moment" value="jourj"> Jour J</label>
+      <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+        <input type="radio" name="moment" value="veille" checked style="transform: scale(1.5);"> Veille
+      </label>
+      <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+        <input type="radio" name="moment" value="jourj" style="transform: scale(1.5);"> Jour J
+      </label>
     </div>
 
     <button id="addBtn" onclick="addItem()">Ajouter à la liste</button>
   </div>
 
   <div style="margin-bottom: 20px;">
-  <input type="text" id="filterInput" onkeyup="filterTasks()" placeholder="Filtrer par responsable ou lieu..." 
+  <input type="text" id="filterInput" onkeyup="filterTasks()" placeholder="Rechercher..." 
          style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #086972; box-sizing: border-box;">
   </div>
   
@@ -303,12 +307,11 @@
             </span>
             <div class="item-details">
   		<span class="badge" onclick="editField('${id}', 'place', '${item.place || ''}')">
-                 📍 ${item.place || 'Ajouter lieu'}
+                 📍 ${item.place || ' ? '}
                 </span>
                 <span class="badge" onclick="editField('${id}', 'owner', '${item.owner || ''}')">
-                 👤 ${item.owner || 'Ajouter responsable'}
+                 👤 ${item.owner || ' ? '}
   	        </span>
- 	        <span class="badge">${item.moment === 'jourj' ? 'Jour J' : 'Veille'}</span>
 	    </div>
           </div>
           <button class="delete-btn" onclick="deleteItem('${id}', '${item.text}')">&times;</button>
