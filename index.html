@@ -123,11 +123,11 @@
       font-size: 20px; cursor: pointer; padding: 5px;
     }
 
-    /* Couleur pour la Veille (Bleu doux) */
-    .item.veille { border-left: 15px solid #d982b5; }
+    /* Couleur pour la Veille */
+    .item.veille { border-left: 15px solid #8edad5; }
 
-    /* Couleur pour le Jour J (Orange/Jaune pour l'alerte) */
-    .item.jourj { border-left: 15px solid #fdcb6e; }
+    /* Couleur pour le Jour J */
+    .item.jourj { border-left: 15px solid #ffad87; }
 
     /* On ajuste un peu la carte pour que le bord coloré soit joli */
     .item { border-left: 8px solid transparent; }
@@ -215,8 +215,16 @@
   }
 
   /* Couleurs identiques à tes bordures d'étiquettes */
-  .dot.veille { background-color: #d982b5; }
-  .dot.jourj { background-color: #fdcb6e; }
+  .dot.veille { background-color: #8edad5; }
+  .dot.jourj { background-color: #ffad87; }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    overflow-x: hidden; /* Empêche le défilement horizontal parasite */
+  }
 
   </style>
 </head>
@@ -231,9 +239,9 @@
 
   <div id="add">
     <input type="text" id="newItem" placeholder="Action (ex: Réserver le traiteur...)">
-    <div style="display: flex; gap: 8px;">
-      <input type="text" id="newPlace" placeholder="Lieu" style="flex: 1;">
-      <input type="text" id="newOwner" placeholder="Responsable" style="flex: 1;">
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <input type="text" id="newPlace" placeholder="Lieu" style="flex: 1; min-width: 140px;">
+      <input type="text" id="newOwner" placeholder="Responsable" style="flex: 1; min-width: 140px;">
     </div>
 
     <div style="display: flex; justify-content: space-around; padding: 10px; background: #f1f2f6; border-radius: 8px; margin-top: 5px;">
