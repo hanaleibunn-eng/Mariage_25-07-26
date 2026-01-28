@@ -226,6 +226,24 @@
     overflow-x: hidden; /* Empêche le défilement horizontal parasite */
   }
 
+  /* Ajoute un petit espace entre le groupe Jour J et le groupe Veille */
+  .item.veille + .item.jourj {
+    margin-top: 30px;
+    position: relative;
+  }
+
+  /* Optionnel : ajoute un petit texte séparateur "Actions du jour J" */
+  .item.veille + .item.jourj::before {
+    content: "Actions du jour J";
+    position: absolute;
+    top: -25px;
+    left: 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: #636e72;
+    text-transform: uppercase;
+  }
+
   </style>
 </head>
 <body>
@@ -268,6 +286,10 @@
     <div class="legend-item">
       <span class="dot jourj"></span> <span>Jour J</span>
     </div>
+  </div>
+
+  <div id="counter-container" style="text-align: center; margin-bottom: 20px; font-weight: bold; color: var(--primary);">
+    <span id="completed-count">0</span> / <span id="total-count">0</span> actions réalisées
   </div>
 
   <div id="list"></div>
@@ -369,22 +391,39 @@
     onValue(ref(db, "items"), snap => {
       const data = snap.val() || {};
   
-      // On transforme l'objet en tableau pour le trier
-      const sortedItems = Object.entries(data).sort((a, b) => {
+      // --- PARTIE COMPTEUR (On la garde) ---
+      const entries = Object.entries(data);
+      const total = entries.length;
+      const completed = entries.filter(item => item[1].done).length;
+      if(document.getElementById("total-count")) {
+        document.getElementById("total-count").innerText = total;
+        document.getElementById("completed-count").innerText = completed;
+      }
+
+      // --- NOUVELLE LOGIQUE DE TRI ---
+      const sortedItems = entries.sort((a, b) => {
         const itemA = a[1];
         const itemB = b[1];
 
-        // 1. Priorité aux tâches non faites (item.done est false = 0, true = 1)
+        // 1. TRI PAR MOMENT (Jour J en haut, Veille en bas)
+        // 'jourj' vient avant 'veille' alphabétiquement, mais pour être sûr :
+        const momentOrder = { 'veille': 1, 'jourj': 2 };
+        const orderA = momentOrder[itemA.moment] || 3;
+        const orderB = momentOrder[itemB.moment] || 3;
+    
+        if (orderA !== orderB) {
+          return orderA - orderB;
+        }
+
+        // 2. TRI PAR STATUT (À faire avant Fait) à l'intérieur du groupe
         if (itemA.done !== itemB.done) {
           return itemA.done - itemB.done;
         }
 
-        // 2. Si les deux sont au même état, on met le plus récent (createdAt plus grand) en haut
-        // On utilise "|| 0" pour gérer les anciennes tâches qui n'auraient pas de date
+        // 3. TRI CHRONOLOGIQUE (Le plus récent en haut) à l'intérieur du groupe
         return (itemB.createdAt || 0) - (itemA.createdAt || 0);
       });
 
-      // On transforme le tableau trié en objet pour le rendu
       const finalObj = Object.fromEntries(sortedItems);
       render(finalObj);
     });
@@ -428,6 +467,9 @@
 
     // AJOUT ICI : On cache ou affiche la légende
     document.querySelector('.legend-container').style.display = isChecklist ? 'flex' : 'none';
+	
+	// Disparition du compteur dans l'onglet du Déroulé
+    document.getElementById('counter-container').style.display = isChecklist ? 'block' : 'none';
 
     // Gère l'apparence des boutons
     const btns = document.querySelectorAll('.tab-btn');
