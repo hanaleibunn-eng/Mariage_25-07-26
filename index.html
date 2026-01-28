@@ -192,6 +192,32 @@
     margin-top: 4px;       /* Un petit espace avec la ligne du dessus */
   }
 
+  /* Style de la légende */
+  .legend-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  /* Couleurs identiques à tes bordures d'étiquettes */
+  .dot.veille { background-color: #d982b5; }
+  .dot.jourj { background-color: #fdcb6e; }
+
   </style>
 </head>
 <body>
@@ -211,8 +237,8 @@
     </div>
 
     <div style="display: flex; justify-content: space-around; padding: 10px; background: #f1f2f6; border-radius: 8px; margin-top: 5px;">
-      <label><input type="radio" name="moment" value="veille" checked> 🌙 Veille</label>
-      <label><input type="radio" name="moment" value="jourj"> 🚀 Jour J</label>
+      <label><input type="radio" name="moment" value="veille" checked> Veille</label>
+      <label><input type="radio" name="moment" value="jourj"> Jour J</label>
     </div>
 
     <button id="addBtn" onclick="addItem()">Ajouter à la liste</button>
@@ -221,6 +247,15 @@
   <div style="margin-bottom: 20px;">
   <input type="text" id="filterInput" onkeyup="filterTasks()" placeholder="Filtrer par responsable ou lieu..." 
          style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #086972; box-sizing: border-box;">
+  </div>
+  
+  <div class="legend-container">
+    <div class="legend-item">
+      <span class="dot veille"></span> <span>Veille</span>
+    </div>
+    <div class="legend-item">
+      <span class="dot jourj"></span> <span>Jour J</span>
+    </div>
   </div>
 
   <div id="list"></div>
@@ -273,7 +308,7 @@
                 <span class="badge" onclick="editField('${id}', 'owner', '${item.owner || ''}')">
                  👤 ${item.owner || 'Ajouter responsable'}
   	        </span>
- 	        <span class="badge">${item.moment === 'jourj' ? '🚀 Jour J' : '🌙 Veille'}</span>
+ 	        <span class="badge">${item.moment === 'jourj' ? 'Jour J' : 'Veille'}</span>
 	    </div>
           </div>
           <button class="delete-btn" onclick="deleteItem('${id}', '${item.text}')">&times;</button>
@@ -303,9 +338,16 @@
       const place = document.getElementById("newPlace").value.trim();
       const owner = document.getElementById("newOwner").value.trim();
       const moment = document.querySelector('input[name="moment"]:checked').value;
-    // Ajoute ensuite "moment" dans ton push vers Firebase :
-      push(ref(db, "items"), { text, place, owner, moment, done: false });
-      
+  
+      // On ajoute Date.now() pour avoir le moment précis de création
+      push(ref(db, "items"), { 
+        text, 
+        place, 
+        owner, 
+        moment, 
+        done: false, 
+        createdAt: Date.now() 
+      });
 
       // Reset des champs
       document.getElementById("newItem").value = "";
@@ -315,10 +357,23 @@
 
     onValue(ref(db, "items"), snap => {
       const data = snap.val() || {};
-      // On transforme l'objet en tableau pour pouvoir le trier
-      const sortedItems = Object.entries(data).sort((a, b) => a[1].done - b[1].done);
   
-      // On transforme le tableau trié en un objet pour ta fonction render
+      // On transforme l'objet en tableau pour le trier
+      const sortedItems = Object.entries(data).sort((a, b) => {
+        const itemA = a[1];
+        const itemB = b[1];
+
+        // 1. Priorité aux tâches non faites (item.done est false = 0, true = 1)
+        if (itemA.done !== itemB.done) {
+          return itemA.done - itemB.done;
+        }
+
+        // 2. Si les deux sont au même état, on met le plus récent (createdAt plus grand) en haut
+        // On utilise "|| 0" pour gérer les anciennes tâches qui n'auraient pas de date
+        return (itemB.createdAt || 0) - (itemA.createdAt || 0);
+      });
+
+      // On transforme le tableau trié en objet pour le rendu
       const finalObj = Object.fromEntries(sortedItems);
       render(finalObj);
     });
@@ -352,13 +407,16 @@
   };
 
   window.showTab = function(tabName) {
-    const isChecklist = tabName === 'checklist';
+   const isChecklist = tabName === 'checklist';
   
     // Affiche ou cache les sections
     document.getElementById('add').style.display = isChecklist ? 'flex' : 'none';
     document.getElementById('filterInput').style.display = isChecklist ? 'block' : 'none';
     document.getElementById('list').style.display = isChecklist ? 'block' : 'none';
     document.getElementById('timeline-section').style.display = isChecklist ? 'none' : 'block';
+
+    // AJOUT ICI : On cache ou affiche la légende
+    document.querySelector('.legend-container').style.display = isChecklist ? 'flex' : 'none';
 
     // Gère l'apparence des boutons
     const btns = document.querySelectorAll('.tab-btn');
