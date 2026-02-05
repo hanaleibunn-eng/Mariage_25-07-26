@@ -11,7 +11,7 @@
       --success: #00b894;
       --danger: #ff7675;
       --bg: #E3FAFA;
-      --card: rgba(255, 255, 255, 0.9); /* Le 0.9 signifie 90% d'opacité (un peu transparent) */
+      --card: #ffffff
     }
 
     body { 
@@ -172,6 +172,29 @@
     width: 60px;               /* Largeur fixe pour la colonne des heures */
     flex-shrink: 0;            /* Empêche l'heure de rétrécir */
   }
+  
+  .name { 
+    color: var(--primary); 
+    font-weight: 800; 
+    font-size: 14px; /* Un peu plus petit que l'heure pour que ça rentre */
+    width: 80px;
+    flex-shrink: 0;
+	margin-right: 30px;
+  }
+   .contact-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+  .contact-list { 
+    list-style: none; 
+    padding: 0; 
+    border-left: none; 
+    margin-left: 0;
+  }
+
+  .contact-list li { 
+    display: flex;
+    align-items: flex-start;
+    padding: 15px 0; 
+    border-bottom: 1px solid #eee; 
+  }
 
   .desc { 
     font-size: 16px; 
@@ -251,7 +274,8 @@
 
   <div class="tabs">
     <button class="tab-btn active" onclick="showTab('checklist')">📋 Checklist</button>
-    <button class="tab-btn" onclick="showTab('timeline')">🕒 Déroulé Jour J</button>
+    <button class="tab-btn" onclick="showTab('timeline')">🕒 Déroulé</button>
+    <button class="tab-btn" onclick="showTab('contact')">👥 Contacts</button>
   </div>
 
   <div id="add">
@@ -455,24 +479,27 @@
   };
 
   window.showTab = function(tabName) {
-   const isChecklist = tabName === 'checklist';
-  
-    // Affiche ou cache les sections
+    // 1. On définit ce qui doit être visible pour chaque onglet
+    const isChecklist = tabName === 'checklist';
+    const isTimeline = tabName === 'timeline';
+    const isContact = tabName === 'contact';
+
+    // 2. Gestion des sections principales
     document.getElementById('add').style.display = isChecklist ? 'flex' : 'none';
     document.getElementById('filterInput').style.display = isChecklist ? 'block' : 'none';
     document.getElementById('list').style.display = isChecklist ? 'block' : 'none';
-    document.getElementById('timeline-section').style.display = isChecklist ? 'none' : 'block';
-
-    // AJOUT ICI : On cache ou affiche la légende
     document.querySelector('.legend-container').style.display = isChecklist ? 'flex' : 'none';
-	
-	// Disparition du compteur dans l'onglet du Déroulé
     document.getElementById('counter-container').style.display = isChecklist ? 'block' : 'none';
 
-    // Gère l'apparence des boutons
+    // 3. Gestion des onglets spécifiques (Timeline vs Contact)
+    document.getElementById('timeline-section').style.display = isTimeline ? 'block' : 'none';
+    document.getElementById('contact-section').style.display = isContact ? 'block' : 'none';
+
+    // 4. Gestion de l'apparence des boutons (classe active)
     const btns = document.querySelectorAll('.tab-btn');
     btns[0].classList.toggle('active', isChecklist);
-    btns[1].classList.toggle('active', !isChecklist);
+    btns[1].classList.toggle('active', isTimeline);
+    btns[2].classList.toggle('active', isContact);
   };
 
   </script>
@@ -549,6 +576,63 @@
 	  <div class="desc-container">
 	    <span class="desc"><strong>Soirée</strong></span>
  	    <span class="note">Surprise des Dem. d'honneur, Playlist de soirée</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div id="contact-section" style="display: none;">
+    <div class="contact-card">
+      <h3>👥 Respo et musique</h3>
+      <ul class="contact-list">
+        <li>
+          <span class="name">Papa</span>
+	  <div class="desc-container">
+            <span class="desc"><strong>Respo sono et câbles</strong></span>
+	    <span class="note">07 48 14 76 75<br>Enceinte et playlist mairie avec Xavier.<br>Mise en place des enceintes au lieu.<br>Micro, rallonges, lumières du soir.</span>
+	  </div>
+        </li>
+        <li>
+	  <span class="name">Léandra</span>
+	  <div class="desc-container">
+	    <span class="desc"><strong>Respo vidéo et playlist du soir</strong></span>
+ 	    <span class="note">06 33 74 73 83<br>Mise en place du trépied avec Go Pro pour la cérémonie laïque, pour l'ouverture de bal, et pour la danse.<br>Lancement de la musique pour l'ouverture de bal et pour la danse surprise.</span>
+          </div>
+        </li>
+        <li>
+          <span class="name">Ilona</span>
+	  <div class="desc-container">
+	    <span class="desc"><strong>Respo Go Pro</strong></span>
+ 	    <span class="note">06 04 16 24 01<br>Chargement de la Go Pro entre la cérémonie laïque, l'ouverture de bal, et la soirée</span>
+          </div>
+        </li>
+        <li>
+          <span class="name">Saban</span>
+	  <div class="desc-container">
+	    <span class="desc"><strong>Respo Alliances</strong></span>
+ 	    <span class="note">07 81 79 71 80<br>Apporter les alliances aux mariés à la cérémonie laïque</span>
+          </div>
+        </li>
+        <li>
+          <span class="name">Karen</span>
+	  <div class="desc-container">
+	    <span class="desc"><strong>Respo playlist du jour</strong></span>
+ 	    <span class="note">07 82 29 87 76<br>Playlist cérémonie laïque, playlist dîner</span>
+          </div>
+        </li>
+        <li>
+          <span class="name">Demoiselles d'honneur</span>
+	  <div class="desc-container">
+	    <span class="desc"><strong>Respo timing</strong></span>
+ 	    <span class="note">Guider les invités après la mairie vers le Lieu de réception.<br>Inciter les invités à passer à table pour le dîner<br>Apporter le gâteau après l'ouverture de bal</span>
+          </div>
+        </li>
+		<li>
+          <span class="name">Tony</span>
+	  <div class="desc-container">
+	    <span class="desc"><strong>Animateur cérémonie laïque</strong></span>
+ 	    <span class="note">06 80 16 97 51<br>Texte préparé à l'avance.<br>Annonce du vin d'honneur et du dîner qui suit.</span>
           </div>
         </li>
       </ul>
