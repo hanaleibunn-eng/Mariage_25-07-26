@@ -6,40 +6,61 @@
   <title>Checklist 25/07</title>
   <style>
     :root {
-      --primary: #086972;
-      --secondary: #a7ffeb;
+      --primary: #800020;    /* Bordeaux classique */
+      --secondary: #D47386;  /* Un ton plus clair pour les éléments secondaires */
       --success: #00b894;
       --danger: #ff7675;
-      --bg: #E3FAFA;
-      --card: #ffffff
+      --bg: #4A0E0E;         /* Fond bordeaux sombre pour faire ressortir les cartes */
+      --card: #ffffff;
+      --tab-active: #A52A2A; /* Brun-rouge plus clair pour l'onglet actif */
+    }
+
+    body, button, input, select, textarea { 
+      font-family: Verdana, sans-serif; 
     }
 
     body { 
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
       background-color: var(--bg);
       color: #2d3436;
       max-width: 600px;
       margin: auto; 
       padding: 20px;
+      font-size: 14px;
     }
 
-    h1 { text-align: center; color: var(--primary); font-weight: 800; margin-bottom: 30px; }
+	h1 { 
+      text-align: center; 
+      color: #F5F5F5; /* Pour que ça ressorte sur le fond bordeaux */
+      font-weight: 600; 
+      margin-bottom: 30px; 
+  
+      /* Nouvelle police structurée et angulaire */
+      font-family: 'Playfair Display', 'Didot', 'Georgia', serif; 
+      font-size: 32px;
+      letter-spacing: 1px; /* Un léger espacement pour le côté élégant */
+      text-transform: uppercase; /* Optionnel : en majuscules pour encore plus de structure */
+    }
 
     #add { 
       background: var(--card);
       padding: 20px;
-      border-radius: 15px;
+      border-radius: 0;
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
       display: flex;
       flex-direction: column;
       gap: 12px;
       margin-bottom: 30px;
     }
+	
+	#add label {
+      color: var(--primary); /* Utilise ton bordeaux sur le fond blanc de la carte */
+      font-weight: 600;
+    }
 
     input[type="text"] { 
       padding: 12px; 
       border: 1px solid #dfe6e9; 
-      border-radius: 8px; 
+      border-radius: 0; 
       font-size: 14px;
       outline: none;
       transition: border-color 0.3s;
@@ -55,8 +76,10 @@
       background: var(--primary); 
       color: white; 
       border: none; 
-      padding: 12px; 
-      border-radius: 8px; 
+      padding: 12px;
+      font-family: inherit; /* Pour bien prendre le Verdana */
+      font-size: 13px;	  
+      border-radius: 0; 
       font-weight: bold;
       cursor: pointer;
       transition: transform 0.2s, background 0.3s;
@@ -69,7 +92,7 @@
       background: var(--card);
       margin-bottom: 12px;
       padding: 15px;
-      border-radius: 12px;
+      border-radius: 4px;
       display: flex;
       align-items: center;
       gap: 15px;
@@ -94,7 +117,7 @@
       top: 0; left: 0;
       height: 30px; width: 30px;
       background-color: #eee;
-      border-radius: 6px;
+      border-radius: 0;
       transition: 0.3s;
       border: 1.5px solid #086972;
     }
@@ -118,7 +141,7 @@
 
     /* Infos de la tâche */
     .item-content { flex: 1; }
-    .item-title { font-weight: 600; display: block; margin-bottom: 4px; font-size: 16px; }
+    .item-title { font-weight: 600; display: block; margin-bottom: 4px; font-size: 14px; }
     .item-details { font-size: 12px; color: #636e72; display: flex; gap: 8px; flex-wrap: wrap; }
     .badge { background: #f1f2f6; padding: 2px 8px; border-radius: 4px; }
 
@@ -128,10 +151,10 @@
     }
 
     /* Couleur pour la Veille */
-    .item.veille { border-left: 15px solid #E3B236; }
+    .item.veille { border-left: 10px solid #D69B8F; }
 
     /* Couleur pour le Jour J */
-    .item.jourj { border-left: 15px solid #CC5A5A; }
+    .item.jourj { border-left: 10px solid #A3B18A; }
 
     /* On ajuste un peu la carte pour que le bord coloré soit joli */
     .item { border-left: 8px solid transparent; }
@@ -147,11 +170,12 @@
     }
 
     .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+	
   .tab-btn { 
-    flex: 1; padding: 10px; border: none; border-radius: 8px; 
-    background: #dfe6e9; cursor: pointer; font-weight: bold; color: #636e72;
+    flex: 1; padding: 10px; border: none; font-family: inherit; font-size: 12px; border-radius: 0; 
+    background: #dfe6e9; cursor: pointer; font-weight: bold; color: var(--bg); font-size: 12px; text-transform: uppercase;
   }
-  .tab-btn.active { background: var(--primary); color: white; }
+  .tab-btn.active { background: #A3B18A; color: white !important; }
 
   .timeline-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
   .timeline-list { 
@@ -172,7 +196,7 @@
   .time { 
     color: var(--primary); 
     font-weight: 800; 
-    font-size: 16px;
+    font-size: 14px;
     width: 55px;               /* Largeur fixe pour la colonne des heures */
     flex-shrink: 0;            /* Empêche l'heure de rétrécir */
   }
@@ -180,7 +204,7 @@
   .name { 
     color: var(--primary); 
     font-weight: 800; 
-    font-size: 16px;
+    font-size: 14px;
     width: 80px;
     flex-shrink: 0;
 	margin-right: 30px;
@@ -201,9 +225,10 @@
   }
 
   .desc { 
-    font-size: 16px; 
+    font-size: 14px; 
     line-height: 1.4;          /* Espace un peu les lignes pour la lecture */
     color: var(--primary);
+	font-weight: bold;
   }
 
   .desc-container {
@@ -226,6 +251,7 @@
     margin-bottom: 20px;
     font-size: 14px;
     font-weight: 600;
+	color: #F5F5F5;
   }
 
   .legend-item {
@@ -241,8 +267,8 @@
   }
 
   /* Couleurs identiques à tes bordures d'étiquettes */
-  .dot.veille { background-color: #E3B236; }
-  .dot.jourj { background-color: #CC5A5A; }
+  .dot.veille { background-color: #D69B8F; }
+  .dot.jourj { background-color: #A3B18A; }
 
   * {
     box-sizing: border-box;
@@ -266,7 +292,7 @@
     left: 0;
     font-size: 12px;
     font-weight: bold;
-    color: #636e72;
+    color: #F5F5F5;
     text-transform: uppercase;
   }
 
@@ -303,7 +329,7 @@
 
   <div style="margin-bottom: 20px;">
   <input type="text" id="filterInput" onkeyup="filterTasks()" placeholder="Rechercher..." 
-         style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #086972; box-sizing: border-box;">
+         style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #086972; box-sizing: border-box;">
   </div>
   
   <div class="legend-container">
@@ -315,7 +341,7 @@
     </div>
   </div>
 
-  <div id="counter-container" style="text-align: center; margin-bottom: 20px; font-weight: bold; color: var(--primary);">
+  <div id="counter-container" style="text-align: center; margin-bottom: 20px; font-weight: bold; color: #F5F5F5 !important;">
     <span id="completed-count">0</span> / <span id="total-count">0</span> actions réalisées
   </div>
 
