@@ -169,11 +169,12 @@
       background: #dfe6e9; /* Devient un peu plus foncé au survol */
     }
 
-    .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+    .tabs { display: flex; gap: 5px; margin-bottom: 20px; width: 100%; }
 	
   .tab-btn { 
-    flex: 1; padding: 10px; border: none; font-family: inherit; font-size: 12px; border-radius: 0; 
-    background: #dfe6e9; cursor: pointer; font-weight: bold; color: var(--bg); font-size: 12px; text-transform: uppercase;
+    flex: 1; padding: 10px 5px; border: none; font-family: inherit; border-radius: 0; 
+    background: #dfe6e9; cursor: pointer; font-weight: bold; color: var(--bg); font-size: 11px; text-transform: uppercase;
+	white-space: nowrap;display: flex; align-items: center; justify-content: center; gap: 4px;
   }
   .tab-btn.active { background: #A3B18A; color: white !important; }
 
