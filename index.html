@@ -12,8 +12,8 @@
       --success: #A3B18A;
       --danger: #ff7675;
       --bg: #4A0E0E;         /* Fond bordeaux sombre pour faire ressortir les cartes */
-      --card: #ffffff;
-	  --card-input: #fdf2f2;
+      --card: #F5F5F5;    /* blanc gris */
+	  --card-input: #FDF7F7;    /* blanc rose */
     }
 
     body, button, input, select, textarea { 
@@ -25,20 +25,36 @@
       color: #3d2b2b;
       max-width: 600px;
       margin: auto; 
-      padding: 20px;
-      font-size: 14px;
+      padding: 70px 15px 20px 15px;
+	  font-size: 14px;
+	  display: flow-root;
     }
 
 	h1 { 
       text-align: center; 
-      color: #F5F5F5; /* Pour que ça ressorte sur le fond bordeaux */
-      font-weight: 600;
-      margin-top: 1;	  
-      margin-bottom: 30px;
+      color: var(--card);
+      font-weight: 700;
+      margin-top: 0;      /* Remis à 0 car le body s'en occupe */
+      margin-bottom: 35px;
       font-family: 'Playfair Display', 'Didot', 'Georgia', serif; 
-      font-size: 32px;
-      letter-spacing: 1px; /* Un léger espacement pour le côté élégant */
-      text-transform: uppercase; /* Optionnel : en majuscules pour encore plus de structure */
+      font-size: 38px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      position: relative;
+      padding-bottom: 15px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+	
+	h1::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background-color: var(--card);
+      border-radius: 2px;
     }
 
     #add { 
@@ -172,7 +188,7 @@
     .item { border-left: 8px solid transparent; }
 
     .badge { 
-      background: #f1f2f6; 
+      background: var(--card-input); 
       padding: 2px 6px;
       font-size: 11px;	  
       border-radius: 4px;
@@ -213,9 +229,9 @@
       border: 1px solid rgba(255,255,255,0.1);
     }
 	
-    .tab-btn.active { background: #FFFFFF !important; color: var(--primary-dark) !important; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+    .tab-btn.active { background: var(--card) !important; color: var(--primary-dark) !important; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
-    .timeline-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .timeline-card { background: var(--card); padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 	
     .timeline-list { 
       list-style: none; 
@@ -244,11 +260,11 @@
       color: var(--primary); 
       font-weight: 800; 
       font-size: 14px;
-      width: 80px;
+      width: 70px;
       flex-shrink: 0;
-	  margin-right: 30px;
+	  margin-right: 20px;
     }
-    .contact-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .contact-card { background: var(--card); padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 	
     .contact-list { 
       list-style: none; 
@@ -279,8 +295,8 @@
 
     .note {
       font-size: 13px;       /* Plus petit que le texte principal */
-      color: #000000;        /* Un gris plus doux */
-      margin-top: 4px;       /* Un petit espace avec la ligne du dessus */
+      color: #3d2b2b;
+      margin-top: 5px;       /* Un petit espace avec la ligne du dessus */
 	}
 
     /* Style de la légende */
@@ -292,7 +308,7 @@
       margin-bottom: 10px;
       font-size: 14px;
       font-weight: 600;
-	  color: #F5F5F5;
+	  color: var(--card);
     }
 
     .legend-item {
@@ -592,78 +608,78 @@
         <li>
           <span class="time">13:30</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Coiffure et Maquillage</strong></span>
+	    <span class="desc">Coiffure et Maquillage</span>
             <span class="note">📍 Larressingle<br>Présence de Laetitia, Fanny, Maman, Léandra</span>
 	  </div>
         </li>
         <li>
           <span class="time">15:30</span>
 	  <div class="desc-container">
-            <span class="desc"><strong>Habillage, arrivée des Dem. d'honneur et témoins à la maison</strong></span>
+            <span class="desc">Habillage, arrivée des Dem. d'honneur et témoins à la maison</span>
 	    <span class="note">📍 Larressingle<br>Photographe présent pour les derniers préparatifs (à vérifier)</span>
 	  </div>
         </li>
         <li>
 	  <span class="time">16:00</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Cérémonie Civile</strong></span>
+	    <span class="desc">Cérémonie Civile</span>
  	    <span class="note">📍 Larressingle<br>Distribution d'éventails et ombrelles à l'arrivée des invités si nécessaire.<br>Arrivée de la mariée vers 16h15</span>
           </div>
         </li>
         <li>
           <span class="time">17:00</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Photos des mariés au château de Larressingle</strong><br>📞 Photographe - David : 06 84 36 67 12</span>
- 	    <span class="note">Les invités rejoignent la Palombière d'Henri à Moncrabeau</span>
+	    <span class="desc">Photos des mariés au château de Larressingle</span>
+ 	    <span class="note">📞 Photographe - David : 06 84 36 67 12<br>Les invités rejoignent la Palombière d'Henri à Moncrabeau</span>
           </div>
         </li>
         <li>
           <span class="time">18:00</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Cérémonie Laïque</strong></span>
+	    <span class="desc">Cérémonie Laïque</span>
  	    <span class="note">📍 Palombière d'Henri<br>Animation par Tony, discours des témoins et des parents, échange des alliances et voeux</span>
           </div>
         </li>
         <li>
           <span class="time">18:45</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Vin d'honneur</strong><br>📞 Saxophoniste - Pierre : 07 80 23 94 09</span>
- 	    <span class="note">Cocktail & bouchées (4 serveurs)<br>Activités : photos de groupe, pétanque, mur des invités, polaroïd</span>
+	    <span class="desc">Vin d'honneur</span>
+ 	    <span class="note">📍 Palombière d'Henri<br>📞 Saxophoniste - Pierre : 07 80 23 94 09<br>Cocktail & bouchées (4 serveurs)<br>Activités : photos de groupe, pétanque, mur des invités, polaroïd</span>
           </div>
         </li>
         <li>
           <span class="time">21:00</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Dîner</strong><br>📞 Traiteur - M. Ducousseau : 06 87 12 94 68</span>
- 	    <span class="note">Plat + Assiette de fromage<br>Discours plus fun des amis et jeux</span>
+	    <span class="desc">Dîner</span>
+ 	    <span class="note">📞 Traiteur - M. Ducousseau : 06 87 12 94 68<br>Plat + Assiette de fromage<br>Discours plus fun des amis et jeux</span>
           </div>
         </li>
         <li>
           <span class="time">22:30</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Ouverture de bal</strong></span>
+	    <span class="desc">Ouverture de bal</span>
  	    <span class="note">Valse papa et Adil<br>Responsable musique : Léandra</span>
           </div>
         </li>
         <li>
           <span class="time">22:45</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Pièces-montée</strong><br>📞 Pâtisserie - C. Garnier : 05 62 28 11 33</span>
- 	    <span class="note">Livraison par le patissier directement</span>
+	    <span class="desc">Pièces-montée</span>
+ 	    <span class="note">📞 Pâtisserie - C. Garnier : 05 62 28 11 33<br>Livraison par le patissier directement</span>
           </div>
         </li>
         <li>
           <span class="time">23:15</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Soirée</strong></span>
+	    <span class="desc">Soirée</span>
  	    <span class="note">Surprise des Dem. d'honneur, Playlist de soirée</span>
           </div>
         </li>
 		<li>
           <span class="time">11:00</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>LENDEMAIN - 26/07</strong></span>
- 	    <span class="note">Brunch du dimanche avec tous les invités intéressés<br>📍 Palombière d'Henri</span>
+	    <span class="desc">LENDEMAIN - 26/07</span>
+ 	    <span class="note">📍 Palombière d'Henri<br>Brunch du dimanche avec tous les invités intéressés</span>
           </div>
         </li>
       </ul>
@@ -677,57 +693,57 @@
         <li>
           <span class="name">Papa</span>
 	  <div class="desc-container">
-            <span class="desc"><strong>Respo sono et câbles</strong></span>
-	    <span class="note">07 48 14 76 75<br>Enceinte et playlist mairie avec Xavier.<br>Mise en place des enceintes au lieu.<br>Micro, rallonges, lumières du soir.</span>
+            <span class="desc">Respo sono et câbles</span>
+	    <span class="note">📞 07 48 14 76 75<br>Enceinte et playlist mairie avec Xavier.<br>Mise en place des enceintes au lieu.<br>Micro, rallonges, lumières du soir.</span>
 	  </div>
         </li>
         <li>
 	  <span class="name">Léandra</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Respo vidéo et playlist du soir</strong></span>
- 	    <span class="note">06 33 74 73 83<br>Mise en place du trépied avec Go Pro pour la cérémonie laïque, pour l'ouverture de bal, et pour la danse.<br>Lancement de la musique pour l'ouverture de bal et pour la danse surprise.</span>
+	    <span class="desc">Respo vidéo et playlist du soir</span>
+ 	    <span class="note">📞 06 33 74 73 83<br>Mise en place du trépied avec Go Pro pour la cérémonie laïque, pour l'ouverture de bal, et pour la danse.<br>Lancement de la musique pour l'ouverture de bal et pour la danse surprise.</span>
           </div>
         </li>
         <li>
           <span class="name">Ilona</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Respo Go Pro</strong></span>
- 	    <span class="note">06 04 16 24 01<br>Chargement de la Go Pro entre la cérémonie laïque, l'ouverture de bal, et la soirée</span>
+	    <span class="desc">Respo Go Pro</span>
+ 	    <span class="note">📞 06 04 16 24 01<br>Chargement de la Go Pro entre la cérémonie laïque, l'ouverture de bal, et la soirée</span>
           </div>
         </li>
         <li>
           <span class="name">Saban</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Respo Alliances</strong></span>
- 	    <span class="note">07 81 79 71 80<br>Apporter les alliances aux mariés à la cérémonie laïque</span>
+	    <span class="desc">Respo Alliances</span>
+ 	    <span class="note">📞 07 81 79 71 80<br>Apporter les alliances aux mariés à la cérémonie laïque</span>
           </div>
         </li>
         <li>
           <span class="name">Karen</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Respo playlist du jour</strong></span>
- 	    <span class="note">07 82 29 87 76<br>Playlist cérémonie laïque, playlist dîner</span>
+	    <span class="desc">Respo playlist du jour</span>
+ 	    <span class="note">📞 07 82 29 87 76<br>Playlist cérémonie laïque, playlist dîner</span>
           </div>
         </li>
         <li>
-          <span class="name">Demoiselles d'honneur</span>
+          <span class="name">Dem. d'honneur</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Respo timing et accueil prestataires</strong></span>
- 	    <span class="note">Guider les invités après la mairie vers le Lieu de réception.<br>Accueillir saxophoniste, traiteur, et patissier.<br>Inviter les gens à passer à table pour le dîner.<br>Apporter le gâteau après l'ouverture de bal.</span>
+	    <span class="desc">Respo timing et accueil prestataires</span>
+ 	    <span class="note">📞 Guider les invités après la mairie vers le Lieu de réception.<br>Accueillir saxophoniste, traiteur, et patissier.<br>Inviter les gens à passer à table pour le dîner.<br>Apporter le gâteau après l'ouverture de bal.</span>
           </div>
         </li>
 		<li>
           <span class="name">Tony</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Animateur cérémonie laïque</strong></span>
- 	    <span class="note">06 80 16 97 51<br>Texte préparé à l'avance.<br>Annonce du vin d'honneur et du dîner qui suit.</span>
+	    <span class="desc">Animateur cérémonie laïque</span>
+ 	    <span class="note">📞 06 80 16 97 51<br>Texte préparé à l'avance.<br>Annonce du vin d'honneur et du dîner qui suit.</span>
           </div>
         </li>
 		<li>
           <span class="name">Maman</span>
 	  <div class="desc-container">
-	    <span class="desc"><strong>Respo fleur et brunch du dimanche</strong></span>
- 	    <span class="note">06 60 59 68 68<br>Bouquet de la mariée.<br>Pizza et boissons pour le brunch.</span>
+	    <span class="desc">Respo fleur et brunch du dimanche</span>
+ 	    <span class="note">📞 06 60 59 68 68<br>Bouquet de la mariée.<br>Pizza et boissons pour le brunch.</span>
           </div>
         </li>
       </ul>
