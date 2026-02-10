@@ -13,6 +13,7 @@
       --danger: #ff7675;
       --bg: #4A0E0E;         /* Fond bordeaux sombre pour faire ressortir les cartes */
       --card: #ffffff;
+	  --card-input: #fdf2f2;
     }
 
     body, button, input, select, textarea { 
@@ -21,7 +22,7 @@
 
     body { 
       background-color: var(--bg);
-      color: #2d3436;
+      color: #3d2b2b;
       max-width: 600px;
       margin: auto; 
       padding: 20px;
@@ -40,7 +41,7 @@
     }
 
     #add { 
-      background: var(--card);
+      background: var(--card-input);
       padding: 20px;
       border-radius: 4px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
@@ -51,9 +52,20 @@
     }
 	
 	#add label {
-      color: var(--primary); /* Utilise ton bordeaux sur le fond blanc de la carte */
+      color: var(--primary);
       font-weight: 600;
-	  font-size: 12px;
+	  font-size: 13px;
+    }
+	
+	input[type="radio"] {
+      accent-color: var(--primary-dark);
+      cursor: pointer;
+    }
+	
+	.moment-selection label {
+      color: var(--primary-dark);
+      font-size: 14px;
+      font-weight: bold;
     }
 
     input[type="text"] { 
@@ -339,7 +351,7 @@
       <input type="text" id="newOwner" placeholder="Responsable" style="flex: 1; min-width: 140px;">
     </div>
 
-    <div style="display: flex; justify-content: space-around; padding: 10px; background: #f1f2f6; border-radius: 8px; margin-top: 5px;">
+    <div class="moment-selection" style="display: flex; justify-content: space-around; padding: 10px 0; margin-top: 5px;">
       <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
         <input type="radio" name="moment" value="veille" checked style="transform: scale(1.5);"> Veille
       </label>
