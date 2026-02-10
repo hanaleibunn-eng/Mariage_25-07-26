@@ -8,7 +8,7 @@
     :root {
       --primary: #800020;    /* Bordeaux classique */
       --secondary: #D47386;  /* Un ton plus clair pour les éléments secondaires */
-      --success: #00b894;
+      --success: #A3B18A;
       --danger: #ff7675;
       --bg: #4A0E0E;         /* Fond bordeaux sombre pour faire ressortir les cartes */
       --card: #ffffff;
@@ -117,7 +117,7 @@
       background-color: #eee;
       border-radius: 0;
       transition: 0.3s;
-      border: 1.5px solid #086972;
+      border: 1.5px solid #dfe6e9;
     }
 
     .checkbox-container input:checked ~ .checkmark { background-color: var(--success); }
@@ -144,15 +144,15 @@
     .badge { background: #f1f2f6; padding: 2px 8px; border-radius: 4px; }
 
     .delete-btn { 
-      background: none; border: none; color: var(--danger); 
+      background: none; border: none; color: var(--primary); 
       font-size: 20px; cursor: pointer; padding: 5px;
     }
 
     /* Couleur pour la Veille */
-    .item.veille { border-left: 10px solid #A3B18A; }
+    .item.veille { border-left: 15px solid #A3B18A; }
 
     /* Couleur pour le Jour J */
-    .item.jourj { border-left: 10px solid #D69B8F; }
+    .item.jourj { border-left: 15px solid #D69B8F; }
 
     /* On ajuste un peu la carte pour que le bord coloré soit joli */
     .item { border-left: 8px solid transparent; }
@@ -290,7 +290,7 @@
     position: absolute;
     top: -25px;
     left: 0;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
     color: #F5F5F5;
     text-transform: uppercase;
