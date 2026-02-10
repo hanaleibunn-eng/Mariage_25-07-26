@@ -7,12 +7,12 @@
   <style>
     :root {
       --primary: #800020;    /* Bordeaux classique */
+	  --primary-dark: #4A0E0E;
       --secondary: #D47386;  /* Un ton plus clair pour les éléments secondaires */
       --success: #A3B18A;
       --danger: #ff7675;
       --bg: #4A0E0E;         /* Fond bordeaux sombre pour faire ressortir les cartes */
       --card: #ffffff;
-      --tab-active: #A52A2A; /* Brun-rouge plus clair pour l'onglet actif */
     }
 
     body, button, input, select, textarea { 
@@ -42,7 +42,7 @@
     #add { 
       background: var(--card);
       padding: 20px;
-      border-radius: 0;
+      border-radius: 4px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
       display: flex;
       flex-direction: column;
@@ -53,6 +53,7 @@
 	#add label {
       color: var(--primary); /* Utilise ton bordeaux sur le fond blanc de la carte */
       font-weight: 600;
+	  font-size: 12px;
     }
 
     input[type="text"] { 
@@ -65,7 +66,7 @@
     }
     
 	input[type="text"], select { 
-     font-size: 16px; /* Évite le zoom auto sur iOS */
+     font-size: 14px;
     }
 	
     input[type="text"]:focus { border-color: var(--primary); }
@@ -167,134 +168,156 @@
       background: #dfe6e9; /* Devient un peu plus foncé au survol */
     }
 
-    .tabs { display: flex; gap: 5px; margin-bottom: 20px; width: 100%; }
+    .tabs {
+	  display: flex;
+	  gap: 6px;
+	  margin-bottom: 25px;
+	  width: 100%;
+	}
 	
-  .tab-btn { 
-    flex: 1; padding: 10px 5px; border: none; font-family: inherit; border-radius: 0; 
-    background: #dfe6e9; cursor: pointer; font-weight: bold; color: var(--bg); font-size: 11px; text-transform: uppercase;
-	white-space: nowrap;display: flex; align-items: center; justify-content: center; gap: 4px;
-  }
-  .tab-btn.active { background: #A3B18A; color: white !important; }
+    .tab-btn { 
+      flex: 1;
+	  padding: 12px 5px;
+	  border: none;
+	  font-family: inherit;
+	  border-radius: 4px; 
+      background: #631313;
+	  cursor: pointer;
+	  font-weight: bold;
+	  color: rgba(255,255,255,0.7);
+	  font-size: 12px;
+	  text-transform: uppercase;
+	  white-space: nowrap;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  gap: 6px;
+	  transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+	
+    .tab-btn.active { background: #FFFFFF !important; color: var(--primary-dark) !important; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
-  .timeline-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-  .timeline-list { 
-    list-style: none; 
-    padding: 0; 
-    border-left: 2px dashed #dfe6e9; 
-    margin-left: 20px; /* On se place juste après la fin des 60px de l'heure */
-    padding-left: 15px; 
-  }
+    .timeline-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .timeline-list { 
+      list-style: none; 
+      padding: 0; 
+      border-left: 2px dashed #dfe6e9; 
+      margin-left: 20px; /* On se place juste après la fin des 60px de l'heure */
+      padding-left: 15px; 
+    }
 
-  .timeline-list li { 
-    display: flex;             /* Aligne l'heure et le texte sur la même ligne */
-    align-items: flex-start;   /* Aligne le texte en haut si plusieurs lignes */
-    padding: 15px 0; 
-    border-bottom: 1px solid #eee; 
-  }
+    .timeline-list li { 
+      display: flex;             /* Aligne l'heure et le texte sur la même ligne */
+      align-items: flex-start;   /* Aligne le texte en haut si plusieurs lignes */
+      padding: 15px 0; 
+      border-bottom: 1px solid #eee; 
+    }
 
-  .time { 
-    color: var(--primary); 
-    font-weight: 800; 
-    font-size: 14px;
-    width: 55px;               /* Largeur fixe pour la colonne des heures */
-    flex-shrink: 0;            /* Empêche l'heure de rétrécir */
-  }
+    .time { 
+      color: var(--primary); 
+      font-weight: 800; 
+      font-size: 14px;
+      width: 55px;               /* Largeur fixe pour la colonne des heures */
+      flex-shrink: 0;            /* Empêche l'heure de rétrécir */
+    }
   
-  .name { 
-    color: var(--primary); 
-    font-weight: 800; 
-    font-size: 14px;
-    width: 80px;
-    flex-shrink: 0;
-	margin-right: 30px;
-  }
-   .contact-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-  .contact-list { 
-    list-style: none; 
-    padding: 0; 
-    border-left: none; 
-    margin-left: 0;
-  }
+    .name { 
+      color: var(--primary); 
+      font-weight: 800; 
+      font-size: 14px;
+      width: 80px;
+      flex-shrink: 0;
+	  margin-right: 30px;
+    }
+    .contact-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+	
+    .contact-list { 
+      list-style: none; 
+      padding: 0; 
+      border-left: none; 
+      margin-left: 0;
+    }
 
-  .contact-list li { 
-    display: flex;
-    align-items: flex-start;
-    padding: 15px 0; 
-    border-bottom: 1px solid #eee; 
-  }
+    .contact-list li { 
+      display: flex;
+      align-items: flex-start;
+      padding: 15px 0; 
+      border-bottom: 1px solid #eee; 
+    }
 
-  .desc { 
-    font-size: 14px; 
-    line-height: 1.4;          /* Espace un peu les lignes pour la lecture */
-    color: var(--primary);
-	font-weight: bold;
-  }
+    .desc { 
+      font-size: 14px; 
+      line-height: 1.4;          /* Espace un peu les lignes pour la lecture */
+      color: var(--primary);
+	  font-weight: bold;
+    }
 
-  .desc-container {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
+    .desc-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
 
-  .note {
-    font-size: 13px;       /* Plus petit que le texte principal */
-    color: #000000;        /* Un gris plus doux */
-    margin-top: 4px;       /* Un petit espace avec la ligne du dessus */
-  }
+    .note {
+      font-size: 13px;       /* Plus petit que le texte principal */
+      color: #000000;        /* Un gris plus doux */
+      margin-top: 4px;       /* Un petit espace avec la ligne du dessus */
+	}
 
-  /* Style de la légende */
-  .legend-container {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    margin-bottom: 20px;
-    font-size: 14px;
-    font-weight: 600;
-	color: #F5F5F5;
-  }
+    /* Style de la légende */
+    .legend-container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 14px;
+      font-weight: 600;
+	  color: #F5F5F5;
+    }
 
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-  .dot {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-	flex-shrink: 0;
-  }
+    .dot {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+	  flex-shrink: 0;
+    }
 
-  /* Couleurs identiques à tes bordures d'étiquettes */
-  .dot.veille { background-color: #A3B18A; }
-  .dot.jourj { background-color: #D69B8F; }
+    /* Couleurs identiques à tes bordures d'étiquettes */
+    .dot.veille { background-color: #A3B18A; }
+    .dot.jourj { background-color: #D69B8F; }
 
-  * {
-    box-sizing: border-box;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  body {
-    overflow-x: hidden; /* Empêche le défilement horizontal parasite */
-  }
+    body {
+      overflow-x: hidden; /* Empêche le défilement horizontal parasite */
+    }
 
-  /* Ajoute un petit espace entre le groupe Jour J et le groupe Veille */
-  .item.veille + .item.jourj {
-    margin-top: 30px;
-    position: relative;
-  }
+    /* Ajoute un petit espace entre le groupe Jour J et le groupe Veille */
+    .item.veille + .item.jourj {
+      margin-top: 30px;
+      position: relative;
+    }
 
-  /* Optionnel : ajoute un petit texte séparateur "Actions du jour J" */
-  .item.veille + .item.jourj::before {
-    content: "Actions du jour J";
-    position: absolute;
-    top: -25px;
-    left: 0;
-    font-size: 14px;
-    font-weight: bold;
-    color: #F5F5F5;
-    text-transform: uppercase;
-  }
+    /* Optionnel : ajoute un petit texte séparateur "Actions du jour J" */
+    .item.veille + .item.jourj::before {
+      content: "Actions du jour J";
+      position: absolute;
+      top: -25px;
+      left: 0;
+      font-size: 14px;
+      font-weight: bold;
+      color: #F5F5F5;
+      text-transform: uppercase;
+    }
 
   </style>
 </head>
@@ -608,13 +631,20 @@
  	    <span class="note">Surprise des Dem. d'honneur, Playlist de soirée</span>
           </div>
         </li>
+		<li>
+          <span class="time">11:00</span>
+	  <div class="desc-container">
+	    <span class="desc"><strong>LENDEMAIN - 26/07</strong></span>
+ 	    <span class="note">Brunch du dimanche avec tous les invités intéressés<br>📍 Palombière d'Henri</span>
+          </div>
+        </li>
       </ul>
     </div>
   </div>
   
   <div id="contact-section" style="display: none;">
     <div class="contact-card">
-      <h3>👥 Respo et musique</h3>
+      <h3>👥 Responsables</h3>
       <ul class="contact-list">
         <li>
           <span class="name">Papa</span>
