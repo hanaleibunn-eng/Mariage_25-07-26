@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checklist 25/07</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #800020;    /* Bordeaux classique */
@@ -95,7 +96,7 @@
     }
     
 	input[type="text"], select { 
-     font-size: 14px;
+     font-size: 16px;
     }
 	
     input[type="text"]:focus { border-color: var(--primary); }
@@ -203,14 +204,14 @@
 
     .tabs {
 	  display: flex;
-	  gap: 6px;
+	  gap: 4px;
 	  margin-bottom: 25px;
 	  width: 100%;
 	}
 	
     .tab-btn { 
       flex: 1;
-	  padding: 12px 5px;
+	  padding: 10px 4px;
 	  border: none;
 	  font-family: inherit;
 	  border-radius: 4px; 
@@ -218,7 +219,7 @@
 	  cursor: pointer;
 	  font-weight: bold;
 	  color: rgba(255,255,255,0.7);
-	  font-size: 12px;
+	  font-size: 11px;
 	  text-transform: uppercase;
 	  white-space: nowrap;
 	  display: flex;
@@ -231,60 +232,83 @@
 	
     .tab-btn.active { background: var(--card) !important; color: var(--primary-dark) !important; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
-    .timeline-card { background: var(--card); padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-	
-    .timeline-list { 
-      list-style: none; 
-      padding: 0; 
-      border-left: 2px dashed #dfe6e9; 
-      margin-left: 10px;
-      padding-left: 10px; 
-    }
-
-    .timeline-list li { 
-      display: flex;             /* Aligne l'heure et le texte sur la même ligne */
-      align-items: flex-start;   /* Aligne le texte en haut si plusieurs lignes */
-      padding: 15px 0; 
-      border-bottom: 1px solid #eee; 
-    }
-
+    /* Le Badge de l'heure */
     .time { 
-      color: var(--primary); 
-      font-weight: 800; 
-      font-size: 14px;
-      width: 55px;               /* Largeur fixe pour la colonne des heures */
-      flex-shrink: 0;            /* Empêche l'heure de rétrécir */
+      background: var(--primary); 
+      color: white !important; 
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      width: fit-content; /* S'adapte au texte */
+      margin-bottom: 10px;
+      display: inline-block;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
-  
-    .name { 
-      color: var(--primary); 
-      font-weight: 800; 
-      font-size: 14px;
-      width: 70px;
-      flex-shrink: 0;
-	  margin-right: 20px;
-    }
-    .contact-card { background: var(--card); padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 	
-    .contact-list { 
-      list-style: none; 
-      padding: 0; 
-      border-left: none; 
-      margin-left: 0;
+	/* --- TITRES DE SECTIONS (Planning & Contacts) --- */
+    #timeline-section h3, 
+    #contact-section h3 {
+      color: var(--card-input);
+      text-align: center;
+      text-transform: uppercase;
+      font-family: 'Playfair Display', serif;
+      letter-spacing: 1px;
+      margin-top: 10px;
+      margin-bottom: 25px;
+      font-size: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 10px;
     }
 
+    /* --- CARTES UNIFORMES (Planning & Contacts) --- */
+    .timeline-card, .contact-card { 
+      background: transparent; 
+      padding: 0; 
+      box-shadow: none; 
+    }
+
+    .timeline-list, .contact-list { 
+      list-style: none; 
+      padding: 0; 
+      margin: 0;
+    }
+
+    /* On applique le style "Carte" aux éléments de liste des deux sections */
+    .timeline-list li, 
     .contact-list li { 
-      display: flex;
-      align-items: flex-start;
-      padding: 15px 0; 
-      border-bottom: 1px solid #eee; 
+      display: flex; 
+      flex-direction: column; 
+      background: var(--card); 
+      margin-bottom: 15px; 
+      padding: 15px; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      border: 1px solid #eee; 
+      position: relative;
+      border-bottom: none; /* On enlève l'ancienne ligne de séparation grise */
+    }
+
+    /* Ajustement spécifique pour les noms dans Contacts (pour qu'ils ressemblent aux badges d'heures) */
+    .name { 
+      background: var(--primary); 
+      color: white !important; 
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      width: fit-content;
+      margin-bottom: 10px;
+      display: inline-block;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
     .desc { 
-      font-size: 14px; 
-      line-height: 1.4;          /* Espace un peu les lignes pour la lecture */
-      color: var(--primary);
-	  font-weight: bold;
+      font-size: 16px; /* Titre un peu plus grand */
+      color: var(--primary-dark);
+      font-weight: 800;
+      display: block;
+      margin-bottom: 5px;
     }
 
     .desc-container {
@@ -294,9 +318,12 @@
     }
 
     .note {
-      font-size: 13px;       /* Plus petit que le texte principal */
-      color: #3d2b2b;
-      margin-top: 5px;       /* Un petit espace avec la ligne du dessus */
+      font-size: 13px;
+      color: #555;
+      line-height: 1.5;
+      border-top: 1px solid #eee;
+      padding-top: 8px;
+      margin-top: 5px;
 	}
 
     /* Style de la légende */
@@ -370,12 +397,12 @@
   <h1>Mariage 25/07/26</h1>
 
   <div class="tabs">
-    <button class="tab-btn active" onclick="showTab('checklist')">📋 Checklist</button>
-    <button class="tab-btn" onclick="showTab('timeline')">🕒 Déroulé</button>
+    <button class="tab-btn active" onclick="showTab('timeline')">🕒 Déroulé</button>
+	<button class="tab-btn" onclick="showTab('checklist')">📋 Checklist</button>  
     <button class="tab-btn" onclick="showTab('contact')">👥 Contacts</button>
   </div>
 
-  <div id="add">
+  <div id="add" style="display: none;">
     <input type="text" id="newItem" placeholder="Action (ex: Réserver le traiteur...)">
     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
       <input type="text" id="newPlace" placeholder="Lieu" style="flex: 1; min-width: 140px;">
@@ -394,16 +421,16 @@
     <button id="addBtn" onclick="addItem()">Ajouter à la liste</button>
   </div>
 
-  <div style="margin-bottom: 20px;">
-    <input type="text" id="filterInput" onkeyup="filterTasks()" placeholder="Rechercher..." 
+  <div id="filter-container" style="margin-bottom: 20px; display: none;">
+  <input type="text" id="filterInput" onkeyup="filterTasks()" placeholder="Rechercher..." 
          style="width: 100%; padding: 10px; border-radius: 4px; border: none; box-sizing: border-box; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
   </div>
 
-  <div id="counter-container" style="text-align: center; margin-bottom: 15px; font-weight: bold; color: #F5F5F5 !important; font-size: 16px;">
+  <div id="counter-container" style="display: none; text-align: center; margin-bottom: 15px; font-weight: bold; color: #F5F5F5 !important; font-size: 16px;">
     <span id="completed-count">0</span> / <span id="total-count">0</span> actions réalisées
   </div>
 
-  <div class="legend-container">
+  <div class="legend-container" style="display: none;">
     <div class="legend-item">
       <span class="dot veille"></span> <span>Veille</span>
     </div>
@@ -412,7 +439,7 @@
     </div>
   </div>
 
-  <div id="list"></div>
+  <div id="list" style="display: none;"></div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
@@ -486,6 +513,7 @@
     };
 
     window.addItem = function () {
+	  window.navigator.vibrate(50);
       const text = document.getElementById("newItem").value.trim();
       if (!text) return;
       const place = document.getElementById("newPlace").value.trim();
@@ -581,27 +609,26 @@
     const isTimeline = tabName === 'timeline';
     const isContact = tabName === 'contact';
 
-    // 2. Gestion des sections principales
+    // Affichage des sections
     document.getElementById('add').style.display = isChecklist ? 'flex' : 'none';
-    document.getElementById('filterInput').style.display = isChecklist ? 'block' : 'none';
+    document.getElementById('filter-container').style.display = isChecklist ? 'block' : 'none';
     document.getElementById('list').style.display = isChecklist ? 'block' : 'none';
     document.querySelector('.legend-container').style.display = isChecklist ? 'flex' : 'none';
     document.getElementById('counter-container').style.display = isChecklist ? 'block' : 'none';
 
-    // 3. Gestion des onglets spécifiques (Timeline vs Contact)
     document.getElementById('timeline-section').style.display = isTimeline ? 'block' : 'none';
     document.getElementById('contact-section').style.display = isContact ? 'block' : 'none';
 
-    // 4. Gestion de l'apparence des boutons (classe active)
+    // Mise à jour des boutons (Ordre : 0=Timeline, 1=Checklist, 2=Contact)
     const btns = document.querySelectorAll('.tab-btn');
-    btns[0].classList.toggle('active', isChecklist);
-    btns[1].classList.toggle('active', isTimeline);
-    btns[2].classList.toggle('active', isContact);
+    btns[0].classList.toggle('active', isTimeline);  // Déroulé
+    btns[1].classList.toggle('active', isChecklist); // Checklist
+    btns[2].classList.toggle('active', isContact);   // Contacts
   };
 
   </script>
 
-  <div id="timeline-section" style="display: none;">
+  <div id="timeline-section" style="display: block;">
     <div class="timeline-card">
       <h3>🕒 Planning de la journée</h3>
       <ul class="timeline-list">
@@ -609,77 +636,77 @@
           <span class="time">13:30</span>
 	  <div class="desc-container">
 	    <span class="desc">Coiffure et Maquillage</span>
-            <span class="note">📍 Larressingle<br>Présence de Laetitia, Fanny, Maman, Léandra</span>
+            <span class="note">📍 Larressingle - Maison<br>Présence de Laetitia (coiffeuse), Fanny (maquilleuse), Maman, Léandra.</span>
 	  </div>
         </li>
         <li>
           <span class="time">15:30</span>
 	  <div class="desc-container">
-            <span class="desc">Habillage, arrivée des Dem. d'honneur et témoins à la maison</span>
-	    <span class="note">📍 Larressingle<br>Photographe présent pour les derniers préparatifs (à vérifier)</span>
+            <span class="desc">Habillage, arrivée des Demoiselles d'honneur et témoins à la maison</span>
+	    <span class="note">📍 Larressingle - Maison<br>Photographe présent pour les derniers préparatifs (à vérifier).</span>
 	  </div>
         </li>
         <li>
 	  <span class="time">16:00</span>
 	  <div class="desc-container">
 	    <span class="desc">Cérémonie Civile</span>
- 	    <span class="note">📍 Larressingle<br>Distribution d'éventails et ombrelles à l'arrivée des invités si nécessaire.<br>Arrivée de la mariée vers 16h15</span>
+ 	    <span class="note">📍 Larressingle - Mairie<br>Distribution d'éventails et ombrelles à l'arrivée des invités si nécessaire.<br>Arrivée de la mariée vers 16h15.</span>
           </div>
         </li>
         <li>
           <span class="time">17:00</span>
 	  <div class="desc-container">
 	    <span class="desc">Photos des mariés au château de Larressingle</span>
- 	    <span class="note">📞 Photographe - David : 06 84 36 67 12<br>Les invités rejoignent la Palombière d'Henri à Moncrabeau</span>
+ 	    <span class="note">📞 Photographe - David : <a href="tel:0684366712" style="color: inherit; text-decoration: none; font-weight: bold;">06 84 36 67 12</a><br>Les invités rejoignent la Palombière d'Henri à Moncrabeau.</span>
           </div>
         </li>
         <li>
           <span class="time">18:00</span>
 	  <div class="desc-container">
 	    <span class="desc">Cérémonie Laïque</span>
- 	    <span class="note">📍 Palombière d'Henri<br>Animation par Tony, discours des témoins et des parents, échange des alliances et voeux</span>
+ 	    <span class="note">📍 Palombière d'Henri<br>Accueil des invités avec musique de fond.<br>Introduction de Tony.<br> Discours des témoins et des parents (15 min).<br> Echange des alliances, voeux, rituel symbolique.<br>Remerciements par Tony et sortie des mariés en musique.</span>
           </div>
         </li>
         <li>
           <span class="time">18:45</span>
 	  <div class="desc-container">
 	    <span class="desc">Vin d'honneur</span>
- 	    <span class="note">📍 Palombière d'Henri<br>📞 Saxophoniste - Pierre : 07 80 23 94 09<br>Cocktail & bouchées (4 serveurs)<br>Activités : photos de groupe, pétanque, mur des invités, polaroïd</span>
+ 	    <span class="note">📍 Palombière d'Henri<br>📞 Saxophoniste - Pierre : <a href="tel:0780239409" style="color: inherit; text-decoration: none; font-weight: bold;">07 80 23 94 09</a><br>Cocktail et bouchées (4 serveurs).<br>Activités : photos avec le photographe, pétanque, mur des invités, polaroïd.</span>
           </div>
         </li>
         <li>
           <span class="time">21:00</span>
 	  <div class="desc-container">
 	    <span class="desc">Dîner</span>
- 	    <span class="note">📞 Traiteur - M. Ducousseau : 06 87 12 94 68<br>Plat + Assiette de fromage<br>Discours plus fun des amis et jeux</span>
+ 	    <span class="note">📞 Traiteur - M. Ducousseau : <a href="tel:0687129468" style="color: inherit; text-decoration: none; font-weight: bold;">06 87 12 94 68</a><br>Plat principal + Assiette de fromage.<br>Discours plus fun des amis et jeux.<br>Musique en fond.</span>
           </div>
         </li>
         <li>
           <span class="time">22:30</span>
 	  <div class="desc-container">
 	    <span class="desc">Ouverture de bal</span>
- 	    <span class="note">Valse papa et Adil<br>Responsable musique : Léandra</span>
+ 	    <span class="note">Valse papa et Adil.<br>Responsable musique : Léandra.</span>
           </div>
         </li>
         <li>
           <span class="time">22:45</span>
 	  <div class="desc-container">
 	    <span class="desc">Pièces-montée</span>
- 	    <span class="note">📞 Pâtisserie - C. Garnier : 05 62 28 11 33<br>Livraison par le patissier directement</span>
+ 	    <span class="note">📞 Pâtisserie - C. Garnier : <a href="tel:0562281133" style="color: inherit; text-decoration: none; font-weight: bold;">05 62 28 11 33</a><br>Livraison par le patissier directement.</span>
           </div>
         </li>
         <li>
           <span class="time">23:15</span>
 	  <div class="desc-container">
 	    <span class="desc">Soirée</span>
- 	    <span class="note">Surprise des Dem. d'honneur, Playlist de soirée</span>
+ 	    <span class="note">Surprise des Demoiselles d'honneur.<br>Playlist de soirée.</span>
           </div>
         </li>
 		<li>
-          <span class="time">11:00</span>
+          <span class="time">Dimanche 11:00</span>
 	  <div class="desc-container">
-	    <span class="desc">LENDEMAIN - 26/07</span>
- 	    <span class="note">📍 Palombière d'Henri<br>Brunch du dimanche avec tous les invités intéressés</span>
+	    <span class="desc">Brunch</span>
+ 	    <span class="note">📍 Palombière d'Henri<br>Brunch du dimanche avec tous les invités intéressés.</span>
           </div>
         </li>
       </ul>
@@ -688,7 +715,7 @@
   
   <div id="contact-section" style="display: none;">
     <div class="contact-card">
-      <h3>👥 Responsables</h3>
+      <h3>Responsables</h3>
       <ul class="contact-list">
         <li>
           <span class="name">Papa</span>
@@ -708,28 +735,28 @@
           <span class="name">Ilona</span>
 	  <div class="desc-container">
 	    <span class="desc">Respo Go Pro</span>
- 	    <span class="note">📞 06 04 16 24 01<br>Chargement de la Go Pro entre la cérémonie laïque, l'ouverture de bal, et la soirée</span>
+ 	    <span class="note">📞 06 04 16 24 01<br>Chargement de la Go Pro entre la cérémonie laïque, l'ouverture de bal, et la soirée.</span>
           </div>
         </li>
         <li>
           <span class="name">Saban</span>
 	  <div class="desc-container">
 	    <span class="desc">Respo Alliances</span>
- 	    <span class="note">📞 07 81 79 71 80<br>Apporter les alliances aux mariés à la cérémonie laïque</span>
+ 	    <span class="note">📞 07 81 79 71 80<br>Apporter les alliances aux mariés à la cérémonie laïque.</span>
           </div>
         </li>
         <li>
           <span class="name">Karen</span>
 	  <div class="desc-container">
 	    <span class="desc">Respo playlist du jour</span>
- 	    <span class="note">📞 07 82 29 87 76<br>Playlist cérémonie laïque, playlist dîner</span>
+ 	    <span class="note">📞 07 82 29 87 76<br>Playlist cérémonie laïque, playlist dîner.</span>
           </div>
         </li>
         <li>
-          <span class="name">Dem. d'honneur</span>
+          <span class="name">Demoiselles d'honneur</span>
 	  <div class="desc-container">
 	    <span class="desc">Respo timing et accueil prestataires</span>
- 	    <span class="note">📞 Guider les invités après la mairie vers le Lieu de réception.<br>Accueillir saxophoniste, traiteur, et patissier.<br>Inviter les gens à passer à table pour le dîner.<br>Apporter le gâteau après l'ouverture de bal.</span>
+ 	    <span class="note">Guider les invités après la mairie vers le Lieu de réception.<br>Accueillir saxophoniste, traiteur, et patissier.<br>Inviter les gens à passer à table pour le dîner.<br>Apporter la Pièce Montée après l'ouverture de bal.</span>
           </div>
         </li>
 		<li>
@@ -743,7 +770,7 @@
           <span class="name">Maman</span>
 	  <div class="desc-container">
 	    <span class="desc">Respo fleur et brunch du dimanche</span>
- 	    <span class="note">📞 06 60 59 68 68<br>Bouquet de la mariée.<br>Pizza et boissons pour le brunch.</span>
+ 	    <span class="note">📞 06 60 59 68 68<br>Bouquet de la mariée.<br>Pizza, viennoiseries, et boissons pour le brunch.</span>
           </div>
         </li>
       </ul>
