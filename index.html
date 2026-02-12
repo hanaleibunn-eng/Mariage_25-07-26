@@ -57,6 +57,16 @@
       background-color: var(--card);
       border-radius: 2px;
     }
+	
+	#welcome-message {
+      animation: fadeIn 0.8s ease-in-out;
+      padding: 0 20px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     #add { 
       background: var(--card-input);
@@ -389,19 +399,55 @@
       color: #ffffff;     /* Couleur du lien mail */
       text-decoration: underline;
     }
+	
+	.countdown-box {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 10px;
+      border-radius: 6px;
+      min-width: 65px;
+      text-align: center;
+    }
+    .countdown-box span {
+      display: block;
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+    }
+    .countdown-box small {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.8;
+    }
 
   </style>
 </head>
 <body>
 
-  <h1>Mariage 25/07/26</h1>
-
+  <h1 onclick="showTab()" style="cursor: pointer;">Mariage 25/07/26</h1>
+  
   <div class="tabs">
-    <button class="tab-btn active" onclick="showTab('timeline')">🕒 Déroulé</button>
+    <button class="tab-btn" onclick="showTab('timeline')">🕒 Déroulé</button>
 	<button class="tab-btn" onclick="showTab('checklist')">📋 Checklist</button>  
     <button class="tab-btn" onclick="showTab('contact')">👥 Contacts</button>
   </div>
 
+  <div id="welcome-message" style="display: block;">
+    <div style="text-align: center; color: var(--card); margin-top: 30px; padding: 0 20px;">
+      <p style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Pour suivre l'avancée des préparatifs  ! 🥂<br> <br></p>
+      <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.3);">
+        <p style="margin: 0; line-height: 1.6; font-style: italic;">Mariage Civil et Laïque d'Adil et Hanaleï<br>Utilisez les onglets ci-dessus pour naviguer</p>
+      </div>
+      <div id="countdown" style="display: flex; justify-content: center; gap: 10px; margin-top: 30px;">
+        <div class="countdown-box">
+          <span id="days">00</span>
+          <small>Jours</small>
+        </div>
+      </div>
+      <p style="margin-top: 25px; font-size: 14px; opacity: 0.8;">📍 Larressingle & Moncrabeau<br> <br> <br></p>
+    </div>
+  </div>
+  
   <div id="add" style="display: none;">
     <input type="text" id="newItem" placeholder="Action (ex: Réserver le traiteur...)">
     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
@@ -409,7 +455,7 @@
       <input type="text" id="newOwner" placeholder="Responsable" style="flex: 1; min-width: 140px;">
     </div>
 
-    <div class="moment-selection" style="display: flex; justify-content: space-around; padding: 10px 0; margin-top: 5px;">
+    <div class="moment-selection" style="display: flex; justify-content: space-around; padding: 5px; margin-top: 0px;">
       <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
         <input type="radio" name="moment" value="veille" checked style="transform: scale(1.5);"> Veille
       </label>
@@ -602,33 +648,67 @@
     const itemRef = ref(db, `items/${id}/${field}`);
     set(itemRef, newValue);
   };
-
+  
   window.showTab = function(tabName) {
-    // 1. On définit ce qui doit être visible pour chaque onglet
     const isChecklist = tabName === 'checklist';
     const isTimeline = tabName === 'timeline';
     const isContact = tabName === 'contact';
+    const isHome = !tabName; // Vrai si aucun onglet n'est passé
 
-    // Affichage des sections
+    // Affichage/Masquage du message d'accueil
+    document.getElementById('welcome-message').style.display = isHome ? 'block' : 'none';
+
+    // Affichage des sections de la checklist
     document.getElementById('add').style.display = isChecklist ? 'flex' : 'none';
     document.getElementById('filter-container').style.display = isChecklist ? 'block' : 'none';
     document.getElementById('list').style.display = isChecklist ? 'block' : 'none';
     document.querySelector('.legend-container').style.display = isChecklist ? 'flex' : 'none';
     document.getElementById('counter-container').style.display = isChecklist ? 'block' : 'none';
 
+    // Affichage des autres sections
     document.getElementById('timeline-section').style.display = isTimeline ? 'block' : 'none';
     document.getElementById('contact-section').style.display = isContact ? 'block' : 'none';
 
-    // Mise à jour des boutons (Ordre : 0=Timeline, 1=Checklist, 2=Contact)
+    // Mise à jour des boutons
     const btns = document.querySelectorAll('.tab-btn');
-    btns[0].classList.toggle('active', isTimeline);  // Déroulé
-    btns[1].classList.toggle('active', isChecklist); // Checklist
-    btns[2].classList.toggle('active', isContact);   // Contacts
+    btns.forEach(btn => btn.classList.remove('active')); // On nettoie tout
+  
+    if (isTimeline) btns[0].classList.add('active');
+    if (isChecklist) btns[1].classList.add('active');
+    if (isContact) btns[2].classList.add('active');
   };
+  
+  function updateCountdown() {
+    const weddingDate = new Date("July 25, 2026 16:00:00").getTime();
+    const now = new Date().getTime();
+    const diff = weddingDate - now;
+
+    if (diff > 0) {
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+      // Mise à jour des chiffres
+      document.getElementById("days").innerText = d.toString().padStart(2, '0');
+      document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+      document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+    
+     // Mise à jour du "J-X" en haut
+      if(document.getElementById("days-count")) {
+          document.getElementById("days-count").innerText = d;
+      }
+    } else {
+      document.getElementById("welcome-message").innerHTML = "<h2 style='color:white; text-align:center;'>C'est le grand jour ! 🎉</h2>";
+    }
+  }
+
+  // Lancer le compte à rebours
+  updateCountdown();
+  setInterval(updateCountdown, 60000); // Mise à jour toutes les minutes
 
   </script>
 
-  <div id="timeline-section" style="display: block;">
+  <div id="timeline-section" style="display: none;">
     <div class="timeline-card">
       <h3>🕒 Planning de la journée</h3>
       <ul class="timeline-list">
