@@ -419,6 +419,19 @@
       letter-spacing: 1px;
       opacity: 0.8;
     }
+	
+	.welcome-card {
+      background: var(--card-input);             /* Fond blanc pur */
+      padding: 20px;
+      border-radius: 12px;             /* Coins arrondis élégants */
+      box-shadow: 0 10px 35px rgba(0,0,0,0.5); /* Ombre portée pour le relief */
+	  border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 20px auto;                /* Espace au dessus */
+	  font-weight: 700;                /* Rend le texte épais */
+      font-size: 16px;                 /* Légèrement plus grand pour la lisibilité */
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
 
   </style>
 </head>
@@ -435,8 +448,11 @@
   <div id="welcome-message" style="display: block;">
     <div style="text-align: center; color: var(--card); margin-top: 30px; padding: 0 20px;">
       <p style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Pour suivre l'avancée des préparatifs  ! 🥂<br> <br></p>
-      <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.3);">
-        <p style="margin: 0; line-height: 1.6; font-style: italic;">Mariage Civil et Laïque d'Adil et Hanaleï<br>Utilisez les onglets ci-dessus pour naviguer</p>
+      <div class="welcome-card">
+        <p style="margin: 0; line-height: 1.6; font-style: italic; color: #4A0E0E;">
+          Mariage Civil et Laïque d'Adil et Hanaleï<br>
+          <span style="font-weight: 400; font-size: 12px; opacity: 0.8;">Nombre d'invités total : 107<br>Nombre d'invités au dîner : 90</span>
+        </p>
       </div>
       <div id="countdown" style="display: flex; justify-content: center; gap: 10px; margin-top: 30px;">
         <div class="countdown-box">
