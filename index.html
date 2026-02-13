@@ -582,28 +582,46 @@
       if (confirm(`Supprimer "${text}" ?`)) remove(ref(db, "items/" + id));
     };
 
-    window.addItem = function () {
-	  window.navigator.vibrate(50);
-      const text = document.getElementById("newItem").value.trim();
-      if (!text) return;
-      const place = document.getElementById("newPlace").value.trim();
-      const owner = document.getElementById("newOwner").value.trim();
-      const moment = document.querySelector('input[name="moment"]:checked').value;
-  
-      // On ajoute Date.now() pour avoir le moment précis de création
-      push(ref(db, "items"), { 
-        text, 
-        place, 
-        owner, 
-        moment, 
-        done: false, 
-        createdAt: Date.now() 
-      });
+    // Remplacez votre fonction addItem actuelle par celle-ci dans le script module :
 
-      // Reset des champs
-      document.getElementById("newItem").value = "";
-      document.getElementById("newPlace").value = "";
-      document.getElementById("newOwner").value = "";
+    window.addItem = function () {
+        // Petit retour haptique pour le fun
+        if (window.navigator.vibrate) window.navigator.vibrate(50);
+
+        const textInput = document.getElementById("newItem");
+        const placeInput = document.getElementById("newPlace");
+        const ownerInput = document.getElementById("newOwner");
+    
+        const text = textInput.value.trim();
+        if (!text) {
+            alert("L'action ne peut pas être vide !");
+            return;
+        }
+
+        const place = placeInput.value.trim();
+        const owner = ownerInput.value.trim();
+    
+        // On récupère la valeur du bouton radio sélectionné
+        const momentChecked = document.querySelector('input[name="moment"]:checked');
+        const moment = momentChecked ? momentChecked.value : "avant";
+
+        // Envoi vers Firebase
+        push(ref(db, "items"), { 
+            text, 
+            place, 
+            owner, 
+            moment, 
+            done: false, 
+            createdAt: Date.now() 
+        }).then(() => {
+            // Reset des champs uniquement après le succès de l'envoi
+            textInput.value = "";
+            placeInput.value = "";
+            ownerInput.value = "";
+        }).catch((error) => {
+            console.error("Erreur Firebase :", error);
+            alert("Erreur lors de l'ajout.");
+        });
     };
 
     onValue(ref(db, "items"), snap => {
