@@ -189,7 +189,10 @@
       font-size: 20px; cursor: pointer; padding: 5px;
     }
 
-    /* Couleur pour la Veille */
+    /* Couleur pour le Avant */
+    .item.avant { border-left: 15px solid #FFFDE8; }
+	
+	/* Couleur pour la Veille */
     .item.veille { border-left: 15px solid #A3B18A; }
 
     /* Couleur pour le Jour J */
@@ -362,6 +365,7 @@
     }
 
     /* Couleurs identiques à tes bordures d'étiquettes */
+	.dot.avant { background-color: #FFFDE8; }
     .dot.veille { background-color: #A3B18A; }
     .dot.jourj { background-color: #D69B8F; }
 
@@ -372,20 +376,6 @@
     body {
       overflow-x: hidden; /* Empêche le défilement horizontal parasite */
     }
-
-    /* Ajoute un petit espace entre le groupe Jour J et le groupe Veille */
-    .item.veille + .item.jourj {
-      margin-top: 25px;
-      position: relative;
-    }
-
-    /* Optionnel : ajoute un petit texte séparateur "Actions du jour J" */
-    .item.veille + .item.jourj::before {
-      content: "";
-      position: absolute;
-      top: -25px;
-      left: 0;
-    }
 	
 	footer {
       text-align: center; /* Centre le texte */
@@ -393,6 +383,8 @@
       font-size: 0.8rem;  /* Rend le texte plus petit (1rem est la taille normale) */
       color: rgba(255, 255, 255, 0.7);
       border-top: 1px solid #eee; /* Une petite ligne de séparation optionnelle */
+	  margin-top: 50px; /* Donne de l'air après la liste */
+      margin-bottom: 20px;
     }
 
     footer a {
@@ -404,7 +396,7 @@
       background: rgba(255, 255, 255, 0.15);
       padding: 10px;
       border-radius: 6px;
-      min-width: 65px;
+      min-width: 90px;
       text-align: center;
     }
     .countdown-box span {
@@ -472,8 +464,11 @@
     </div>
 
     <div class="moment-selection" style="display: flex; justify-content: space-around; padding: 5px; margin-top: 0px;">
+	  <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+        <input type="radio" name="moment" value="avant" checked style="transform: scale(1.5);"> Avant
+      </label>
       <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-        <input type="radio" name="moment" value="veille" checked style="transform: scale(1.5);"> Veille
+        <input type="radio" name="moment" value="veille" style="transform: scale(1.5);"> Veille
       </label>
       <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
         <input type="radio" name="moment" value="jourj" style="transform: scale(1.5);"> Jour J
@@ -493,6 +488,9 @@
   </div>
 
   <div class="legend-container" style="display: none;">
+    <div class="legend-item">
+      <span class="dot avant"></span> <span>Avant</span>
+    </div>
     <div class="legend-item">
       <span class="dot veille"></span> <span>Veille</span>
     </div>
@@ -528,11 +526,21 @@
 
     function render(items) {
       listDiv.innerHTML = "";
+      let lastMoment = null; // Pour suivre le groupe précédent
+
       for (const id in items) {
         const item = items[id];
+    
+        // Si on change de catégorie, on ajoute un espace
+        if (lastMoment !== null && lastMoment !== item.moment) {
+          const spacer = document.createElement("div");
+          spacer.style.height = "15px"; // L'espace que tu souhaites
+          spacer.style.width = "100%";
+          listDiv.appendChild(spacer);
+        }
+        lastMoment = item.moment;
 
         const row = document.createElement("div");
-        // On ajoute la classe veille ou jourj en fonction de la donnée
         row.className = `item ${item.done ? 'done' : ''} ${item.moment || ''}`;
 
         row.innerHTML = `
@@ -542,16 +550,16 @@
           </label>
           <div class="item-content">
             <span class="item-title" onclick="editField('${id}', 'text', '${item.text.replace(/'/g, "\\'")}')" style="cursor: pointer;">
-  ${item.text}
+              ${item.text}
             </span>
             <div class="item-details">
-  		<span class="badge" onclick="editField('${id}', 'place', '${item.place || ''}')">
-                 📍 ${item.place || ' ? '}
-                </span>
-                <span class="badge" onclick="editField('${id}', 'owner', '${item.owner || ''}')">
-                 👤 ${item.owner || ' ? '}
-  	        </span>
-	    </div>
+              <span class="badge" onclick="editField('${id}', 'place', '${item.place || ''}')">
+                📍 ${item.place || ' ? '}
+              </span>
+              <span class="badge" onclick="editField('${id}', 'owner', '${item.owner || ''}')">
+                👤 ${item.owner || ' ? '}
+              </span>
+            </div>
           </div>
           <button class="delete-btn" onclick="deleteItem('${id}', '${item.text}')">&times;</button>
         `;
@@ -622,16 +630,16 @@
         }
 
         // PRIORITÉ 2 : Le Moment (seulement si le statut 'done' est le même)
-        const momentOrder = { 'veille': 1, 'jourj': 2 };
-        const orderA = momentOrder[itemA.moment] || 3;
-        const orderB = momentOrder[itemB.moment] || 3;
+        const momentOrder = { 'avant': 1, 'veille': 2,'jourj': 3 };
+        const orderA = momentOrder[itemA.moment] || 1;
+        const orderB = momentOrder[itemB.moment] || 1;
       
         if (orderA !== orderB) {
           return orderA - orderB;
         }
 
         // PRIORITÉ 3 : Alphabétique (pour la stabilité)
-        return itemA.text.localeCompare(itemB.text);
+        return (itemA.createdAt || 0) - (itemB.createdAt || 0);
       });
 
       render(Object.fromEntries(sortedItems));
@@ -701,18 +709,10 @@
 
     if (diff > 0) {
       const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
       // Mise à jour des chiffres
       document.getElementById("days").innerText = d.toString().padStart(2, '0');
-      document.getElementById("hours").innerText = h.toString().padStart(2, '0');
-      document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
     
-     // Mise à jour du "J-X" en haut
-      if(document.getElementById("days-count")) {
-          document.getElementById("days-count").innerText = d;
-      }
     } else {
       document.getElementById("welcome-message").innerHTML = "<h2 style='color:white; text-align:center;'>C'est le grand jour ! 🎉</h2>";
     }
