@@ -639,7 +639,10 @@
         }
 
         // PRIORITÉ 3 : Alphabétique (pour la stabilité)
-        return (itemA.createdAt || 0) - (itemB.createdAt || 0);
+        const nameA = (itemA.text || "").toLowerCase();
+        const nameB = (itemB.text || "").toLowerCase();
+
+        return nameA.localeCompare(nameB);
       });
 
       render(Object.fromEntries(sortedItems));
@@ -661,6 +664,7 @@
       }
     });
   };
+  
   window.editField = function(id, field, oldValue) {
     const label = field === 'place' ? 'le lieu' : 'le responsable';
     const newValue = prompt(`Modifier ${label} :`, oldValue);
