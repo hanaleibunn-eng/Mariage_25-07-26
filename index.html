@@ -1,900 +1,238 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checklist 25/07</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #800020;    /* Bordeaux classique */
-	  --primary-dark: #4A0E0E;
-      --secondary: #D47386;  /* Un ton plus clair pour les éléments secondaires */
-      --success: #A3B18A;
-      --danger: #ff7675;
-      --bg: #4A0E0E;         /* Fond bordeaux sombre pour faire ressortir les cartes */
-      --card: #F5F5F5;    /* blanc gris */
-	  --card-input: #FDF7F7;    /* blanc rose */
-    }
-
-    body, button, input, select, textarea { 
-      font-family: Verdana, sans-serif; 
-    }
-
-    body { 
-      background-color: var(--bg);
-      color: #3d2b2b;
-      max-width: 600px;
-      margin: auto; 
-      padding: 70px 15px 20px 15px;
-	  font-size: 14px;
-	  display: flow-root;
-    }
-
-	h1 { 
-      text-align: center; 
-      color: var(--card);
-      font-weight: 700;
-      margin-top: 0;      /* Remis à 0 car le body s'en occupe */
-      margin-bottom: 35px;
-      font-family: 'Playfair Display', 'Didot', 'Georgia', serif; 
-      font-size: 38px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      position: relative;
-      padding-bottom: 15px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Budget Mariage - Clean Design</title>
+    <style>
+        :root {
+            --bg: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text: #e0e0e0;
+            --highlight: #4caf50;
+            --input-bg: #3d3d3d;
+            --unpaid: #ff5252;
+            --adil-color: #2196F3;
+            --hanalei-color: #E91E63;
+            --parents-color: #FF9800;
         }
-	
-	h1::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 3px;
-      background-color: var(--card);
-      border-radius: 2px;
-    }
-	
-	#welcome-message {
-      animation: fadeIn 0.8s ease-in-out;
-      padding: 0 20px;
-    }
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 15px; padding-bottom: 220px; }
+        
+        /* --- SUPPRESSION DES FLÈCHES (SPINNERS) --- */
+        /* Pour Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Pour Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .side-tabs { position: fixed; left: 0; top: 25%; display: flex; flex-direction: column; gap: 12px; z-index: 1000; }
+        .tab { width: 40px; height: 50px; border-radius: 0 10px 10px 0; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; cursor: pointer; box-shadow: 4px 0 10px rgba(0,0,0,0.3); }
+        .tab-a { background: var(--adil-color); }
+        .tab-h { background: var(--hanalei-color); }
+        .tab-p { background: var(--parents-color); }
 
-    #add { 
-      background: var(--card-input);
-      padding: 20px;
-      border-radius: 4px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 30px;
-    }
-	
-	#add label {
-      color: var(--primary);
-      font-weight: 600;
-	  font-size: 13px;
-    }
-	
-	input[type="radio"] {
-      accent-color: var(--primary-dark);
-      cursor: pointer;
-    }
-	
-	.moment-selection label {
-      color: var(--primary-dark);
-      font-size: 14px;
-      font-weight: bold;
-    }
+        #detailsModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; backdrop-filter: blur(5px); align-items: center; justify-content: center; }
+        .modal-content { background: var(--card-bg); width: 85%; max-width: 320px; padding: 25px; border-radius: 20px; border: 1px solid #444; text-align: center; }
+        .modal-active { display: flex !important; }
 
-    input[type="text"] { 
-      padding: 8px 12px; 
-      border: 1px solid #dfe6e9; 
-      border-radius: 0;
-      outline: none;
-      transition: border-color 0.3s;
-    }
-    
-	input[type="text"], select { 
-     font-size: 13px;
-	 padding: 8px 12px;
-    }
-	
-    input[type="text"]:focus { border-color: var(--primary); }
+        .container { max-width: 500px; margin: 0 auto; }
+        .card { background: var(--card-bg); border-radius: 15px; margin-bottom: 20px; padding: 15px; border: 1px solid #3d3d3d; }
+        .card-title { font-weight: bold; font-size: 1rem; margin-bottom: 12px; text-align: center; color: #fff; text-transform: uppercase; }
+        
+        .total-wrapper { text-align: center; margin-bottom: 15px; display: flex; justify-content: center; }
+        .input-cout { background: transparent; border: none; border-bottom: 2px solid var(--highlight); font-weight: bold; font-size: 1.6rem; color: var(--highlight); width: 160px; text-align: center; outline: none; }
 
-    button#addBtn { 
-      background: var(--primary); 
-      color: white; 
-      border: none; 
-      padding: 12px;
-      font-family: inherit; /* Pour bien prendre le Verdana */
-      font-size: 13px;	  
-      border-radius: 0; 
-      font-weight: bold;
-      cursor: pointer;
-      transition: transform 0.2s, background 0.3s;
-    }
+        .payeurs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .payeur-box { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .payeur-box label { font-size: 0.7rem; color: #aaa; text-transform: capitalize; }
+        .payeur-box input[type="number"] { width: 100%; box-sizing: border-box; padding: 10px 5px; border-radius: 8px; border: none; background: var(--input-bg); color: white; font-size: 1rem; text-align: center; outline: none; }
+        .pay-check { width: 22px; height: 22px; cursor: pointer; accent-color: var(--highlight); }
 
-    button#addBtn:active { transform: scale(0.98); }
+        .is-paid-field { background: rgba(74, 175, 80, 0.2) !important; border: 1px solid var(--highlight) !important; }
+        .comment-input { width: 100%; box-sizing: border-box; background: rgba(0,0,0,0.2); border: 1px solid #444; border-radius: 6px; color: #bbb; font-size: 0.8rem; font-style: italic; margin-top: 15px; padding: 8px; }
 
-    /* Liste des tâches */
-    .item { 
-      background: var(--card);
-      margin-bottom: 12px;
-      padding: 15px;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-      transition: all 0.3s ease;
-    }
-
-    .item.done { opacity: 0.6; background: #f1f2f6; }
-
-    /* Grande Case à cocher personnalisée */
-    .checkbox-container {
-      position: relative;
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-    }
-
-    .checkbox-container input { display: none; }
-
-    .checkmark {
-      position: absolute;
-      top: 0; left: 0;
-      height: 30px; width: 30px;
-      background-color: #eee;
-      border-radius: 0;
-      transition: 0.3s;
-      border: 1.5px solid #dfe6e9;
-    }
-
-    .checkbox-container input:checked ~ .checkmark { background-color: var(--success); }
-
-    .checkmark:after {
-      content: "";
-      position: absolute;
-      display: none;
-      left: 10px;
-      top: 5px;
-      width: 6px;
-      height: 12px;
-      border: solid white;
-      border-width: 0 3px 3px 0;
-      transform: rotate(45deg);
-    }
-
-    .checkbox-container input:checked ~ .checkmark:after { display: block; }
-
-    /* Infos de la tâche */
-    .item-content { flex: 1; }
-    .item-title { font-weight: 600; display: block; margin-bottom: 4px; font-size: 14px; }
-    .item-details { font-size: 12px; color: #636e72; display: flex; gap: 8px; flex-wrap: wrap; }
-    .badge { background: #f1f2f6; padding: 2px 8px; border-radius: 4px; }
-
-    .delete-btn { 
-      background: none; border: none; color: var(--primary); 
-      font-size: 20px; cursor: pointer; padding: 5px;
-    }
-
-    /* Couleur pour le Avant */
-    .item.avant { border-left: 15px solid #EBEBCA; }
-	
-	/* Couleur pour la Veille */
-    .item.veille { border-left: 15px solid #A3B18A; }
-
-    /* Couleur pour le Jour J */
-    .item.jourj { border-left: 15px solid #D69B8F; }
-
-    /* On ajuste un peu la carte pour que le bord coloré soit joli */
-    .item { border-left: 8px solid transparent; }
-
-    .badge { 
-      background: var(--card-input); 
-      padding: 2px 6px;
-      font-size: 11px;	  
-      border-radius: 4px;
-      cursor: pointer; 
-      transition: background 0.2s;
-      user-select: none; /* Évite de sélectionner le texte en cliquant vite */
-    }
-
-    .badge:hover {
-      background: #dfe6e9; /* Devient un peu plus foncé au survol */
-    }
-
-    .tabs {
-	  display: flex;
-	  gap: 4px;
-	  margin-bottom: 25px;
-	  width: 100%;
-	}
-	
-    .tab-btn { 
-      flex: 1;
-	  padding: 10px 4px;
-	  border: none;
-	  font-family: inherit;
-	  border-radius: 4px; 
-      background: #631313;
-	  cursor: pointer;
-	  font-weight: bold;
-	  color: rgba(255,255,255,0.7);
-	  font-size: 11px;
-	  text-transform: uppercase;
-	  white-space: nowrap;
-	  display: flex;
-	  align-items: center;
-	  justify-content: center;
-	  gap: 6px;
-	  transition: all 0.3s ease;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-	
-    .tab-btn.active { background: var(--card) !important; color: var(--primary-dark) !important; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-
-    /* Le Badge de l'heure */
-    .time { 
-      background: var(--primary); 
-      color: white !important; 
-      padding: 7px 13px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: bold;
-      width: fit-content; /* S'adapte au texte */
-      margin-bottom: 10px;
-      display: inline-block;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-	
-	/* --- TITRES DE SECTIONS (Planning & Contacts) --- */
-    #timeline-section h3, 
-    #contact-section h3 {
-      color: var(--card-input);
-      text-align: center;
-      text-transform: uppercase;
-      font-family: 'Playfair Display', serif;
-      letter-spacing: 1px;
-      margin-top: 10px;
-      margin-bottom: 25px;
-      font-size: 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      padding-bottom: 10px;
-    }
-
-    /* --- CARTES UNIFORMES (Planning & Contacts) --- */
-    .timeline-card, .contact-card { 
-      background: transparent; 
-      padding: 0; 
-      box-shadow: none; 
-    }
-
-    .timeline-list, .contact-list { 
-      list-style: none; 
-      padding: 0; 
-      margin: 0;
-    }
-
-    /* On applique le style "Carte" aux éléments de liste des deux sections */
-    .timeline-list li, 
-    .contact-list li { 
-      display: flex; 
-      flex-direction: column; 
-      background: var(--card); 
-      margin-bottom: 15px; 
-      padding: 15px; 
-      border-radius: 8px; 
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      border: 1px solid #eee; 
-      position: relative;
-      border-bottom: none; /* On enlève l'ancienne ligne de séparation grise */
-    }
-
-    /* Ajustement spécifique pour les noms dans Contacts (pour qu'ils ressemblent aux badges d'heures) */
-    .name { 
-      background: var(--primary); 
-      color: white !important; 
-      padding: 7px 13px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: bold;
-      width: fit-content;
-      margin-bottom: 10px;
-      display: inline-block;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-
-    .desc { 
-      font-size: 16px; /* Titre un peu plus grand */
-      color: var(--primary-dark);
-      font-weight: 800;
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .desc-container {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-
-    .note {
-      font-size: 13px;
-      color: #555;
-      line-height: 1.5;
-      border-top: 1px solid #eee;
-      padding-top: 8px;
-      margin-top: 5px;
-	}
-	
-	/* Troisième police pour les infos pratiques (Lieux, Tel) */
-    .info-line {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.5px;
-      color: #7f8c8d; /* Un gris plus doux pour ne pas surcharger */
-      text-transform: uppercase;
-      font-weight: 500;
-      display: block;
-      margin-top: 3px;
-    }
-
-    /* Style de la légende */
-    .legend-container {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-	  margin-top: 25px;
-      margin-bottom: 10px;
-      font-size: 14px;
-      font-weight: 600;
-	  color: var(--card);
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .dot {
-      width: 45px;
-      height: 15px;
-      border-radius: 3px;
-	  flex-shrink: 0;
-    }
-
-    /* Couleurs identiques à tes bordures d'étiquettes */
-	.dot.avant { background-color: #EBEBCA; }
-    .dot.veille { background-color: #A3B18A; }
-    .dot.jourj { background-color: #D69B8F; }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      overflow-x: hidden; /* Empêche le défilement horizontal parasite */
-    }
-	
-	footer {
-      text-align: center; /* Centre le texte */
-      padding: 20px;      /* Ajoute de l'espace autour */
-      font-size: 0.8rem;  /* Rend le texte plus petit (1rem est la taille normale) */
-      color: rgba(255, 255, 255, 0.7);
-      border-top: 1px solid #eee; /* Une petite ligne de séparation optionnelle */
-	  margin-top: 50px; /* Donne de l'air après la liste */
-      margin-bottom: 20px;
-    }
-
-    footer a {
-      color: #ffffff;     /* Couleur du lien mail */
-      text-decoration: underline;
-    }
-	
-	.countdown-box {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 10px;
-      border-radius: 6px;
-      min-width: 90px;
-      text-align: center;
-    }
-    .countdown-box span {
-      display: block;
-      font-size: 20px;
-      font-weight: bold;
-      color: #fff;
-    }
-    .countdown-box small {
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      opacity: 0.8;
-    }
-	
-	.welcome-card {
-      background: var(--card-input);             /* Fond blanc pur */
-      padding: 20px;
-      border-radius: 12px;             /* Coins arrondis élégants */
-      box-shadow: 0 10px 35px rgba(0,0,0,0.5); /* Ombre portée pour le relief */
-	  border: 1px solid rgba(255, 255, 255, 0.1);
-      margin-top: 20px auto;                /* Espace au dessus */
-	  font-weight: 700;                /* Rend le texte épais */
-      font-size: 16px;                 /* Légèrement plus grand pour la lisibilité */
-      text-align: center;
-      transition: transform 0.3s ease;
-    }
-
-  </style>
+        .sticky-footer { position: fixed; bottom: 0; left: 0; right: 0; background: #000; padding: 15px 20px; z-index: 100; border-top: 1px solid #333; }
+        .progress-container { height: 6px; background: #333; border-radius: 3px; margin-bottom: 10px; overflow: hidden; }
+        #progressBar { height: 100%; background: var(--highlight); width: 0%; transition: 0.5s; }
+        .btn-save { width: 100%; padding: 15px; background: var(--highlight); color: white; border: none; border-radius: 12px; font-weight: bold; font-size: 1.1rem; cursor: pointer; }
+    </style>
 </head>
 <body>
 
-  <h1 onclick="showTab()" style="cursor: pointer;">Mariage 25/07/26</h1>
-  
-  <div class="tabs">
-    <button class="tab-btn" onclick="showTab('timeline')">🕒 Déroulé</button>
-	<button class="tab-btn" onclick="showTab('checklist')">📋 Checklist</button>  
-    <button class="tab-btn" onclick="showTab('contact')">👥 Contacts</button>
-  </div>
+    <div class="side-tabs">
+        <div class="tab tab-a" onclick="openModal('Adil')">A</div>
+        <div class="tab tab-h" onclick="openModal('Hanaleï')">H</div>
+        <div class="tab tab-p" onclick="openModal('Parents')">P</div>
+    </div>
 
-  <div id="welcome-message" style="display: block;">
-    <div style="text-align: center; color: var(--card); margin-top: 30px; padding: 0 20px;">
-      <p style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Pour suivre l'avancée des préparatifs  ! 🥂<br> <br></p>
-      <div class="welcome-card">
-        <p style="margin: 0; line-height: 1.6; font-style: italic; color: #4A0E0E;">
-          Mariage Civil et Laïque d'Adil et Hanaleï<br>
-          <span style="font-weight: 400; font-size: 12px; opacity: 0.8;">Nombre d'invités total : 107<br>Nombre d'invités au dîner : 90</span>
-        </p>
-      </div>
-      <div id="countdown" style="display: flex; justify-content: center; gap: 10px; margin-top: 30px;">
-        <div class="countdown-box">
-          <span id="days">00</span>
-          <small>Jours</small>
+    <div id="detailsModal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h2 id="modalHeader"></h2>
+            <div style="display:flex; justify-content:space-between; margin:10px 0;"><span>Payé:</span><b id="modalPaid" style="color:var(--highlight)"></b></div>
+            <div style="display:flex; justify-content:space-between; margin:10px 0;"><span>Reste:</span><b id="modalRest" style="color:var(--unpaid)"></b></div>
+            <hr style="border:0; border-top:1px solid #444">
+            <div style="display:flex; justify-content:space-between; margin:10px 0;"><span>Total:</span><b id="modalTotal"></b></div>
+            <button onclick="closeModal()" style="width:100%; padding:12px; margin-top:10px; border-radius:8px; border:none; background:#444; color:white; font-weight:bold;">FERMER</button>
         </div>
-      </div>
-      <p style="margin-top: 25px; font-size: 14px; opacity: 0.8;">📍 Larressingle & Moncrabeau<br> <br> <br></p>
-    </div>
-  </div>
-  
-  <div id="add" style="display: none;">
-    <input type="text" id="newItem" placeholder="Action (ex: Réserver le traiteur...)">
-    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-      <input type="text" id="newPlace" placeholder="Lieu" style="flex: 1; min-width: 140px;">
-      <input type="text" id="newOwner" placeholder="Responsable" style="flex: 1; min-width: 140px;">
     </div>
 
-    <div class="moment-selection" style="display: flex; justify-content: space-around; padding: 5px; margin-top: 0px;">
-	  <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-        <input type="radio" name="moment" value="avant" checked style="transform: scale(1.5);"> Avant
-      </label>
-      <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-        <input type="radio" name="moment" value="veille" style="transform: scale(1.5);"> Veille
-      </label>
-      <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-        <input type="radio" name="moment" value="jourj" style="transform: scale(1.5);"> Jour J
-      </label>
-    </div>
-
-    <button id="addBtn" onclick="addItem()">Ajouter à la liste</button>
-  </div>
-
-  <div id="filter-container" style="margin-bottom: 20px; display: none;">
-  <input type="text" id="filterInput" onkeyup="filterTasks()" placeholder="Rechercher..." 
-         style="width: 100%; padding: 10px; border-radius: 4px; border: none; box-sizing: border-box; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-  </div>
-
-  <div id="counter-container" style="display: none; text-align: center; margin-bottom: 15px; font-weight: bold; color: #F5F5F5 !important; font-size: 16px;">
-    <span id="completed-count">0</span> / <span id="total-count">0</span> actions réalisées
-  </div>
-
-  <div class="legend-container" style="display: none;">
-    <div class="legend-item">
-      <span class="dot avant"></span> <span>Avant</span>
-    </div>
-    <div class="legend-item">
-      <span class="dot veille"></span> <span>Veille</span>
-    </div>
-    <div class="legend-item">
-      <span class="dot jourj"></span> <span>Jour J</span>
-    </div>
-  </div>
-
-  <div id="list" style="display: none;"></div>
-
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-  import { 
-    getDatabase, ref, onValue, push, set, remove, update 
-  } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js";
-
-  const firebaseConfig = {
-      apiKey: "AIzaSyCbpc_k-kDC5pN6A2MLmt_6jCJ0mnM_AC4",
-      authDomain: "checklist-mariage.firebaseapp.com",
-      databaseURL: "https://checklist-mariage-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "checklist-mariage",
-      storageBucket: "checklist-mariage.firebasestorage.app",
-      messagingSenderId: "436777851923",
-      appId: "1:436777851923:web:341755f72d59a6dff9b3e6",
-      measurementId: "G-T096M0YK86"
-    };
-	
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const listDiv = document.getElementById("list");
-
-  // Stockage local des données pour y accéder facilement
-  let currentItems = {};
-
-  function render(items) {
-    listDiv.innerHTML = "";
-    let lastMoment = null;
-
-    for (const id in items) {
-      const item = items[id];
-      
-      if (lastMoment !== null && lastMoment !== item.moment) {
-        const spacer = document.createElement("div");
-        spacer.style.height = "15px";
-        spacer.style.width = "100%";
-        listDiv.appendChild(spacer);
-      }
-      lastMoment = item.moment;
-
-      const row = document.createElement("div");
-      row.className = `item ${item.done ? 'done' : ''} ${item.moment || ''}`;
-
-      // Utilisation de l'ID uniquement pour les fonctions globales
-      row.innerHTML = `
-        <label class="checkbox-container">
-          <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleItem('${id}', ${item.done})">
-          <span class="checkmark"></span>
-        </label>
-        <div class="item-content">
-          <span class="item-title" onclick="editTitle('${id}')" style="cursor: pointer;">
-            ${item.text}
-          </span>
-          <div class="item-details">
-            <span class="badge" onclick="editField('${id}', 'place')">
-              📍 ${item.place || '   '}
-            </span>
-            <span class="badge" onclick="editField('${id}', 'owner')">
-              👤 ${item.owner || '   '}
-            </span>
-          </div>
+    <div class="container">
+        <h1 style="text-align: center;">Budget Mariage</h1>
+        <div id="cardsContainer"></div>
+        <button class="btn-save" id="saveButton">ENREGISTRER</button>
+        
+        <div class="sticky-footer">
+            <div class="progress-container"><div id="progressBar"></div></div>
+            <div style="display: flex; justify-content: space-between; font-weight: bold; color: var(--highlight); margin-bottom: 5px; font-size: 1.2rem;">
+                <span>Total Payé</span>
+                <span><span id="totalPaid">0</span> €</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #999;">
+                <span>Budget : <span id="totalGlobal">0</span> €</span>
+                <span>Reste : <span id="totalRemaining">0</span> €</span>
+            </div>
         </div>
-        <button class="delete-btn" onclick="deleteItem('${id}')">&times;</button>
-      `;
-      listDiv.appendChild(row);
-    }
-  }
-
-  // Fonctions window pour qu'elles soient accessibles depuis le HTML (scope module)
-  window.toggleItem = (id, currentStatus) => {
-    update(ref(db, "items/" + id), { done: !currentStatus });
-  };
-
-  window.deleteItem = (id) => {
-    const text = currentItems[id].text;
-    if (confirm(`Supprimer "${text}" ?`)) remove(ref(db, "items/" + id));
-  };
-
-  window.editTitle = (id) => {
-    const oldVal = currentItems[id].text;
-    const newVal = prompt("Modifier l'action :", oldVal);
-    if (newVal && newVal !== oldVal) update(ref(db, "items/" + id), { text: newVal });
-  };
-
-  window.editField = (id, field) => {
-    const oldVal = currentItems[id][field] || "";
-    const label = field === 'place' ? 'le lieu' : 'le responsable';
-    const newVal = prompt(`Modifier ${label} :`, oldVal);
-    if (newVal !== null) update(ref(db, "items/" + id), { [field]: newVal });
-  };
-
-  window.addItem = function () {
-    const textInput = document.getElementById("newItem");
-    const placeInput = document.getElementById("newPlace");
-    const ownerInput = document.getElementById("newOwner");
-    const text = textInput.value.trim();
-    
-    if (!text) return alert("L'action ne peut pas être vide !");
-
-    const moment = document.querySelector('input[name="moment"]:checked')?.value || "avant";
-
-    push(ref(db, "items"), { 
-      text, 
-      place: placeInput.value.trim(), 
-      owner: ownerInput.value.trim(), 
-      moment, 
-      done: false, 
-      createdAt: Date.now() 
-    }).then(() => {
-      textInput.value = ""; placeInput.value = ""; ownerInput.value = "";
-    });
-  };
-
-  onValue(ref(db, "items"), snap => {
-    const data = snap.val() || {};
-    currentItems = data; // Mise à jour du cache local
-    const entries = Object.entries(data);
-
-    // Compteurs
-    const total = entries.length;
-    const completed = entries.filter(item => item[1].done).length;
-    document.getElementById("total-count").innerText = total;
-    document.getElementById("completed-count").innerText = completed;
-
-    // Tri
-    const sortedEntries = entries.sort((a, b) => {
-      if (a[1].done !== b[1].done) return a[1].done - b[1].done;
-      const order = { 'avant': 1, 'veille': 2, 'jourj': 3 };
-      if (order[a[1].moment] !== order[b[1].moment]) return order[a[1].moment] - order[b[1].moment];
-      return a[1].text.localeCompare(b[1].text);
-    });
-
-    render(Object.fromEntries(sortedEntries));
-  });
-
-  // Les fonctions de filtrage, tabs et compte à rebours restent identiques
-  
-  window.filterTasks = function() {
-    const query = document.getElementById("filterInput").value.toLowerCase();
-    const items = document.querySelectorAll(".item");
-
-    items.forEach(item => {
-      // On récupère tout le texte à l'intérieur de la carte (titre, lieu, responsable)
-      const text = item.innerText.toLowerCase();
-    
-      // Si la recherche est vide ou si le texte contient le mot tapé, on affiche
-      if (text.includes(query)) {
-        item.style.display = "flex";
-      } else {
-        item.style.display = "none"; // Sinon on cache
-      }
-    });
-  };
-  
-  window.showTab = function(tabName) {
-    const isChecklist = tabName === 'checklist';
-    const isTimeline = tabName === 'timeline';
-    const isContact = tabName === 'contact';
-    const isHome = !tabName; // Vrai si aucun onglet n'est passé
-
-    // Affichage/Masquage du message d'accueil
-    document.getElementById('welcome-message').style.display = isHome ? 'block' : 'none';
-
-    // Affichage des sections de la checklist
-    document.getElementById('add').style.display = isChecklist ? 'flex' : 'none';
-    document.getElementById('filter-container').style.display = isChecklist ? 'block' : 'none';
-    document.getElementById('list').style.display = isChecklist ? 'block' : 'none';
-    document.querySelector('.legend-container').style.display = isChecklist ? 'flex' : 'none';
-    document.getElementById('counter-container').style.display = isChecklist ? 'block' : 'none';
-
-    // Affichage des autres sections
-    document.getElementById('timeline-section').style.display = isTimeline ? 'block' : 'none';
-    document.getElementById('contact-section').style.display = isContact ? 'block' : 'none';
-
-    // Mise à jour des boutons
-    const btns = document.querySelectorAll('.tab-btn');
-    btns.forEach(btn => btn.classList.remove('active')); // On nettoie tout
-  
-    if (isTimeline) btns[0].classList.add('active');
-    if (isChecklist) btns[1].classList.add('active');
-    if (isContact) btns[2].classList.add('active');
-  };
-  
-  function updateCountdown() {
-    const weddingDate = new Date("July 25, 2026 16:00:00").getTime();
-    const now = new Date().getTime();
-    const diff = weddingDate - now;
-
-    if (diff > 0) {
-      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-      // Mise à jour des chiffres
-      document.getElementById("days").innerText = d.toString().padStart(2, '0');
-    
-    } else {
-      document.getElementById("welcome-message").innerHTML = "<h2 style='color:white; text-align:center;'>C'est le grand jour ! 🎉</h2>";
-    }
-  }
-
-  // Lancer le compte à rebours
-  updateCountdown();
-  setInterval(updateCountdown, 60000); // Mise à jour toutes les minutes
-
-</script>
-
-  <div id="timeline-section" style="display: none;">
-    <div class="timeline-card">
-      <h3>🕒 Planning de la journée</h3>
-      <ul class="timeline-list">
-        <li>
-          <span class="time">13:30</span>
-	  <div class="desc-container">
-	    <span class="desc">Préparation des mariés</span>
-		<span class="info-line">📍 Larressingle - Maison</span>
-        <span class="note">Coiffure et Maquillage pour la mariée.<br>Présence de Laetitia (coiffeuse), Fanny (maquilleuse), Maman, Léandra.</span>
-	  </div>
-        </li>
-        <li>
-          <span class="time">15:30</span>
-	  <div class="desc-container">
-        <span class="desc">Habillage, arrivée des Demoiselles d'honneur et Témoins à la maison</span>
-		<span class="info-line">📍 Larressingle - Maison</span>
-	    <span class="note">Photographe présent pour les derniers préparatifs de la mariée (à vérifier).</span>
-	  </div>
-        </li>
-        <li>
-	  <span class="time">16:00</span>
-	  <div class="desc-container">
-	    <span class="desc">Cérémonie Civile</span>
-		<span class="info-line">📍 Larressingle - Mairie</span>
- 	    <span class="note">Distribution d'éventails et ombrelles à l'arrivée des invités si nécessaire.<br>Arrivée du marié vers 16h.<br> Arrivée de la mariée vers 16h15.</span>
-          </div>
-        </li>
-        <li>
-          <span class="time">16:45</span>
-	  <div class="desc-container">
-	    <span class="desc">Photos des mariés au château de Larressingle</span>
-		<span class="info-line">📞 Photographe - David : <a href="tel:0684366712" style="color: inherit; text-decoration: none; font-weight: bold;">06 84 36 67 12</a></span>
- 	    <span class="note">Les invités rejoignent la Palombière d'Henri à Moncrabeau.</span>
-          </div>
-        </li>
-        <li>
-          <span class="time">17:45</span>
-	  <div class="desc-container">
-	    <span class="desc">Cérémonie Laïque</span>
-		<span class="info-line">📍 Palombière d'Henri</span>
- 	    <span class="note">Accueil des invités avec musique de fond.<br>Introduction de Tony.<br> Discours des témoins et des parents (15 min).<br> Echange des alliances, voeux, rituel symbolique.<br>Remerciements par Tony et sortie des mariés en musique.</span>
-          </div>
-        </li>
-        <li>
-          <span class="time">18:30</span>
-	  <div class="desc-container">
-	    <span class="desc">Vin d'honneur</span>
-		<span class="info-line">📍 Palombière d'Henri<br>📞 Saxophoniste - Pierre : <a href="tel:0780239409" style="color: inherit; text-decoration: none; font-weight: bold;">07 80 23 94 09</a></span>
- 	    <span class="note">Cocktail et bouchées (4 serveurs).<br>Activités : photos avec le photographe, pétanque, mur des invités, polaroïd.</span>
-          </div>
-        </li>
-        <li>
-          <span class="time">20:45</span>
-	  <div class="desc-container">
-	    <span class="desc">Dîner</span>
-		<span class="info-line">📞 Traiteur - M. Ducousseau : <a href="tel:0687129468" style="color: inherit; text-decoration: none; font-weight: bold;">06 87 12 94 68</a></span>
- 	    <span class="note">Plat principal + Assiette de fromage.<br>Discours des amis et jeux.<br>Musique en fond.</span>
-          </div>
-        </li>
-        <li>
-          <span class="time">22:30</span>
-	  <div class="desc-container">
-	    <span class="desc">Ouverture de bal</span>
-		<span class="info-line">📍 Palombière d'Henri</span>
- 	    <span class="note">Valse papa et Adil.<br>Responsable musique : Léandra.</span>
-          </div>
-        </li>
-        <li>
-          <span class="time">22:45</span>
-	  <div class="desc-container">
-	    <span class="desc">Pièce-montée</span>
-		<span class="info-line">📞 Pâtisserie - C. Garnier : <a href="tel:0562281133" style="color: inherit; text-decoration: none; font-weight: bold;">05 62 28 11 33</a></span>
- 	    <span class="note">Livraison par le patissier directement.<br>Changement de robe de la mariée.</span>
-          </div>
-        </li>
-        <li>
-          <span class="time">23:15</span>
-	  <div class="desc-container">
-	    <span class="desc">Soirée</span>
-		<span class="info-line">📍 Palombière d'Henri</span>
- 	    <span class="note">Surprise des Demoiselles d'honneur et Témoins.<br>Playlist de soirée.</span>
-          </div>
-        </li>
-		<li>
-          <span class="time">Dimanche 11:00</span>
-	  <div class="desc-container">
-	    <span class="desc">Brunch</span>
-		<span class="info-line">📍 Palombière d'Henri</span>
- 	    <span class="note">Brunch du dimanche avec tous les invités intéressés.</span>
-          </div>
-        </li>
-      </ul>
     </div>
-  </div>
-  
-  <div id="contact-section" style="display: none;">
-    <div class="contact-card">
-      <h3>Responsables</h3>
-      <ul class="contact-list">
-        <li>
-          <span class="name">Papa</span>
-	  <div class="desc-container">
-        <span class="desc">Respo sono et câbles</span>
-		<span class="info-line">📞 07 48 14 76 75</span>
-	    <span class="note">Installer l'enceinte et préparer la playlist pour la Mairie avec Xavier.<br>Installer les enceintes à la Palombière d'Henri.<br>Tester Micro, rallonges, lumières du soir.</span>
-	  </div>
-        </li>
-        <li>
-	  <span class="name">Léandra</span>
-	  <div class="desc-container">
-	    <span class="desc"><em>Témoin</em><br>Respo vidéo et playlist du soir</span>
-		<span class="info-line">📞 06 33 74 73 83</span>
- 	    <span class="note">Positionner le trépied pour les vidéos de la cérémonie laïque, ouverture de bal, et danse.<br>Lancer la musique pour l'ouverture de bal et pour la danse surprise.</span>
-          </div>
-        </li>
-        <li>
-          <span class="name">Ilona</span>
-	  <div class="desc-container">
-	    <span class="desc"><em>Témoin</em><br>Respo Go Pro</span>
-		<span class="info-line">📞 06 04 16 24 01</span>		
- 	    <span class="note">Installer avec Léandra la Go Pro pour les vidéos.<br>Charger la Go Pro entre la cérémonie laïque, l'ouverture de bal, et la soirée.</span>
-          </div>
-        </li>
-		<li>
-          <span class="name">Sofiane</span>
-	  <div class="desc-container">
-	    <span class="desc"><em>Témoin</em></span>
- 	    <span class="note">Signature du contrat de mariage à la mairie avec les autres témoins.</span>
-          </div>
-        </li>
-        <li>
-          <span class="name">Saban</span>
-	  <div class="desc-container">
-	    <span class="desc"><em>Témoin</em><br>Respo Alliances</span>
-		<span class="info-line">📞 07 81 79 71 80</span>
- 	    <span class="note">Apporter les alliances aux mariés à la cérémonie laïque.</span>
-          </div>
-        </li>
-        <li>
-          <span class="name">Karen</span>
-	  <div class="desc-container">
-	    <span class="desc">Respo playlist du jour</span>
-		<span class="info-line">📞 07 82 29 87 76</span>
- 	    <span class="note">Playlist cérémonie laïque, playlist dîner.</span>
-          </div>
-        </li>
-        <li>
-          <span class="name">Demoiselles d'honneur</span>
-	  <div class="desc-container">
-	    <span class="desc">Respo timing et accueil prestataires</span>
- 	    <span class="note">Guider les invités après la mairie vers le Lieu de réception.<br>Accueillir saxophoniste, traiteur, et patissier.<br>Inviter les gens à passer à table pour le dîner.<br>Apporter la Pièce Montée après l'ouverture de bal.</span>
-          </div>
-        </li>
-		<li>
-          <span class="name">Tony</span>
-	  <div class="desc-container">
-	    <span class="desc">Animateur cérémonie laïque</span>
-		<span class="info-line">📞 06 80 16 97 51</span>
- 	    <span class="note">Texte préparé à l'avance.<br>Annoncer le vin d'honneur et le dîner qui suit.</span>
-          </div>
-        </li>
-		<li>
-          <span class="name">Maman</span>
-	  <div class="desc-container">
-	    <span class="desc">Respo fleur et brunch du dimanche</span>
-		<span class="info-line">📞 06 60 59 68 68</span>
- 	    <span class="note">Bouquet de la mariée.<br>Pizza, viennoiseries, fruits, et boissons pour le brunch.</span>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-  
-  <footer>
-    <p>&copy;2026 Hanaleï et Adil<br>Tous droits réservés</p>
-    <p>Contact : <a href="mailto:votre@email.com">hanalei.bunn@gmail.com</a><br>Tél Hanaleï : <a href="tel:+33600000000">06 12 92 50 22</a><br>Tél Adil : <a href="tel:+33600000000">06 15 82 41 22</a></p>
-  </footer>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAJoAI9wBPbCAgF7wiOZKhS4z2rIvpUTFY",
+            authDomain: "budget-mariage-d42dd.firebaseapp.com",
+            databaseURL: "https://budget-mariage-d42dd-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "budget-mariage-d42dd",
+            storageBucket: "budget-mariage-d42dd.firebasestorage.app",
+            messagingSenderId: "462100456581",
+            appId: "1:462100456581:web:db61911fe3d792b703b5ec"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const budgetRef = ref(db, 'weddingBudget');
+
+        window.stats = { Adil: { paid: 0, total: 0 }, Hanaleï: { paid: 0, total: 0 }, Parents: { paid: 0, total: 0 } };
+
+        const categories = ["Lieu de réception", "Fiançailles Maroc", "Traiteur", "Boissons", "Location sono", "Déco et Activités", "Saxophoniste", "Brunch", "Photographe", "Alliances", "Pièce-Montée", "Robe", "Coiffure et Maquillage", "Costume"];
+        const container = document.getElementById('cardsContainer');
+
+        categories.forEach(cat => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.setAttribute('data-category', cat);
+            const payeurs = ['adil', 'hanalei', 'parents'].map(p => `
+                <div class="payeur-box">
+                    <label>${p}</label>
+                    <input type="checkbox" class="pay-check" data-field="check_${p}">
+                    <input type="number" inputmode="decimal" class="payeur-input" data-field="${p}" placeholder="0">
+                </div>`).join('');
+
+            card.innerHTML = `
+                <div class="card-title">${cat}</div>
+                <div class="total-wrapper">
+                    <input type="text" class="input-cout" value="0 €" readonly>
+                </div>
+                <div class="payeurs-grid">${payeurs}</div>
+                <input type="text" class="comment-input" data-field="note" placeholder="Note...">`;
+            container.appendChild(card);
+        });
+
+        function updateEverything() {
+            let globalTotal = 0, globalPaid = 0, sA = 0, pA = 0, sH = 0, pH = 0, sP = 0, pP = 0;
+
+            document.querySelectorAll('.card').forEach(card => {
+                const vA = parseFloat(card.querySelector('[data-field="adil"]').value) || 0;
+                const vH = parseFloat(card.querySelector('[data-field="hanalei"]').value) || 0;
+                const vP = parseFloat(card.querySelector('[data-field="parents"]').value) || 0;
+                const cA = card.querySelector('[data-field="check_adil"]').checked;
+                const cH = card.querySelector('[data-field="check_hanalei"]').checked;
+                const cP = card.querySelector('[data-field="check_parents"]').checked;
+
+                const rowTotal = vA + vH + vP;
+                card.querySelector('.input-cout').value = rowTotal > 0 ? rowTotal.toLocaleString() + " €" : "0 €";
+                
+                globalTotal += rowTotal;
+                sA += vA; sH += vH; sP += vP;
+                if(cA) pA += vA; if(cH) pH += vH; if(cP) pP += vP;
+
+                card.querySelector('[data-field="adil"]').classList.toggle('is-paid-field', cA);
+                card.querySelector('[data-field="hanalei"]').classList.toggle('is-paid-field', cH);
+                card.querySelector('[data-field="parents"]').classList.toggle('is-paid-field', cP);
+            });
+
+            globalPaid = pA + pH + pP;
+            window.stats.Adil = { paid: pA, total: sA };
+            window.stats.Hanaleï = { paid: pH, total: sH };
+            window.stats.Parents = { paid: pP, total: sP };
+
+            document.getElementById('totalGlobal').innerText = globalTotal.toLocaleString();
+            document.getElementById('totalPaid').innerText = globalPaid.toLocaleString();
+            document.getElementById('totalRemaining').innerText = (globalTotal - globalPaid).toLocaleString() + " €";
+            document.getElementById('progressBar').style.width = (globalTotal > 0 ? (globalPaid / globalTotal) * 100 : 0) + "%";
+        }
+
+        window.openModal = function(name) {
+            const data = window.stats[name];
+            document.getElementById('modalHeader').innerText = name;
+            document.getElementById('modalHeader').style.color = name === 'Adil' ? 'var(--adil-color)' : name === 'Hanaleï' ? 'var(--hanalei-color)' : 'var(--parents-color)';
+            document.getElementById('modalPaid').innerText = data.paid.toLocaleString() + " €";
+            document.getElementById('modalRest').innerText = (data.total - data.paid).toLocaleString() + " €";
+            document.getElementById('modalTotal').innerText = data.total.toLocaleString() + " €";
+            document.getElementById('detailsModal').classList.add('modal-active');
+        };
+
+        window.closeModal = () => document.getElementById('detailsModal').classList.remove('modal-active');
+
+        container.addEventListener('input', updateEverything);
+        container.addEventListener('change', (e) => { if(e.target.type === 'checkbox') updateEverything(); });
+
+        onValue(budgetRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                document.querySelectorAll('.card').forEach(card => {
+                    const catName = card.getAttribute('data-category');
+                    const savedData = data[catName];
+                    if (savedData) {
+                        ['adil', 'hanalei', 'parents', 'note'].forEach(f => {
+                            const input = card.querySelector(`[data-field="${f}"]`);
+                            if(input) input.value = savedData[f] || "";
+                        });
+                        ['adil', 'hanalei', 'parents'].forEach(p => {
+                            const check = card.querySelector(`[data-field="check_${p}"]`);
+                            if(check) check.checked = savedData[`check_${p}`] || false;
+                        });
+                    }
+                });
+                updateEverything();
+            }
+        });
+
+        document.getElementById('saveButton').addEventListener('click', function() {
+            const btn = this; btn.innerText = "SAUVEGARDE..."; btn.disabled = true;
+            let dataToSave = {};
+            document.querySelectorAll('.card').forEach(card => {
+                const title = card.getAttribute('data-category');
+                dataToSave[title] = {
+                    adil: card.querySelector('[data-field="adil"]').value || 0,
+                    hanalei: card.querySelector('[data-field="hanalei"]').value || 0,
+                    parents: card.querySelector('[data-field="parents"]').value || 0,
+                    note: card.querySelector('[data-field="note"]').value || "",
+                    check_adil: card.querySelector('[data-field="check_adil"]').checked,
+                    check_hanalei: card.querySelector('[data-field="check_hanalei"]').checked,
+                    check_parents: card.querySelector('[data-field="check_parents"]').checked
+                };
+            });
+            set(budgetRef, dataToSave).then(() => { 
+                btn.innerText = "✅ RÉUSSI"; 
+                setTimeout(() => { btn.innerText = "ENREGISTRER"; btn.disabled = false; }, 2000); 
+            }).catch(e => { alert("Erreur: " + e.message); btn.disabled = false; });
+        });
+    </script>
 </body>
 </html>
