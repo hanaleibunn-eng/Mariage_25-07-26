@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checklist 25/07</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #800020;    /* Bordeaux classique */
@@ -338,6 +338,18 @@
       padding-top: 8px;
       margin-top: 5px;
 	}
+	
+	/* Troisième police pour les infos pratiques (Lieux, Tel) */
+    .info-line {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      color: #7f8c8d; /* Un gris plus doux pour ne pas surcharger */
+      text-transform: uppercase;
+      font-weight: 500;
+      display: block;
+      margin-top: 3px;
+    }
 
     /* Style de la légende */
     .legend-container {
@@ -502,13 +514,12 @@
   <div id="list" style="display: none;"></div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-    import { 
-      getDatabase, ref, onValue, push, set, remove, update 
-    } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+  import { 
+    getDatabase, ref, onValue, push, set, remove, update 
+  } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js";
 
-    // TA CONFIGURATION (Gardée de ton code précédent)
-    const firebaseConfig = {
+  const firebaseConfig = {
       apiKey: "AIzaSyCbpc_k-kDC5pN6A2MLmt_6jCJ0mnM_AC4",
       authDomain: "checklist-mariage.firebaseapp.com",
       databaseURL: "https://checklist-mariage-default-rtdb.europe-west1.firebasedatabase.app",
@@ -518,153 +529,125 @@
       appId: "1:436777851923:web:341755f72d59a6dff9b3e6",
       measurementId: "G-T096M0YK86"
     };
+	
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const listDiv = document.getElementById("list");
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    
-    const listDiv = document.getElementById("list");
+  // Stockage local des données pour y accéder facilement
+  let currentItems = {};
 
-    function render(items) {
-      listDiv.innerHTML = "";
-      let lastMoment = null; // Pour suivre le groupe précédent
+  function render(items) {
+    listDiv.innerHTML = "";
+    let lastMoment = null;
 
-      for (const id in items) {
-        const item = items[id];
-    
-        // Si on change de catégorie, on ajoute un espace
-        if (lastMoment !== null && lastMoment !== item.moment) {
-          const spacer = document.createElement("div");
-          spacer.style.height = "15px"; // L'espace que tu souhaites
-          spacer.style.width = "100%";
-          listDiv.appendChild(spacer);
-        }
-        lastMoment = item.moment;
-
-        const row = document.createElement("div");
-        row.className = `item ${item.done ? 'done' : ''} ${item.moment || ''}`;
-
-        row.innerHTML = `
-          <label class="checkbox-container">
-            <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleItem('${id}', ${item.done}, '${item.text.replace(/'/g, "\\'")}', '${(item.place || '').replace(/'/g, "\\'")}', '${(item.owner || '').replace(/'/g, "\\'")}', '${item.moment}')">
-            <span class="checkmark"></span>
-          </label>
-          <div class="item-content">
-            <span class="item-title" onclick="editField('${id}', 'text', '${item.text.replace(/'/g, "\\'")}')" style="cursor: pointer;">
-              ${item.text}
-            </span>
-            <div class="item-details">
-              <span class="badge" onclick="editField('${id}', 'place', '${item.place || ''}')">
-                📍 ${item.place || ' ? '}
-              </span>
-              <span class="badge" onclick="editField('${id}', 'owner', '${item.owner || ''}')">
-                👤 ${item.owner || ' ? '}
-              </span>
-            </div>
-          </div>
-          <button class="delete-btn" onclick="deleteItem('${id}', '${item.text}')">&times;</button>
-        `;
-        listDiv.appendChild(row);
+    for (const id in items) {
+      const item = items[id];
+      
+      if (lastMoment !== null && lastMoment !== item.moment) {
+        const spacer = document.createElement("div");
+        spacer.style.height = "15px";
+        spacer.style.width = "100%";
+        listDiv.appendChild(spacer);
       }
-    }
+      lastMoment = item.moment;
 
-    // Fonctions globales pour Firebase
-    window.toggleItem = (id, currentStatus, text, place, owner, moment) => {
-      update(ref(db, "items/" + id), {
-      text: text,
-      place: place,
-      owner: owner,
-      moment: moment, // <--- On rajoute cette ligne pour ne pas perdre la couleur
-      done: !currentStatus
+      const row = document.createElement("div");
+      row.className = `item ${item.done ? 'done' : ''} ${item.moment || ''}`;
+
+      // Utilisation de l'ID uniquement pour les fonctions globales
+      row.innerHTML = `
+        <label class="checkbox-container">
+          <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleItem('${id}', ${item.done})">
+          <span class="checkmark"></span>
+        </label>
+        <div class="item-content">
+          <span class="item-title" onclick="editTitle('${id}')" style="cursor: pointer;">
+            ${item.text}
+          </span>
+          <div class="item-details">
+            <span class="badge" onclick="editField('${id}', 'place')">
+              📍 ${item.place || '   '}
+            </span>
+            <span class="badge" onclick="editField('${id}', 'owner')">
+              👤 ${item.owner || '   '}
+            </span>
+          </div>
+        </div>
+        <button class="delete-btn" onclick="deleteItem('${id}')">&times;</button>
+      `;
+      listDiv.appendChild(row);
+    }
+  }
+
+  // Fonctions window pour qu'elles soient accessibles depuis le HTML (scope module)
+  window.toggleItem = (id, currentStatus) => {
+    update(ref(db, "items/" + id), { done: !currentStatus });
+  };
+
+  window.deleteItem = (id) => {
+    const text = currentItems[id].text;
+    if (confirm(`Supprimer "${text}" ?`)) remove(ref(db, "items/" + id));
+  };
+
+  window.editTitle = (id) => {
+    const oldVal = currentItems[id].text;
+    const newVal = prompt("Modifier l'action :", oldVal);
+    if (newVal && newVal !== oldVal) update(ref(db, "items/" + id), { text: newVal });
+  };
+
+  window.editField = (id, field) => {
+    const oldVal = currentItems[id][field] || "";
+    const label = field === 'place' ? 'le lieu' : 'le responsable';
+    const newVal = prompt(`Modifier ${label} :`, oldVal);
+    if (newVal !== null) update(ref(db, "items/" + id), { [field]: newVal });
+  };
+
+  window.addItem = function () {
+    const textInput = document.getElementById("newItem");
+    const placeInput = document.getElementById("newPlace");
+    const ownerInput = document.getElementById("newOwner");
+    const text = textInput.value.trim();
+    
+    if (!text) return alert("L'action ne peut pas être vide !");
+
+    const moment = document.querySelector('input[name="moment"]:checked')?.value || "avant";
+
+    push(ref(db, "items"), { 
+      text, 
+      place: placeInput.value.trim(), 
+      owner: ownerInput.value.trim(), 
+      moment, 
+      done: false, 
+      createdAt: Date.now() 
+    }).then(() => {
+      textInput.value = ""; placeInput.value = ""; ownerInput.value = "";
     });
   };
 
-    window.deleteItem = (id, text) => {
-      if (confirm(`Supprimer "${text}" ?`)) remove(ref(db, "items/" + id));
-    };
+  onValue(ref(db, "items"), snap => {
+    const data = snap.val() || {};
+    currentItems = data; // Mise à jour du cache local
+    const entries = Object.entries(data);
 
-    // Remplacez votre fonction addItem actuelle par celle-ci dans le script module :
+    // Compteurs
+    const total = entries.length;
+    const completed = entries.filter(item => item[1].done).length;
+    document.getElementById("total-count").innerText = total;
+    document.getElementById("completed-count").innerText = completed;
 
-    window.addItem = function () {
-        // Petit retour haptique pour le fun
-        if (window.navigator.vibrate) window.navigator.vibrate(50);
-
-        const textInput = document.getElementById("newItem");
-        const placeInput = document.getElementById("newPlace");
-        const ownerInput = document.getElementById("newOwner");
-    
-        const text = textInput.value.trim();
-        if (!text) {
-            alert("L'action ne peut pas être vide !");
-            return;
-        }
-
-        const place = placeInput.value.trim();
-        const owner = ownerInput.value.trim();
-    
-        // On récupère la valeur du bouton radio sélectionné
-        const momentChecked = document.querySelector('input[name="moment"]:checked');
-        const moment = momentChecked ? momentChecked.value : "avant";
-
-        // Envoi vers Firebase
-        push(ref(db, "items"), { 
-            text, 
-            place, 
-            owner, 
-            moment, 
-            done: false, 
-            createdAt: Date.now() 
-        }).then(() => {
-            // Reset des champs uniquement après le succès de l'envoi
-            textInput.value = "";
-            placeInput.value = "";
-            ownerInput.value = "";
-        }).catch((error) => {
-            console.error("Erreur Firebase :", error);
-            alert("Erreur lors de l'ajout.");
-        });
-    };
-
-    onValue(ref(db, "items"), snap => {
-      const data = snap.val() || {};
-      const entries = Object.entries(data);
-
-      // --- PARTIE COMPTEUR ---
-      const total = entries.length;
-      const completed = entries.filter(item => item[1].done).length;
-      if(document.getElementById("total-count")) {
-        document.getElementById("total-count").innerText = total;
-        document.getElementById("completed-count").innerText = completed;
-      }
-
-      // --- LOGIQUE DE TRI (Les faites tout en bas) ---
-      const sortedItems = entries.sort((a, b) => {
-        const itemA = a[1];
-        const itemB = b[1];
-
-        // PRIORITÉ 1 : Le statut "Fait"
-        // Si l'un est fait et l'autre non, le fait va en bas (false < true)
-        if (itemA.done !== itemB.done) {
-          return itemA.done - itemB.done;
-        }
-
-        // PRIORITÉ 2 : Le Moment (seulement si le statut 'done' est le même)
-        const momentOrder = { 'avant': 1, 'veille': 2,'jourj': 3 };
-        const orderA = momentOrder[itemA.moment] || 1;
-        const orderB = momentOrder[itemB.moment] || 1;
-      
-        if (orderA !== orderB) {
-          return orderA - orderB;
-        }
-
-        // PRIORITÉ 3 : Alphabétique (pour la stabilité)
-        const nameA = (itemA.text || "").toLowerCase();
-        const nameB = (itemB.text || "").toLowerCase();
-
-        return nameA.localeCompare(nameB);
-      });
-
-      render(Object.fromEntries(sortedItems));
+    // Tri
+    const sortedEntries = entries.sort((a, b) => {
+      if (a[1].done !== b[1].done) return a[1].done - b[1].done;
+      const order = { 'avant': 1, 'veille': 2, 'jourj': 3 };
+      if (order[a[1].moment] !== order[b[1].moment]) return order[a[1].moment] - order[b[1].moment];
+      return a[1].text.localeCompare(b[1].text);
     });
+
+    render(Object.fromEntries(sortedEntries));
+  });
+
+  // Les fonctions de filtrage, tabs et compte à rebours restent identiques
   
   window.filterTasks = function() {
     const query = document.getElementById("filterInput").value.toLowerCase();
@@ -681,18 +664,6 @@
         item.style.display = "none"; // Sinon on cache
       }
     });
-  };
-  
-  window.editField = function(id, field, oldValue) {
-    const label = field === 'place' ? 'le lieu' : 'le responsable';
-    const newValue = prompt(`Modifier ${label} :`, oldValue);
-  
-    // Si l'utilisateur clique sur Annuler, on ne fait rien
-    if (newValue === null) return; 
-  
-    // On met à jour uniquement le champ concerné dans Firebase
-    const itemRef = ref(db, `items/${id}/${field}`);
-    set(itemRef, newValue);
   };
   
   window.showTab = function(tabName) {
@@ -744,7 +715,7 @@
   updateCountdown();
   setInterval(updateCountdown, 60000); // Mise à jour toutes les minutes
 
-  </script>
+</script>
 
   <div id="timeline-section" style="display: none;">
     <div class="timeline-card">
@@ -754,55 +725,63 @@
           <span class="time">13:30</span>
 	  <div class="desc-container">
 	    <span class="desc">Préparation des mariés</span>
-            <span class="note">📍 Larressingle - Maison<br>Coiffure et Maquillage pour la mariée.<br>Présence de Laetitia (coiffeuse), Fanny (maquilleuse), Maman, Léandra.</span>
+		<span class="info-line">📍 Larressingle - Maison</span>
+        <span class="note">Coiffure et Maquillage pour la mariée.<br>Présence de Laetitia (coiffeuse), Fanny (maquilleuse), Maman, Léandra.</span>
 	  </div>
         </li>
         <li>
           <span class="time">15:30</span>
 	  <div class="desc-container">
-            <span class="desc">Habillage, arrivée des Demoiselles d'honneur et Témoins à la maison</span>
-	    <span class="note">📍 Larressingle - Maison<br>Photographe présent pour les derniers préparatifs de la mariée (à vérifier).</span>
+        <span class="desc">Habillage, arrivée des Demoiselles d'honneur et Témoins à la maison</span>
+		<span class="info-line">📍 Larressingle - Maison</span>
+	    <span class="note">Photographe présent pour les derniers préparatifs de la mariée (à vérifier).</span>
 	  </div>
         </li>
         <li>
 	  <span class="time">16:00</span>
 	  <div class="desc-container">
 	    <span class="desc">Cérémonie Civile</span>
- 	    <span class="note">📍 Larressingle - Mairie<br>Distribution d'éventails et ombrelles à l'arrivée des invités si nécessaire.<br>Arrivée du marié vers 16h.<br> Arrivée de la mariée vers 16h15.</span>
+		<span class="info-line">📍 Larressingle - Mairie</span>
+ 	    <span class="note">Distribution d'éventails et ombrelles à l'arrivée des invités si nécessaire.<br>Arrivée du marié vers 16h.<br> Arrivée de la mariée vers 16h15.</span>
           </div>
         </li>
         <li>
-          <span class="time">17:00</span>
+          <span class="time">16:45</span>
 	  <div class="desc-container">
 	    <span class="desc">Photos des mariés au château de Larressingle</span>
- 	    <span class="note">📞 Photographe - David : <a href="tel:0684366712" style="color: inherit; text-decoration: none; font-weight: bold;">06 84 36 67 12</a><br>Les invités rejoignent la Palombière d'Henri à Moncrabeau.</span>
+		<span class="info-line">📞 Photographe - David : <a href="tel:0684366712" style="color: inherit; text-decoration: none; font-weight: bold;">06 84 36 67 12</a></span>
+ 	    <span class="note">Les invités rejoignent la Palombière d'Henri à Moncrabeau.</span>
           </div>
         </li>
         <li>
-          <span class="time">18:00</span>
+          <span class="time">17:45</span>
 	  <div class="desc-container">
 	    <span class="desc">Cérémonie Laïque</span>
- 	    <span class="note">📍 Palombière d'Henri<br>Accueil des invités avec musique de fond.<br>Introduction de Tony.<br> Discours des témoins et des parents (15 min).<br> Echange des alliances, voeux, rituel symbolique.<br>Remerciements par Tony et sortie des mariés en musique.</span>
+		<span class="info-line">📍 Palombière d'Henri</span>
+ 	    <span class="note">Accueil des invités avec musique de fond.<br>Introduction de Tony.<br> Discours des témoins et des parents (15 min).<br> Echange des alliances, voeux, rituel symbolique.<br>Remerciements par Tony et sortie des mariés en musique.</span>
           </div>
         </li>
         <li>
-          <span class="time">18:45</span>
+          <span class="time">18:30</span>
 	  <div class="desc-container">
 	    <span class="desc">Vin d'honneur</span>
- 	    <span class="note">📍 Palombière d'Henri<br>📞 Saxophoniste - Pierre : <a href="tel:0780239409" style="color: inherit; text-decoration: none; font-weight: bold;">07 80 23 94 09</a><br>Cocktail et bouchées (4 serveurs).<br>Activités : photos avec le photographe, pétanque, mur des invités, polaroïd.</span>
+		<span class="info-line">📍 Palombière d'Henri<br>📞 Saxophoniste - Pierre : <a href="tel:0780239409" style="color: inherit; text-decoration: none; font-weight: bold;">07 80 23 94 09</a></span>
+ 	    <span class="note">Cocktail et bouchées (4 serveurs).<br>Activités : photos avec le photographe, pétanque, mur des invités, polaroïd.</span>
           </div>
         </li>
         <li>
-          <span class="time">21:00</span>
+          <span class="time">20:45</span>
 	  <div class="desc-container">
 	    <span class="desc">Dîner</span>
- 	    <span class="note">📞 Traiteur - M. Ducousseau : <a href="tel:0687129468" style="color: inherit; text-decoration: none; font-weight: bold;">06 87 12 94 68</a><br>Plat principal + Assiette de fromage.<br>Discours des amis et jeux.<br>Musique en fond.</span>
+		<span class="info-line">📞 Traiteur - M. Ducousseau : <a href="tel:0687129468" style="color: inherit; text-decoration: none; font-weight: bold;">06 87 12 94 68</a></span>
+ 	    <span class="note">Plat principal + Assiette de fromage.<br>Discours des amis et jeux.<br>Musique en fond.</span>
           </div>
         </li>
         <li>
           <span class="time">22:30</span>
 	  <div class="desc-container">
 	    <span class="desc">Ouverture de bal</span>
+		<span class="info-line">📍 Palombière d'Henri</span>
  	    <span class="note">Valse papa et Adil.<br>Responsable musique : Léandra.</span>
           </div>
         </li>
@@ -810,13 +789,15 @@
           <span class="time">22:45</span>
 	  <div class="desc-container">
 	    <span class="desc">Pièce-montée</span>
- 	    <span class="note">📞 Pâtisserie - C. Garnier : <a href="tel:0562281133" style="color: inherit; text-decoration: none; font-weight: bold;">05 62 28 11 33</a><br>Livraison par le patissier directement.</span>
+		<span class="info-line">📞 Pâtisserie - C. Garnier : <a href="tel:0562281133" style="color: inherit; text-decoration: none; font-weight: bold;">05 62 28 11 33</a></span>
+ 	    <span class="note">Livraison par le patissier directement.<br>Changement de robe de la mariée.</span>
           </div>
         </li>
         <li>
           <span class="time">23:15</span>
 	  <div class="desc-container">
 	    <span class="desc">Soirée</span>
+		<span class="info-line">📍 Palombière d'Henri</span>
  	    <span class="note">Surprise des Demoiselles d'honneur et Témoins.<br>Playlist de soirée.</span>
           </div>
         </li>
@@ -824,7 +805,8 @@
           <span class="time">Dimanche 11:00</span>
 	  <div class="desc-container">
 	    <span class="desc">Brunch</span>
- 	    <span class="note">📍 Palombière d'Henri<br>Brunch du dimanche avec tous les invités intéressés.</span>
+		<span class="info-line">📍 Palombière d'Henri</span>
+ 	    <span class="note">Brunch du dimanche avec tous les invités intéressés.</span>
           </div>
         </li>
       </ul>
@@ -838,43 +820,48 @@
         <li>
           <span class="name">Papa</span>
 	  <div class="desc-container">
-            <span class="desc">Respo sono et câbles</span>
-	    <span class="note">📞 07 48 14 76 75<br>Installer l'enceinte et préparer la playlist pour la Mairie avec Xavier.<br>Installer les enceintes à la Palombière d'Henri.<br>Tester Micro, rallonges, lumières du soir.</span>
+        <span class="desc">Respo sono et câbles</span>
+		<span class="info-line">📞 07 48 14 76 75</span>
+	    <span class="note">Installer l'enceinte et préparer la playlist pour la Mairie avec Xavier.<br>Installer les enceintes à la Palombière d'Henri.<br>Tester Micro, rallonges, lumières du soir.</span>
 	  </div>
         </li>
         <li>
-	  <span class="name">Léandra - Témoin</span>
+	  <span class="name">Léandra</span>
 	  <div class="desc-container">
-	    <span class="desc">Respo vidéo et playlist du soir</span>
- 	    <span class="note">📞 06 33 74 73 83<br>Positionner le trépied pour les vidéos de la cérémonie laïque, ouverture de bal, et danse.<br>Lancer la musique pour l'ouverture de bal et pour la danse surprise.</span>
+	    <span class="desc"><em>Témoin</em><br>Respo vidéo et playlist du soir</span>
+		<span class="info-line">📞 06 33 74 73 83</span>
+ 	    <span class="note">Positionner le trépied pour les vidéos de la cérémonie laïque, ouverture de bal, et danse.<br>Lancer la musique pour l'ouverture de bal et pour la danse surprise.</span>
           </div>
         </li>
         <li>
-          <span class="name">Ilona - Témoin</span>
+          <span class="name">Ilona</span>
 	  <div class="desc-container">
-	    <span class="desc">Respo Go Pro</span>
- 	    <span class="note">📞 06 04 16 24 01<br>Installer avec Léandra la Go Pro pour les vidéos.<br>Charger la Go Pro entre la cérémonie laïque, l'ouverture de bal, et la soirée.</span>
+	    <span class="desc"><em>Témoin</em><br>Respo Go Pro</span>
+		<span class="info-line">📞 06 04 16 24 01</span>		
+ 	    <span class="note">Installer avec Léandra la Go Pro pour les vidéos.<br>Charger la Go Pro entre la cérémonie laïque, l'ouverture de bal, et la soirée.</span>
           </div>
         </li>
 		<li>
-          <span class="name">Sofiane - Témoin</span>
+          <span class="name">Sofiane</span>
 	  <div class="desc-container">
-	    <span class="desc">Respo ?</span>
+	    <span class="desc"><em>Témoin</em></span>
  	    <span class="note">Signature du contrat de mariage à la mairie avec les autres témoins.</span>
           </div>
         </li>
         <li>
-          <span class="name">Saban - Témoin</span>
+          <span class="name">Saban</span>
 	  <div class="desc-container">
-	    <span class="desc">Respo Alliances</span>
- 	    <span class="note">📞 07 81 79 71 80<br>Apporter les alliances aux mariés à la cérémonie laïque.</span>
+	    <span class="desc"><em>Témoin</em><br>Respo Alliances</span>
+		<span class="info-line">📞 07 81 79 71 80</span>
+ 	    <span class="note">Apporter les alliances aux mariés à la cérémonie laïque.</span>
           </div>
         </li>
         <li>
           <span class="name">Karen</span>
 	  <div class="desc-container">
 	    <span class="desc">Respo playlist du jour</span>
- 	    <span class="note">📞 07 82 29 87 76<br>Playlist cérémonie laïque, playlist dîner.</span>
+		<span class="info-line">📞 07 82 29 87 76</span>
+ 	    <span class="note">Playlist cérémonie laïque, playlist dîner.</span>
           </div>
         </li>
         <li>
@@ -888,14 +875,16 @@
           <span class="name">Tony</span>
 	  <div class="desc-container">
 	    <span class="desc">Animateur cérémonie laïque</span>
- 	    <span class="note">📞 06 80 16 97 51<br>Texte préparé à l'avance.<br>Annoncer le vin d'honneur et le dîner qui suit.</span>
+		<span class="info-line">📞 06 80 16 97 51</span>
+ 	    <span class="note">Texte préparé à l'avance.<br>Annoncer le vin d'honneur et le dîner qui suit.</span>
           </div>
         </li>
 		<li>
           <span class="name">Maman</span>
 	  <div class="desc-container">
 	    <span class="desc">Respo fleur et brunch du dimanche</span>
- 	    <span class="note">📞 06 60 59 68 68<br>Bouquet de la mariée.<br>Pizza, viennoiseries, et boissons pour le brunch.</span>
+		<span class="info-line">📞 06 60 59 68 68</span>
+ 	    <span class="note">Bouquet de la mariée.<br>Pizza, viennoiseries, fruits, et boissons pour le brunch.</span>
           </div>
         </li>
       </ul>
@@ -904,7 +893,7 @@
   
   <footer>
     <p>&copy;2026 Hanaleï et Adil<br>Tous droits réservés</p>
-    <p>Contact : <a href="mailto:votre@email.com">hanalei.bunn@gmail.com</a><br>Tél : <a href="tel:+33600000000">06 12 92 50 22</a></p>
+    <p>Contact : <a href="mailto:votre@email.com">hanalei.bunn@gmail.com</a><br>Tél Hanaleï : <a href="tel:+33600000000">06 12 92 50 22</a><br>Tél Adil : <a href="tel:+33600000000">06 15 82 41 22</a></p>
   </footer>
 
 </body>
