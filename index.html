@@ -22,7 +22,7 @@
     }
 
     body { 
-      background-color: var(--bg);
+      background: radial-gradient(circle, #5e0d11 0%, #4A0E0E 100%);
       color: #3d2b2b;
       max-width: 600px;
       margin: auto; 
@@ -69,7 +69,7 @@
     }
 
     #add { 
-      background: var(--card-input);
+      background: var(--card);
       padding: 20px;
       border-radius: 4px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.05);
@@ -231,7 +231,7 @@
       background: #631313;
 	  cursor: pointer;
 	  font-weight: bold;
-	  color: rgba(255,255,255,0.7);
+	  color: rgba(255,255,255,0.8);
 	  font-size: 11px;
 	  text-transform: uppercase;
 	  white-space: nowrap;
@@ -240,7 +240,7 @@
 	  justify-content: center;
 	  gap: 6px;
 	  transition: all 0.3s ease;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.3);
     }
 	
     .tab-btn.active { background: var(--card) !important; color: var(--primary-dark) !important; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
@@ -405,36 +405,95 @@
     }
 	
 	.countdown-box {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 10px;
+      border: 5px solid;
+	  border-image-source: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+      border-image-slice: 1;
+      box-shadow: 0 0 15px rgba(191, 149, 63, 0.3); /* Une légère lueur externe */
+	  background: transparent;
+      padding: 20px;
       border-radius: 6px;
       min-width: 90px;
       text-align: center;
     }
     .countdown-box span {
       display: block;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
-      color: #fff;
+      color: var(--card);
     }
     .countdown-box small {
-      font-size: 9px;
+      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 1px;
       opacity: 0.8;
     }
 	
 	.welcome-card {
-      background: var(--card-input);             /* Fond blanc pur */
-      padding: 20px;
-      border-radius: 12px;             /* Coins arrondis élégants */
-      box-shadow: 0 10px 35px rgba(0,0,0,0.5); /* Ombre portée pour le relief */
+      background: var(--card);
+      padding: 30px;
+      border-radius: 20px;             /* Coins arrondis élégants */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Ombre portée pour le relief */
 	  border: 1px solid rgba(255, 255, 255, 0.1);
       margin-top: 20px auto;                /* Espace au dessus */
 	  font-weight: 700;                /* Rend le texte épais */
       font-size: 16px;                 /* Légèrement plus grand pour la lisibilité */
       text-align: center;
       transition: transform 0.3s ease;
+    }
+	
+	/* --- SECTION GUEST LIST --- */
+    .guest-section {
+      background: var(--card);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 30px 15px; /* Marges pour ne pas coller aux bords */
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .guest-section h3 {
+      color: var(--primary);
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      text-transform: uppercase;
+      font-size: 20px;
+	  margin-top: 5px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    .guest-list {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Deux colonnes auto */
+      gap: 10px;
+    }
+
+    .guest-list li {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      color: #333;
+      padding: 5px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    /* La puce personnalisée dorée */
+    .guest-list li::before {
+      content: "✦"; /* Un petit losange ou étoile */
+      color: #bf953f; /* Votre doré */
+      font-size: 10px;
+      margin-right: 10px;
+    }
+	
+	.guest-role {
+      font-size: 11px;
+      opacity: 0.6;
+      font-style: italic;
+	  font-weight: normal;
+      margin-left: 5px;
+	  color: var(--primary-dark);
     }
 
   </style>
@@ -454,17 +513,17 @@
       <p style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Pour suivre l'avancée des préparatifs  ! 🥂<br> <br></p>
       <div class="welcome-card">
         <p style="margin: 0; line-height: 1.6; font-style: italic; color: #4A0E0E;">
-          Mariage Civil et Laïque d'Adil et Hanaleï<br>
-          <span style="font-weight: 400; font-size: 12px; opacity: 0.8;">Nombre d'invités total : 107<br>Nombre d'invités au dîner : 90</span>
+          Mariage Civil et Laïque d'Hanaleï et Adil<br>
+          <span style="font-weight: 400; font-size: 12px; opacity: 0.8;">Nombre d'invités total : <strong>107</strong><br>Nombre d'invités au dîner : <strong>90</strong></span>
         </p>
       </div>
-      <div id="countdown" style="display: flex; justify-content: center; gap: 10px; margin-top: 30px;">
+      <div id="countdown" style="display: flex; justify-content: center; gap: 10px; margin-top: 35px;">
         <div class="countdown-box">
           <span id="days">00</span>
           <small>Jours</small>
         </div>
       </div>
-      <p style="margin-top: 25px; font-size: 14px; opacity: 0.8;">📍 Larressingle & Moncrabeau<br> <br> <br></p>
+      <p style="margin-top: 35px; font-size: 14px; opacity: 0.8;">📍 Larressingle & Moncrabeau<br> <br></p>
     </div>
   </div>
   
@@ -674,6 +733,7 @@
 
     // Affichage/Masquage du message d'accueil
     document.getElementById('welcome-message').style.display = isHome ? 'block' : 'none';
+	document.getElementById('guest-list-section').style.display = isHome ? 'block' : 'none';
 
     // Affichage des sections de la checklist
     document.getElementById('add').style.display = isChecklist ? 'flex' : 'none';
@@ -890,6 +950,98 @@
       </ul>
     </div>
   </div>
+  
+  <div id="guest-list-section" class="guest-section">
+    <h3>✨ Liste des Invités</h3>
+	<ul class="guest-list">
+	  <li>Adil <span class="guest-role">(GROOM)</span></li>
+	  <li>Hanaleï <span class="guest-role">(BRIDE)</span></li>
+	  <li>Amina <span class="guest-role">(Maman)</span></li>
+	  <li>Carole <span class="guest-role">(Maman)</span></li>
+	  <li>Christophe <span class="guest-role">(Papa)</span></li>
+	  <li>Léandra <span class="guest-role">(Soeur)</span></li>
+	  <li>Sofiane <span class="guest-role">(Frère)</span></li>
+	  <li>Ilona <span class="guest-role">(Témoin)</span></li>
+	  <li>Maxime</li>
+	  <li>Saban <span class="guest-role">(Témoin)</span></li>
+	  <li>Nora</li>
+	  <li>Myriam <span class="guest-role">(Tante)</span></li>
+	  <li>Zineb <span class="guest-role">(Tante)</span></li>
+	  <li>Rhita <span class="guest-role">(Cousine)</span></li>
+	  <li>Simon</li>
+	  <li>Fille de Simon</li>
+	  <li>Fille de Simon</li>
+	  <li>Anthony B. <span class="guest-role">(Oncle)</span></li>
+	  <li>Gwen B.</li>
+	  <li>Indiana <span class="guest-role">(Cousine)</span></li>
+	  <li>Hervé <span class="guest-role">(Oncle)</span></li>
+	  <li>Isabelle</li>
+	  <li>Thibault <span class="guest-role">(Cousin)</span></li>
+      <li>Angelia</li>
+	  <li>Marc <span class="guest-role">(Papi)</span></li>
+	  <li>Rachel</li>
+	  <li>Paule</li>
+	  <li>Olivier</li>
+	  <li>Laurent</li>
+	  <li>Stéphanie</li>
+	  <li>Julien</li>
+	  <li>Loralie</li>
+	  <li>Maxandre</li>
+	  <li>Marilyn</li>
+	  <li>Christian</li>
+	  <li>Carla</li>
+	  <li>Anthony</li>
+      <li>Copine Anthony</li>
+	  <li>Raymond</li>
+	  <li>Corinne</li>
+	  <li>Alexis et Julien</li>
+	  <li>Annie <span class="guest-role">(Mamie)</span></li>
+	  <li>Martine</li>
+	  <li>Mathieu</li>
+	  <li>Marie-Noëlle</li>
+	  <li>Karen</li>
+	  <li>Abdoul</li>
+	  <li>Moncef</li>
+	  <li>Noussair</li>
+	  <li>Zeineb</li>
+	  <li>Mariam</li>
+	  <li>Lucas</li>
+	  <li>Alexandros</li>
+	  <li>Brice</li>
+	  <li>Mathilde <span class="guest-role">(Dem.)</span></li>
+	  <li>Vincent</li>
+	  <li>Elsa <span class="guest-role">(Dem.)</span></li>
+	  <li>Thibault</li>
+	  <li>Marlène <span class="guest-role">(Dem.)</span></li>
+	  <li>Antoine Bu</li>
+	  <li>Delphine <span class="guest-role">(Dem.)</span></li>
+	  <li>Benjamin</li>
+	  <li>Juliette <span class="guest-role">(Dem.)</span></li>
+	  <li>Kevin</li>
+	  <li>Noémie et Nico</li>
+	  <li>Nina et Egon</li>
+	  <li>Maïlys et P-G.</li>
+	  <li>Gwen</li>
+	  <li>Hugo</li>
+	  <li>Justine</li>
+	  <li>Malo</li>
+	  <li>Estelle</li>
+	  <li>Pauline</li>
+      <li>William</li>
+	  <li>Wijdane</li>
+      <li>Brice</li>
+	  <li>Soleil</li>
+	  <li>Manon</li>
+	  <li>Clara</li>
+	  <li>Youssef</li>
+	  <li>Mohammed</li>
+	  <li>Taha</li>
+	  <li>Mathilde B.</li>
+	  <li>Mahoua</li>
+	  <li>Axel</li>
+	<p style="text-align:center; font-size: 11px; color: #999; margin-top: 15px; font-style: italic;">Total à confirmer : 90 personnes
+    </p>
+  </div>	
   
   <footer>
     <p>&copy;2026 Hanaleï et Adil<br>Tous droits réservés</p>
