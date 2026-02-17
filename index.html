@@ -508,8 +508,7 @@
 	
 	/* Style pour le badge spécifique avec pointillés */
     .badge-special {
-      border: 2px dashed var(--secondary) !important;
-      font-weight: bold;
+      border: 2px dashed var(--card-input) !important;
     }
 
     /* Le fond opaque du pop-up */
@@ -556,7 +555,7 @@
   
   <div class="tabs">
     <button class="tab-btn" onclick="showTab('timeline')">🕒 Déroulé</button>
-	<button class="tab-btn" onclick="showTab('checklist')">📋 Checklist</button>  
+    <button class="tab-btn" onclick="showTab('checklist')">📋 Checklist</button>  
     <button class="tab-btn" onclick="showTab('contact')">👥 Contacts</button>
   </div>
 
@@ -566,7 +565,7 @@
       <div class="welcome-card">
         <p style="margin: 0; line-height: 1.6; letter-spacing: 1.5px; font-style: italic; font-size: 19px; color: var(--card);">
           Mariage Civil et Laïque d'Hanaleï et Adil
-		  <span style="font-weight: 400; font-size: 12px; font-family: Verdana, sans-serif; font-style: normal; letter-spacing: 0.2px; opacity: 0.9;"><br>Nombre d'invités : <strong>90</strong></span>
+          <span style="font-weight: 400; font-size: 12px; font-family: Verdana, sans-serif; font-style: normal; letter-spacing: 0.2px; opacity: 0.9;"><br>Nombre d'invités : <strong>90</strong></span>
         </p>
       </div>
       <div id="countdown" style="display: flex; justify-content: center; font-family: Verdana, sans-serif; gap: 10px; margin-top: 35px;">
@@ -586,8 +585,10 @@
       <input type="text" id="newOwner" placeholder="Responsable" style="flex: 1; min-width: 140px;">
     </div>
 
+    <input type="password" id="authId" placeholder="Votre prénom (Accès restreint)" style="padding: 8px 12px; border: 1.5px solid var(--primary); outline: none; font-size: 13px;">
+
     <div class="moment-selection" style="display: flex; justify-content: space-around; padding: 5px; margin-top: 0px;">
-	  <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+      <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
         <input type="radio" name="moment" value="avant" checked style="transform: scale(1.5);"> Avant
       </label>
       <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
@@ -640,13 +641,20 @@
       appId: "1:436777851923:web:341755f72d59a6dff9b3e6",
       measurementId: "G-T096M0YK86"
     };
-	
+    
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
   const listDiv = document.getElementById("list");
 
-  // Stockage local des données pour y accéder facilement
   let currentItems = {};
+
+  // --- CONFIGURATION DES ACCÈS ---
+  const allowed = ["elsa", "adil", "ilona", "delphine", "mathilde", "juliette", "hanalei", "hanaleï", "maman", "papa", "chris", "marlene", "marlène", "christophe", "carole", "léandra", "leandra"];
+
+  function checkAuth() {
+    const code = prompt("Action protégée. Entrez votre prénom pour valider :");
+    return allowed.includes(code?.trim().toLowerCase());
+  }
 
   function render(items) {
     listDiv.innerHTML = "";
@@ -666,7 +674,6 @@
       const row = document.createElement("div");
       row.className = `item ${item.done ? 'done' : ''} ${item.moment || ''}`;
 
-      // Utilisation de l'ID uniquement pour les fonctions globales
       row.innerHTML = `
         <label class="checkbox-container">
           <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleItem('${id}', ${item.done})">
@@ -678,10 +685,10 @@
           </span>
           <div class="item-details">
             <span class="badge" onclick="editField('${id}', 'place')">
-              📍 ${item.place || '   '}
+              📍 ${item.place || '    '}
             </span>
             <span class="badge" onclick="editField('${id}', 'owner')">
-              👤 ${item.owner || '   '}
+              👤 ${item.owner || '    '}
             </span>
           </div>
         </div>
@@ -691,23 +698,25 @@
     }
   }
 
-  // Fonctions window pour qu'elles soient accessibles depuis le HTML (scope module)
   window.toggleItem = (id, currentStatus) => {
     update(ref(db, "items/" + id), { done: !currentStatus });
   };
 
   window.deleteItem = (id) => {
+    if (!checkAuth()) return alert("Accès refusé.");
     const text = currentItems[id].text;
     if (confirm(`Supprimer "${text}" ?`)) remove(ref(db, "items/" + id));
   };
 
   window.editTitle = (id) => {
+    if (!checkAuth()) return alert("Accès refusé.");
     const oldVal = currentItems[id].text;
     const newVal = prompt("Modifier l'action :", oldVal);
     if (newVal && newVal !== oldVal) update(ref(db, "items/" + id), { text: newVal });
   };
 
   window.editField = (id, field) => {
+    if (!checkAuth()) return alert("Accès refusé.");
     const oldVal = currentItems[id][field] || "";
     const label = field === 'place' ? 'le lieu' : 'le responsable';
     const newVal = prompt(`Modifier ${label} :`, oldVal);
@@ -715,6 +724,11 @@
   };
 
   window.addItem = function () {
+    const authInput = document.getElementById("authId");
+    if (!allowed.includes(authInput.value.trim().toLowerCase())) {
+        return alert("Désolé, ce prénom n'est pas autorisé pour ajouter des actions.");
+    }
+
     const textInput = document.getElementById("newItem");
     const placeInput = document.getElementById("newPlace");
     const ownerInput = document.getElementById("newOwner");
@@ -733,21 +747,20 @@
       createdAt: Date.now() 
     }).then(() => {
       textInput.value = ""; placeInput.value = ""; ownerInput.value = "";
+      // Optionnel: authInput.value = ""; // Vider le code après ajout ou le laisser pour enchaîner
     });
   };
 
   onValue(ref(db, "items"), snap => {
     const data = snap.val() || {};
-    currentItems = data; // Mise à jour du cache local
+    currentItems = data;
     const entries = Object.entries(data);
 
-    // Compteurs
     const total = entries.length;
     const completed = entries.filter(item => item[1].done).length;
     document.getElementById("total-count").innerText = total;
     document.getElementById("completed-count").innerText = completed;
 
-    // Tri
     const sortedEntries = entries.sort((a, b) => {
       if (a[1].done !== b[1].done) return a[1].done - b[1].done;
       const order = { 'avant': 1, 'veille': 2, 'jourj': 3 };
@@ -758,22 +771,12 @@
     render(Object.fromEntries(sortedEntries));
   });
 
-  // Les fonctions de filtrage, tabs et compte à rebours restent identiques
-  
   window.filterTasks = function() {
     const query = document.getElementById("filterInput").value.toLowerCase();
     const items = document.querySelectorAll(".item");
-
     items.forEach(item => {
-      // On récupère tout le texte à l'intérieur de la carte (titre, lieu, responsable)
       const text = item.innerText.toLowerCase();
-    
-      // Si la recherche est vide ou si le texte contient le mot tapé, on affiche
-      if (text.includes(query)) {
-        item.style.display = "flex";
-      } else {
-        item.style.display = "none"; // Sinon on cache
-      }
+      item.style.display = text.includes(query) ? "flex" : "none";
     });
   };
   
@@ -781,27 +784,25 @@
     const isChecklist = tabName === 'checklist';
     const isTimeline = tabName === 'timeline';
     const isContact = tabName === 'contact';
-    const isHome = !tabName; // Vrai si aucun onglet n'est passé
+    const isHome = !tabName;
 
-    // Affichage/Masquage du message d'accueil
     document.getElementById('welcome-message').style.display = isHome ? 'block' : 'none';
-	document.getElementById('guest-list-section').style.display = isHome ? 'block' : 'none';
+    
+    // Si tu as gardé la section guest-list, assure-toi que l'ID existe
+    const guestSec = document.getElementById('guest-list-section');
+    if (guestSec) guestSec.style.display = isHome ? 'block' : 'none';
 
-    // Affichage des sections de la checklist
     document.getElementById('add').style.display = isChecklist ? 'flex' : 'none';
     document.getElementById('filter-container').style.display = isChecklist ? 'block' : 'none';
     document.getElementById('list').style.display = isChecklist ? 'block' : 'none';
     document.querySelector('.legend-container').style.display = isChecklist ? 'flex' : 'none';
     document.getElementById('counter-container').style.display = isChecklist ? 'block' : 'none';
 
-    // Affichage des autres sections
     document.getElementById('timeline-section').style.display = isTimeline ? 'block' : 'none';
     document.getElementById('contact-section').style.display = isContact ? 'block' : 'none';
 
-    // Mise à jour des boutons
     const btns = document.querySelectorAll('.tab-btn');
-    btns.forEach(btn => btn.classList.remove('active')); // On nettoie tout
-  
+    btns.forEach(btn => btn.classList.remove('active'));
     if (isTimeline) btns[0].classList.add('active');
     if (isChecklist) btns[1].classList.add('active');
     if (isContact) btns[2].classList.add('active');
@@ -811,29 +812,19 @@
     const weddingDate = new Date("July 25, 2026 16:00:00").getTime();
     const now = new Date().getTime();
     const diff = weddingDate - now;
-
     if (diff > 0) {
       const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-      // Mise à jour des chiffres
       document.getElementById("days").innerText = d.toString().padStart(2, '0');
-    
     } else {
       document.getElementById("welcome-message").innerHTML = "<h2 style='color:white; text-align:center;'>C'est le grand jour ! 🎉</h2>";
     }
   }
 
-    // Lancer le compte à rebours
-    updateCountdown();
-    setInterval(updateCountdown, 60000); // Mise à jour toutes les minutes
-  
-    window.openPinkModal = function() {
-      document.getElementById('pinkModal').style.display = 'flex';
-    };
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
 
-    window.closePinkModal = function() {
-      document.getElementById('pinkModal').style.display = 'none';
-    };
+  window.openPinkModal = () => document.getElementById('pinkModal').style.display = 'flex';
+  window.closePinkModal = () => document.getElementById('pinkModal').style.display = 'none';
 
 </script>
 
