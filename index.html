@@ -825,6 +825,15 @@
 
   window.openPinkModal = () => document.getElementById('pinkModal').style.display = 'flex';
   window.closePinkModal = () => document.getElementById('pinkModal').style.display = 'none';
+  
+  // Fonctions pour le pop-up de la soirée
+  window.openSoireeModal = () => {
+    document.getElementById('soireeModal').style.display = 'flex';
+  };
+
+  window.closeSoireeModal = () => {
+    document.getElementById('soireeModal').style.display = 'none';
+  };
 
 </script>
 
@@ -905,11 +914,10 @@
           </div>
         </li>
         <li>
-          <span class="time time-party">23:00</span>
+          <span class="time time-party" onclick="openSoireeModal()" style="cursor: pointer;">23:00</span>
 	  <div class="desc-container">
 	    <span class="desc">SOIRÉE</span>
 		<span class="info-line">📍 Palombière d'Henri</span>
- 	    <span class="note">Surprise des Demoiselles d'honneur et Témoins.<br>Playlist de soirée.</span>
           </div>
         </li>
 		<li>
@@ -921,6 +929,23 @@
           </div>
         </li>
       </ul>
+    </div>
+  </div>
+  
+  <div id="soireeModal" class="modal-overlay" onclick="closeSoireeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <h2 style="font-family: 'Playfair Display', serif; color: var(--primary);">✨ Programme de la Nuit</h2>
+      <hr style="border: 0; border-top: 1px solid #eee; margin: 5px 0;">
+    
+      <p style="font-family: Verdana, sans-serif; font-size: 14px; text-align: left; line-height: 1.6;">
+        <strong>Au menu des festivités :</strong><br><br>
+        💃 Ouverture surprise du dancefloor<br>
+        🎧 Playlist faite par les invités<br>
+        🥂 Boissons & pâtisseries<br>
+        📸 Circulation d'une Go Pro tout au long de la nuit<br>
+      </p>
+
+      <button onclick="closeSoireeModal()" style="margin-top: 20px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer;">Fermer</button>
     </div>
   </div>
   
