@@ -13,7 +13,7 @@
       --success: #A3B18A;
       --danger: #ff7675;
       --bg: #4A0E0E;         /* Fond bordeaux sombre pour faire ressortir les cartes */
-      --card: #F5F5F5;    /* blanc gris */
+      --card: #F7FAF5;    /* blanc vert */
 	  --card-input: #FDF7F7;    /* blanc rose */
     }
 
@@ -92,7 +92,7 @@
     }
 	
 	.moment-selection label {
-      color: var(--primary-dark);
+      color: #A3B18A;
       font-size: 14px;
       font-weight: bold;
     }
@@ -113,7 +113,7 @@
     input[type="text"]:focus { border-color: var(--primary); }
 
     button#addBtn { 
-      background: var(--primary); 
+      background: #A3B18A; 
       color: white; 
       border: none; 
       padding: 12px;
@@ -229,10 +229,10 @@
 	  border: none;
 	  font-family: inherit;
 	  border-radius: 4px; 
-      background: #631313;
+      background: var(--card);
 	  cursor: pointer;
 	  font-weight: bold;
-	  color: rgba(255,255,255,0.8);
+	  color: #A3B18A;
 	  font-size: 11px;
 	  text-transform: uppercase;
 	  white-space: nowrap;
@@ -244,7 +244,7 @@
       border: 1px solid rgba(255,255,255,0.3);
     }
 	
-    .tab-btn.active { background: var(--card) !important; color: var(--primary-dark) !important; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+    .tab-btn.active { background: #A3B18A !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
     /* Le Badge de l'heure */
     .time { 
@@ -439,10 +439,10 @@
     }
 	
 	.welcome-card {
-      background: rgba(255, 255, 255, 0.08); 
+      background: #A3B18A; 
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      padding: 20px 10px; /* Padding réduit sur les côtés pour gagner de la place */
+      padding: 30px 10px; /* Padding réduit sur les côtés pour gagner de la place */
       border-radius: 20px;
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); 
       margin: 30px 0;
@@ -506,7 +506,6 @@
 	  color: var(--primary-dark);
     }
 	
-	/* Style pour le badge spécifique avec pointillés */
     .badge-special {
       background: linear-gradient(45deg, #800844 0%, #DE5D83 20%, #800844 40%, #F49AC2 50%, #800844 60%, #DE5D83 80%, #800844 100%) !important;
       color: #ffffff !important;
@@ -586,7 +585,7 @@
       <input type="text" id="newOwner" placeholder="Responsable" style="flex: 1; min-width: 140px;">
     </div>
 
-    <input type="password" id="authId" placeholder="Votre prénom (Accès restreint)" style="padding: 8px 12px; border: 1.5px solid var(--primary); outline: none; font-size: 13px;">
+    <input type="password" id="authId" placeholder="Votre prénom (Accès restreint)" style="padding: 8px 12px; border: 1.5px solid #A3B18A; outline: none; font-size: 13px;">
 
     <div class="moment-selection" style="display: flex; justify-content: space-around; padding: 5px; margin-top: 0px;">
       <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
