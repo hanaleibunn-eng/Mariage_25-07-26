@@ -546,6 +546,26 @@
       aspect-ratio: 1;
       border-radius: 4px;
     }
+	
+	.btn-moodboard {
+      display: inline-block;
+      padding: 12px 25px;
+      background-color: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.2);
+      margin: 20px 0;
+    }
+
+    .btn-moodboard:hover {
+      background-color: #F5F5F5;
+      color: #4A0E0E;
+      transform: translateY(-3px);
+    }
 
   </style>
 </head>
@@ -1017,6 +1037,12 @@
         <div class="color-square" style="background: #C93886;"></div>
         <div class="color-square" style="background: #C21E56;"></div>
         <div class="color-square" style="background: #800844;"></div>
+      </div>
+	  <div style="text-align: center; width: 100%;">
+        <a href="https://hanaleibunn-eng.github.io/moodboard/" class="btn-moodboard"
+		style="background-color: var(--primary) !important; color: white !important; display: inline-block;">
+		Voir le Mood Board d'inspiration
+		</a>
       </div>
       <button onclick="closePinkModal()" style="margin-top:20px; border:none; background:var(--primary); color:white; padding:8px 15px; cursor:pointer; border-radius:5px;">Fermer</button>
     </div>
