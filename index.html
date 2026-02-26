@@ -654,6 +654,19 @@
 	.table-card.honneur .seats-list {
       gap: 12px; /* Plus d'espace entre les noms */
     }
+	
+    .grid-tabs {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 10px;
+    }
+    .grid-tabs .tab-btn {
+      width: 100% !important;
+      font-size: 11px; /* Légèrement réduit pour mobile */
+      padding: 12px 2px;
+      white-space: nowrap;
+    }
 
   </style>
 </head>
@@ -661,10 +674,13 @@
 
   <h1 onclick="showTab()" style="cursor: pointer;">Mariage 25/07/26</h1>
   
-  <div class="tabs">
+  <div class="tabs grid-tabs">
     <button class="tab-btn" onclick="showTab('timeline')">🕒 Déroulé</button>
+    <button class="tab-btn" onclick="showTab('guestlist')">👥 Invités</button>
+	<button class="tab-btn" onclick="showTab('contact')">📞 Contacts</button>
     <button class="tab-btn" onclick="showTab('checklist')">📋 Checklist</button>  
-    <button class="tab-btn" onclick="showTab('contact')">👥 Contacts</button>
+    <button class="tab-btn" onclick="showTab('logistique')">📊 Logistique</button>
+    <button class="tab-btn" onclick="showTab('inventory')">📦 Inventaire</button>
   </div>
 
   <div id="welcome-message" style="display: block;">
@@ -732,6 +748,115 @@
   </div>
 
   <div id="list" style="display: none;"></div>
+  
+  <div id="logistique-section" style="display: none; padding: 0 10px;">
+    <div class="contact-card" style="margin-bottom: 20px;">
+      <h3 style="color: var(--card); margin-bottom: 15px;">💰 Suivi du Budget</h3>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-family: Verdana, sans-serif; font-size: 13px;">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--primary); color: var(--card);">
+              <th style="text-align: left; padding: 8px;">Poste</th>
+              <th style="text-align: left; padding: 8px;">Statut</th>
+              <th style="text-align: left; padding: 8px;">Détails</th>
+            </tr>
+          </thead>
+          <tbody style="color: white; opacity: 0.9;">
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Traiteur</td>
+              <td style="padding: 10px; font-weight: bold;">Non payé</td>
+              <td style="padding: 10px;">Juin-Juillet</td>
+            </tr>
+			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Lieu</td>
+              <td style="padding: 10px; font-weight: bold;">Partiel</td>
+              <td style="padding: 10px;">Reste en Juillet</td>
+            </tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Photographe</td>
+              <td style="padding: 10px; font-weight: bold;">Non payé</td>
+              <td style="padding: 10px;">Jour J-Cash</td>
+            </tr>
+			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Boissons</td>
+              <td style="padding: 10px; font-weight: bold;">Non payé</td>
+              <td style="padding: 10px;">Juin-Juillet</td>
+            </tr>
+			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Alliances</td>
+              <td style="padding: 10px; font-weight: bold;">Non payé</td>
+              <td style="padding: 10px;">Mars</td>
+            </tr>
+			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Fiançailles Maroc</td>
+              <td style="padding: 10px; font-weight: bold;">Non payé</td>
+              <td style="padding: 10px;">Mars-Avril</td>
+            </tr>
+			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Saxophoniste</td>
+              <td style="padding: 10px; font-weight: bold;">Non payé</td>
+              <td style="padding: 10px;">Jour J-Cash</td>
+            </tr>
+			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Sono et lumières</td>
+              <td style="padding: 10px; font-weight: bold;">Non payé</td>
+              <td style="padding: 10px;">Juillet</td>
+            </tr>
+			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Brunch</td>
+              <td style="padding: 10px; font-weight: bold;">Non payé</td>
+              <td style="padding: 10px;">Juillet</td>
+            </tr>
+			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Pièce-Montée</td>
+              <td style="padding: 10px; font-weight: bold;">Partiel</td>
+              <td style="padding: 10px;">Reste en Juillet</td>
+            </tr>
+			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Coiffeuse</td>
+              <td style="padding: 10px; font-weight: bold;">Non payé</td>
+              <td style="padding: 10px;">Jour J</td>
+            </tr>
+			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Maquilleuse</td>
+              <td style="padding: 10px; font-weight: bold;">Non payé</td>
+              <td style="padding: 10px;">Jour J</td>
+            </tr>
+			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Décorations</td>
+              <td style="padding: 10px; font-weight: bold;">Partiel</td>
+              <td style="padding: 10px;">Courant 2026</td>
+            </tr>
+			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Costume</td>
+              <td style="padding: 10px; font-weight: bold;">Non payé</td>
+              <td style="padding: 10px;">Avril-Mai</td>
+            </tr>
+			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+              <td style="padding: 10px;">Robe</td>
+              <td style="padding: 10px; font-weight: bold;">Payé</td>
+              <td style="padding: 10px;">Janvier-Février</td>
+            </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+    <div id="inventory-section" style="display: none; padding: 0 10px;">
+      <div class="guest-section">
+        <h3>📦 Inventaire du Matériel</h3>
+        <ul class="guest-list">
+          <li>Enceinte Mairie <span class="guest-role">(Papa) - ✅ OK</span></li>
+          <li>Rallonges (x3) <span class="guest-role">(Adil) - ⏳ À trouver</span></li>
+          <li>GoPro + Trépied <span class="guest-role">(Léandra)</span></li>
+          <li>Ombrelles & Éventails <span class="guest-role">(Hanaleï)</span></li>
+          <li>Panier d'accueil toilettes <span class="guest-role">(Ilona)</span></li>
+          <li>Appareils Polaroïd <span class="guest-role">(Maman)</span></li>
+          <li>Livre d'or + Stylos <span class="guest-role">(Hanaleï)</span></li>
+        </ul>
+      </div>
+    </div>
 
   <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
@@ -888,48 +1013,52 @@
   };
   
   window.showTab = function(tabName) {
-    const isChecklist = tabName === 'checklist';
-    const isTimeline = tabName === 'timeline';
-    const isContact = tabName === 'contact';
-    const isSeating = tabName === 'seating';
     const isHome = !tabName;
+    const isTimeline = tabName === 'timeline';
+    const isChecklist = tabName === 'checklist';
+    const isGuestlist = tabName === 'guestlist';
+    const isContact = tabName === 'contact';
+    const isLogistique = tabName === 'logistique';
+    const isInventory = tabName === 'inventory';
+    const isSeating = tabName === 'seating'; // Gardé au cas où tu cliques sur le bouton orange du bas
 
-    // 1. Gérer les messages et listes d'accueil
+    // 1. Accueil & Éléments communs
     document.getElementById('welcome-message').style.display = isHome ? 'block' : 'none';
-  
-    const guestSec = document.getElementById('guest-list-section');
-    if (guestSec) guestSec.style.display = isHome ? 'block' : 'none';
-
-    // 2. MASQUER/AFFICHER LE BOUTON "VOIR LE PLAN DE TABLE"
-    // On ne le montre QUE sur la page d'accueil
-    const seatingBtn = document.getElementById('seating-btn-container');
-    if (seatingBtn) seatingBtn.style.display = isHome ? 'block' : 'none';
-
-    // 3. Checklist
+    
+    // 2. Checklist (Boutons d'ajout et compteurs)
     document.getElementById('add').style.display = isChecklist ? 'flex' : 'none';
     document.getElementById('filter-container').style.display = isChecklist ? 'block' : 'none';
     document.getElementById('list').style.display = isChecklist ? 'block' : 'none';
+    document.getElementById('counter-container').style.display = isChecklist ? 'block' : 'none';
     const legend = document.querySelector('.legend-container');
     if (legend) legend.style.display = isChecklist ? 'flex' : 'none';
-    document.getElementById('counter-container').style.display = isChecklist ? 'block' : 'none';
 
-    // 4. Sections individuelles
+    // 3. Affichage des sections
     document.getElementById('timeline-section').style.display = isTimeline ? 'block' : 'none';
     document.getElementById('contact-section').style.display = isContact ? 'block' : 'none';
-  
-    // 5. Section Plan de Table
-    const seatingSection = document.getElementById('seating-section');
-    if (seatingSection) {
-      seatingSection.style.display = isSeating ? 'block' : 'none';
-      if(isSeating) window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    
+    // On lie l'onglet "Invités" à ton ID de section existant
+    const guestSec = document.getElementById('guest-list-section');
+    if (guestSec) guestSec.style.display = isGuestlist ? 'block' : 'none';
 
-    // 6. État actif des boutons du menu supérieur
+    // Gestion Logistique & Inventaire
+    const logSec = document.getElementById('logistique-section');
+    if (logSec) logSec.style.display = isLogistique ? 'block' : 'none';
+
+    const invSec = document.getElementById('inventory-section');
+    if (invSec) invSec.style.display = isInventory ? 'block' : 'none';
+
+    // Gestion du Plan de Table (Seating)
+    const seatingSection = document.getElementById('seating-section');
+    if (seatingSection) seatingSection.style.display = isSeating ? 'block' : 'none';
+
+    // Masquer le bouton orange "Voir le Plan de Table" sur toutes les pages sauf l'accueil
+    const seatingBtn = document.getElementById('seating-btn-container');
+    if (seatingBtn) seatingBtn.style.display = isGuestlist ? 'block' : 'none';
+
+    // 4. État actif des boutons du menu
     const btns = document.querySelectorAll('.tab-btn');
     btns.forEach(btn => btn.classList.remove('active'));
-    if (isTimeline) btns[0].classList.add('active');
-    if (isChecklist) btns[1].classList.add('active');
-    if (isContact) btns[2].classList.add('active');
   };
   
   function updateCountdown() {
@@ -1151,7 +1280,7 @@
     </div>
   </div>
   
-  <div id="guest-list-section" class="guest-section">
+  <div id="guest-list-section" class="guest-section" style="display: none;">
     <h3>✨ Liste des Invités</h3>
 	<ul class="guest-list">
 	  <li style="color: #808080;">Adil <span class="guest-role">(GROOM)</span></li>
@@ -1235,22 +1364,22 @@
 	<p style="text-align:center; font-size: 12px; color: #999; margin-top: 15px; font-style: italic;">Total : 90 personnes<br> <br> 
     </p>
 	<p span class="guest-role"><span>Invités à la Cérémonie et au Vin d'honneur :</span></p>
-	  <li>Aline et Gilou</li>
-	  <li>Luc et Sandrine</li>
-	  <li>Christophe et Barbara</li>
-	  <li>Sandrine</li>
-	  <li>Alain et Solange</li>
-	  <li>Anne et Philippe</li>
-	  <li>Philippe et Nathalie</li>
-	  <li>Bénédicte et Alex</li>
-	  <li>Stéphane et Sandrine</li>	  
-  </div>	
-  
-  	<div id="seating-btn-container" style="padding: 0 15px; margin-top: 20px; display: block;">
-      <button class="tab-btn" onclick="showTab('seating')" style="width: 100%; padding: 15px; background: var(--primary); color: white;">
+	<ul class="guest-list"> <li>Aline et Gilou</li>
+      <li>Luc et Sandrine</li>
+      <li>Christophe et Barbara</li>
+      <li>Sandrine</li>
+      <li>Alain et Solange</li>
+      <li>Anne et Philippe</li>
+      <li>Philippe et Nathalie</li>
+      <li>Bénédicte et Alex</li>
+      <li>Stéphane et Sandrine</li>
+    </ul>	 
+    <div id="seating-btn-container" style="padding: 0 15px; margin-top: 20px; display: block;">
+      <button class="tab-btn" onclick="showTab('seating')" style="width: 100%; padding: 15px; background: #A3B18A; color: white;">
       🍽️ Voir le Plan de Table
       </button>
-    </div>
+    </div>	  
+  </div>	
   
   <div id="seating-section" style="display: none; padding: 0 10px;">
     <div id="timeline-section"><h3>Plan de Table</h3></div>
