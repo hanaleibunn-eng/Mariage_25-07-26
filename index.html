@@ -573,11 +573,12 @@
       border-radius: 12px;
       padding: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      border-top: 4px solid var(--card);
+      border-top: 4px solid #EBEBCA;
     }
 
     .table-card.honneur {
-      border-top: 4px solid #F0F09C;
+      background: #EBEBCA;
+	  border-top: none;
       grid-column: 1 / -1; /* Prend toute la largeur sur grand écran */
     }
 
@@ -632,13 +633,9 @@
       height: 40px;
       border-radius: 50%;    
       margin: 0 auto;
-      background: #EBEBCA;   /* Rappel du doré de la table d'honneur */
+      background: #E3CC96;   /* Rappel du doré de la table d'honneur */
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 	}
-	
-	.table-card.honneur .seats-list {
-      gap: 12px; /* Plus d'espace entre les noms */
-    }
 	
     .grid-tabs {
       display: grid !important;
@@ -956,7 +953,7 @@
       <div style="overflow-x: auto;">
         <table style="width: 100%; border-collapse: collapse; font-family: Verdana, sans-serif; font-size: 13px;">
           <thead>
-            <tr style="border-bottom: 2px solid var(--primary); color: var(--card);">
+            <tr style="border-bottom: 2px solid var(--secondary); color: var(--card);">
               <th style="text-align: left; padding: 8px;">Poste</th>
               <th style="text-align: left; padding: 8px;">Statut</th>
               <th style="text-align: left; padding: 8px;">Echéance</th>
@@ -1189,7 +1186,7 @@
         <div class="table-title">Table d'Honneur</div>
         <div class="seats-list" style="grid-template-columns: repeat(4, 1fr);">
           <div class="seat">Amina</div><div class="seat">Adil</div><div class="seat">Hanaleï</div><div class="seat">Carole</div>
-          <div class="seat">Simon</div><div class="seat center-cercle">🪻</div><div class="seat center-cercle">🪻</div><div class="seat">Christophe</div>
+          <div class="seat">Simon</div><div class="seat center-cercle">🏵️</div><div class="seat center-cercle">🏵️</div><div class="seat">Christophe</div>
   		<div class="seat empty">Sofiane</div><div class="seat empty">Saban</div><div class="seat">Ilona</div><div class="seat">Léandra</div>
         </div>
       </div>
@@ -1198,7 +1195,7 @@
         <div class="table-title">Table 1</div>
         <div class="seats-list">
           <div class="seat">Gwen</div><div class="seat">Hugo</div><div class="seat empty">Maxime</div>
-          <div class="seat">Justine</div><div class="seat center-cercle">🌹</div><div class="seat empty">William</div>
+          <div class="seat">Justine</div><div class="seat center-cercle">🪻</div><div class="seat empty">William</div>
           <div class="seat">Malo</div><div class="seat empty">Estelle</div><div class="seat empty">Pauline</div>
         </div>
       </div>
@@ -1214,7 +1211,7 @@
         <div class="table-title">Table 3</div>
         <div class="seats-list">
           <div class="seat">Karen</div><div class="seat empty">Axel</div><div class="seat empty">Mahoua</div>
-          <div class="seat">Abdoul</div><div class="seat center-cercle">🌻</div><div class="seat">Nora</div>
+          <div class="seat">Abdoul</div><div class="seat center-cercle">🌹</div><div class="seat">Nora</div>
           <div class="seat">Noussair</div><div class="seat empty">Moncef/Saban</div><div class="seat">Brice</div>
         </div>
       </div>
@@ -1222,7 +1219,7 @@
         <div class="table-title">Table 4</div>
         <div class="seats-list">
           <div class="seat">Zineb</div><div class="seat">Gwen</div><div class="seat">Tony</div>
-          <div class="seat empty">Myriam</div><div class="seat center-cercle">🌼</div><div class="seat">Indiana</div>
+          <div class="seat empty">Myriam</div><div class="seat center-cercle">🌸</div><div class="seat">Indiana</div>
           <div class="seat">Ghita</div><div class="seat empty">Fille Simon</div><div class="seat empty">Fille Simon</div>
         </div>
       </div>
@@ -1262,7 +1259,7 @@
         <div class="table-title">Table 9</div>
         <div class="seats-list">
           <div class="seat">Julien</div><div class="seat empty">Mathieu</div><div class="seat empty">Marie-Noëlle</div>
-          <div class="seat">Stéphanie</div><div class="seat center-cercle">💐</div><div class="seat">Martine</div>
+          <div class="seat">Stéphanie</div><div class="seat center-cercle">🌺</div><div class="seat">Martine</div>
           <div class="seat">Maxandre</div><div class="seat">Loralie</div><div class="seat center-hole"></div>
         </div>
       </div>
@@ -1270,7 +1267,7 @@
         <div class="table-title">Table 10</div>
         <div class="seats-list">
           <div class="seat">Christian</div><div class="seat">Marilyn</div><div class="seat">Célia</div>
-          <div class="seat">Carla</div><div class="seat center-cercle">🌹</div><div class="seat">Anthony</div>
+          <div class="seat">Carla</div><div class="seat center-cercle">🌷</div><div class="seat">Anthony</div>
           <div class="seat empty">Annie</div><div class="seat">Raymond</div><div class="seat">Corinne</div>
         </div>
       </div>
