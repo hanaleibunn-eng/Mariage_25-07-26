@@ -577,7 +577,7 @@
     }
 
     .table-card.honneur {
-      border-top: 4px solid #EBEBCA;
+      border-top: 4px solid #F0F09C;
       grid-column: 1 / -1; /* Prend toute la largeur sur grand écran */
     }
 
@@ -635,14 +635,6 @@
       background: #EBEBCA;   /* Rappel du doré de la table d'honneur */
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 	}
-	  
-  	/* On cible les .seat UNIQUEMENT quand ils sont dans une .table-card.honneur */
-	.table-card.honneur .seat {
-      font-size: 12px; /* Ajustez la taille selon votre préférence */
-      padding: 10px 5px; /* On augmente un peu l'espace interne pour l'équilibre */
-	  color: var(--primary);
-	  font-style: italic;
-    }
 	
 	.table-card.honneur .seats-list {
       gap: 12px; /* Plus d'espace entre les noms */
@@ -1197,7 +1189,7 @@
         <div class="table-title">Table d'Honneur</div>
         <div class="seats-list" style="grid-template-columns: repeat(4, 1fr);">
           <div class="seat">Amina</div><div class="seat">Adil</div><div class="seat">Hanaleï</div><div class="seat">Carole</div>
-          <div class="seat">Simon</div><div class="seat center-cercle"></div><div class="seat center-cercle"></div><div class="seat">Christophe</div>
+          <div class="seat">Simon</div><div class="seat center-cercle">🪻</div><div class="seat center-cercle">🪻</div><div class="seat">Christophe</div>
   		<div class="seat empty">Sofiane</div><div class="seat empty">Saban</div><div class="seat">Ilona</div><div class="seat">Léandra</div>
         </div>
       </div>
