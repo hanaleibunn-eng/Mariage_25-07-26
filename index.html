@@ -9,10 +9,10 @@
     :root {
       --primary: #800020;    /* Bordeaux classique */
 	  --primary-dark: #4A0E0E;    /* Bordeaux foncé */
-      --secondary: #D47386;  /* Rose */
-      --success: #A3B18A;    /* Vert olive */
-      --card: #F7FAF5;    /* Blanc vert */
-	  --card-input: #EBEBCA;    /* Jaune */
+      --secondary: #D2BF81;  /* Jaune */
+      --success: #847949;    /* Vert olive */
+      --card: #F7F7F2;    /* Blanc vert */
+	  --card-input: #F0EAD8;    /* Beige */
     }
 
     body, button, input, select, textarea { 
@@ -20,10 +20,10 @@
     }
 
     body { 
-      background: radial-gradient(circle, #5e0d11 0%, #4A0E0E 100%);
+      background: var(--primary-dark);
       color: #3d2b2b;
       max-width: 600px;
-      margin: auto; 
+      margin: auto;
       padding: 70px 15px 20px 15px;
 	  font-size: 14px;
 	  display: flow-root;
@@ -97,7 +97,7 @@
 
     input[type="text"] { 
       padding: 8px 12px; 
-      border: 1px solid #dfe6e9; 
+      border: 1px solid var(--card-input); 
       border-radius: 0;
       outline: none;
       transition: border-color 0.3s;
@@ -188,9 +188,9 @@
       font-size: 20px; cursor: pointer; padding: 5px;
     }
 
-    .item.avant { border-left: 15px solid var(--card-input); }
+    .item.avant { border-left: 15px solid var(--secondary); }
     .item.veille { border-left: 15px solid var(--success); }
-    .item.jourj { border-left: 15px solid #D69B8F; }
+    .item.jourj { border-left: 15px solid #99ABA6; }
 
     /* On ajuste un peu la carte pour que le bord coloré soit joli */
     .item { border-left: 8px solid transparent; }
@@ -377,9 +377,9 @@
     }
 
     /* Couleurs identiques à tes bordures d'étiquettes */
-	.dot.avant { background-color: var(--card-input); }
+	.dot.avant { background-color: var(--secondary); }
     .dot.veille { background-color: var(--success); }
-    .dot.jourj { background-color: #D69B8F; }
+    .dot.jourj { background-color: #99ABA6; }
 
     * {
       box-sizing: border-box;
@@ -400,7 +400,7 @@
     }
 
     footer a {
-      color: #ffffff;     /* Couleur du lien mail */
+      color: #ffffff;
       text-decoration: underline;
     }
 	
@@ -566,15 +566,14 @@
     }
 
     .table-card {
-      background: var(--success);
+      background: var(--card-input);
       border-radius: 12px;
       padding: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      border-top: 4px solid #EBEBCA;
     }
 
     .table-card.honneur {
-      background: var(--card-input);
+      background: var(--secondary);
 	  border-top: none;
       grid-column: 1 / -1; /* Prend toute la largeur sur grand écran */
     }
@@ -629,15 +628,17 @@
       height: 40px;
       border-radius: 50%;    
       margin: 0 auto;
-      background: #E3CC96;   /* Rappel du doré de la table d'honneur */
+      background: var(--card);
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 	}
 	
     .grid-tabs {
       display: grid !important;
       grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      padding: 10px;
+      gap: 6px;
+      margin-left: -15px;      /* Annule le padding gauche du body */
+      margin-right: -15px;     /* Annule le padding droit du body */
+      width: calc(100% + 30px);
 	  position: sticky;
       top: 0;              /* Se colle au bord haut */
       z-index: 1000;       /* Reste au-dessus du contenu qui défile */
@@ -645,6 +646,7 @@
     }
 	
     .grid-tabs .tab-btn {
+	  border-radius: 0;
       width: 100% !important;
       font-size: 11px; /* Légèrement réduit pour mobile */
       padding: 10px 2px;
@@ -683,7 +685,7 @@
           <small>Jours</small>
         </div>
       </div>
-      <p style="margin-top: 35px; font-family: Verdana, sans-serif; font-size: 14px; opacity: 0.8;">📍 Larressingle & Moncrabeau<br></p>
+      <p style="margin-top: 35px; font-family: Verdana, sans-serif; font-size: 14px; opacity: 0.8;">📍 Larressingle & Moncrabeau<br> <br></p>
 	    <div style="margin-top: 25px; text-align: center;">
           <img src="https://www.domainedesaussignac.com/wp-content/uploads/2014/07/larressingle-arriv%C3%A9e.jpg" alt="Photo Mariage" style="width: 100%; max-width: 400px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
         </div>
@@ -707,7 +709,7 @@
   
   <div id="timeline-section" style="display: none;">
     <div class="timeline-card">
-      <h3>🕒 Planning de la journée</h3>
+      <h3>Planning de la journée</h3>
       <ul class="timeline-list">
         <li>
           <span class="time">13:30</span>
@@ -802,7 +804,7 @@
   
     <div id="soireeModal" class="modal-overlay" onclick="closeSoireeModal()">
       <div class="modal-content" onclick="event.stopPropagation()">
-        <h2 style="font-family: 'Playfair Display', serif; color: var(--primary);">✨ Programme de la Nuit</h2>
+        <h2 style="font-family: 'Playfair Display', serif; color: var(--primary);">Programme de la Nuit</h2>
         <hr style="border: 0; border-top: 1px solid #eee; margin: 5px 0;">
     
         <p style="font-family: Verdana, sans-serif; font-size: 14px; text-align: left; line-height: 1.6;">
@@ -866,7 +868,7 @@
   
   <div id="contact-section" style="display: none;">
     <div class="contact-card">
-      <h3>👥 Responsables</h3>
+      <h3>Responsables</h3>
       <ul class="contact-list">
         <li>
           <span class="name">Papa</span>
@@ -944,7 +946,7 @@
     </div>
   
   <div id="logistique-section" style="display: none;">
-  <div id="timeline-section"><h3>💰 Suivi du Budget</h3></div>
+  <div id="timeline-section"><h3>Suivi du Budget</h3></div>
     <div class="contact-card">
       <div style="overflow-x: auto;">
         <table style="width: 100%; border-collapse: collapse; font-family: Verdana, sans-serif; font-size: 13px;">
@@ -1035,7 +1037,7 @@
         </table>
       </div>
     </div>
-	<div id="timeline-section"><h3><br><br>🎀 Déco & Accessoires</h3></div>
+	<div id="timeline-section"><h3><br><br>Inventaire</h3></div>
     <ul class="guest-list" style="padding-left: 40px;">
 	  <li style="color: #ffffff;">Go Pro</li>
 	  <li style="color: #ffffff;">Trépied</li>
@@ -1079,7 +1081,7 @@
   </div>
   
   <div id="guest-list-section" class="guest-section" style="display: none;">
-    <h3>✨ Liste des Invités</h3>
+    <h3>✨ Liste des Invités ✨</h3>
 	<ul class="guest-list">
 	  <li style="color: #A30808;">Adil <span class="guest-role">(GROOM)</span></li>
 	  <li>Hanaleï <span class="guest-role">(BRIDE)</span></li>
@@ -1175,7 +1177,7 @@
   </div>	
   
   <div id="seating-section" style="display: none; padding: 0 10px;">
-    <div id="timeline-section"><h3>🍽️ Plan de Table</h3></div>
+    <div id="timeline-section"><h3>Plan de Table</h3></div>
     <p style="text-align: center; font-size: 14px; color: #ffffff; font-style: italic; margin-bottom: 20px;">Prévisionnel - Attente des confirmations</p>
 
     <div class="seating-grid">
