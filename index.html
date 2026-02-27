@@ -190,13 +190,8 @@
       font-size: 20px; cursor: pointer; padding: 5px;
     }
 
-    /* Couleur pour le Avant */
     .item.avant { border-left: 15px solid #EBEBCA; }
-	
-	/* Couleur pour la Veille */
     .item.veille { border-left: 15px solid #A3B18A; }
-
-    /* Couleur pour le Jour J */
     .item.jourj { border-left: 15px solid #D69B8F; }
 
     /* On ajuste un peu la carte pour que le bord coloré soit joli */
@@ -243,8 +238,6 @@
 	  transition: all 0.3s ease;
       border: 1px solid rgba(255,255,255,0.3);
     }
-	
-    .tab-btn.active { background: #A3B18A !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
     /* Le Badge de l'heure */
     .time { 
@@ -580,7 +573,7 @@
       border-radius: 12px;
       padding: 15px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      border-top: 6px solid var(--card);
+      border-top: 4px solid var(--card);
     }
 
     .table-card.honneur {
@@ -660,13 +653,20 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
       padding: 10px;
+	  position: sticky;
+      top: 0;              /* Se colle au bord haut */
+      z-index: 1000;       /* Reste au-dessus du contenu qui défile */
+      background: var(--bg);
     }
+	
     .grid-tabs .tab-btn {
       width: 100% !important;
       font-size: 11px; /* Légèrement réduit pour mobile */
-      padding: 12px 2px;
+      padding: 10px 2px;
       white-space: nowrap;
     }
+	
+	.tab-btn.active { background: #A3B18A !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
   </style>
 </head>
@@ -675,12 +675,12 @@
   <h1 onclick="showTab()" style="cursor: pointer;">Mariage 25/07/26</h1>
   
   <div class="tabs grid-tabs">
-    <button class="tab-btn" onclick="showTab('timeline')">🕒 Déroulé</button>
-    <button class="tab-btn" onclick="showTab('guestlist')">👥 Invités</button>
-	<button class="tab-btn" onclick="showTab('contact')">📞 Contacts</button>
-    <button class="tab-btn" onclick="showTab('checklist')">📋 Checklist</button>  
-    <button class="tab-btn" onclick="showTab('logistique')">📊 Logistique</button>
-    <button class="tab-btn" onclick="showTab('inventory')">📦 Inventaire</button>
+    <button class="tab-btn" onclick="showTab('timeline')">Déroulé</button>
+    <button class="tab-btn" onclick="showTab('checklist')">Checklist</button>
+	<button class="tab-btn" onclick="showTab('contact')">Contacts</button>
+    <button class="tab-btn" onclick="showTab('logistique')">Logistique</button>
+	<button class="tab-btn" onclick="showTab('guestlist')">Invités</button>
+    <button class="tab-btn" onclick="showTab('seating')">Tables</button>
   </div>
 
   <div id="welcome-message" style="display: block;">
@@ -698,9 +698,121 @@
           <small>Jours</small>
         </div>
       </div>
-      <p style="margin-top: 35px; font-family: Verdana, sans-serif; font-size: 14px; opacity: 0.8;">📍 Larressingle & Moncrabeau<br> <br></p>
+      <p style="margin-top: 35px; font-family: Verdana, sans-serif; font-size: 14px; opacity: 0.8;">📍 Larressingle & Moncrabeau<br></p>
     </div>
   </div>
+  
+  <div id="timeline-section" style="display: none;">
+    <div class="timeline-card">
+      <h3>🕒 Planning de la journée</h3>
+      <ul class="timeline-list">
+        <li>
+          <span class="time">13:30</span>
+	  <div class="desc-container">
+	    <span class="desc">Préparation des Mariés</span>
+		<span class="info-line">📍 Larressingle - Maison</span>
+        <span class="note">Coiffure et Maquillage pour la mariée.<br>Présence de Laetitia (coiffeuse), Fanny (maquilleuse), Maman, Léandra.</span>
+	  </div>
+        </li>
+        <li>
+          <span class="time">15:30</span>
+	  <div class="desc-container">
+        <span class="desc">Habillage</span>
+		<span class="info-line">📍 Larressingle - Maison</span>
+	    <span class="note">Arrivée des Demoiselles d'honneur et Témoins à la maison.<br>Photographe présent pour les derniers préparatifs de la mariée (à vérifier).</span>
+	  </div>
+        </li>
+        <li>
+	  <span class="time">16:00</span>
+	  <div class="desc-container">
+	    <span class="desc">Cérémonie Civile</span>
+		<span class="info-line">📍 Larressingle - Mairie</span>
+ 	    <span class="note">Distribution d'éventails et ombrelles à l'arrivée des invités si nécessaire.<br>Arrivée du marié vers 16h.<br> Arrivée de la mariée vers 16h15.</span>
+          </div>
+        </li>
+        <li>
+          <span class="time">16:45</span>
+	  <div class="desc-container">
+	    <span class="desc">Photos des Mariés</span>
+		<span class="info-line">📍 Larressingle - Château<br>📞 Photographe - David : <a href="tel:0684366712" style="color: inherit; text-decoration: none; font-weight: bold;">06 84 36 67 12</a></span>
+ 	    <span class="note">Les invités partent pour la Palombière d'Henri à Moncrabeau - 20 minutes en voiture.</span>
+          </div>
+        </li>
+        <li>
+          <span class="time">17:45</span>
+	  <div class="desc-container">
+	    <span class="desc">Cérémonie Laïque</span>
+		<span class="info-line">📍 Palombière d'Henri</span>
+ 	    <span class="note">Accueil des invités avec musique de fond.<br>Introduction de Tony - 5 min.<br> Discours des témoins et des parents - 15 min.<br> Echange des alliances, voeux, rituel symbolique - 10 min.<br>Remerciements par Tony et sortie des mariés en musique - 5 min.</span>
+          </div>
+        </li>
+        <li>
+          <span class="time">18:30</span>
+	  <div class="desc-container">
+	    <span class="desc">Vin d'Honneur</span>
+		<span class="info-line">📍 Palombière d'Henri<br>📞 Saxophoniste - Pierre : <a href="tel:0780239409" style="color: inherit; text-decoration: none; font-weight: bold;">07 80 23 94 09</a></span>
+ 	    <span class="note">Cocktail et bouchées (4 serveurs).<br>Musique d'ambiance : saxophoniste.<br>Activités : photos avec le photographe, pétanque, mur des invités, polaroïd.</span>
+          </div>
+        </li>
+        <li>
+          <span class="time">20:30</span>
+	  <div class="desc-container">
+	    <span class="desc">Dîner</span>
+		<span class="info-line">📞 Traiteur - M. Ducousseau : <a href="tel:0687129468" style="color: inherit; text-decoration: none; font-weight: bold;">06 87 12 94 68</a></span>
+ 	    <span class="note">Plat principal + Assiette de fromage.<br>Discours des amis et jeux.<br>Musique en fond.</span>
+          </div>
+        </li>
+        <li>
+          <span class="time">22:15</span>
+	  <div class="desc-container">
+	    <span class="desc">Ouverture de Bal</span>
+		<span class="info-line">📍 Palombière d'Henri</span>
+ 	    <span class="note">Danse avec Papa et Adil.<br>Responsable musique : Léandra.</span>
+          </div>
+        </li>
+        <li>
+          <span class="time">22:30</span>
+	  <div class="desc-container">
+	    <span class="desc">Pièce-Montée</span>
+		<span class="info-line">📞 Pâtisserie - C. Garnier : <a href="tel:0562281133" style="color: inherit; text-decoration: none; font-weight: bold;">05 62 28 11 33</a></span>
+ 	    <span class="note">Livraison par le patissier directement.<br>Changement de robe pour la mariée.</span>
+          </div>
+        </li>
+        <li>
+          <span class="time time-party" onclick="openSoireeModal()" style="cursor: pointer;">23:00</span>
+	  <div class="desc-container">
+	    <span class="desc">SOIRÉE</span>
+		<span class="info-line">📍 Palombière d'Henri</span>
+          </div>
+        </li>
+		<li>
+          <span class="time">Dimanche 11:00</span>
+	  <div class="desc-container">
+	    <span class="desc">Brunch</span>
+		<span class="info-line">📍 Palombière d'Henri</span>
+ 	    <span class="note">Brunch du dimanche avec tous les invités intéressés.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+    <div id="soireeModal" class="modal-overlay" onclick="closeSoireeModal()">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <h2 style="font-family: 'Playfair Display', serif; color: var(--primary);">✨ Programme de la Nuit</h2>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 5px 0;">
+    
+        <p style="font-family: Verdana, sans-serif; font-size: 14px; text-align: left; line-height: 1.6;">
+          <strong>Au menu des festivités :</strong><br><br>
+          💃 Ouverture surprise du dancefloor<br>
+          🎧 Playlist faite par les invités<br>
+          🥂 Boissons & pâtisseries<br>
+          📸 Circulation d'une Go Pro tout au long de la nuit<br>
+        </p>
+
+        <button onclick="closeSoireeModal()" style="margin-top: 20px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer;">Fermer</button>
+      </div>
+    </div>
   
   <div id="add" style="display: none;">
     <input type="text" id="newItem" placeholder="Action (ex: Réserver le traiteur...)">
@@ -726,39 +838,118 @@
     <button id="addBtn" onclick="addItem()">Ajouter à la liste</button>
   </div>
 
-  <div id="filter-container" style="margin-bottom: 20px; display: none;">
-  <input type="text" id="filterInput" onkeyup="filterTasks()" placeholder="Rechercher..." 
+    <div id="filter-container" style="margin-bottom: 20px; display: none;">
+      <input type="text" id="filterInput" onkeyup="filterTasks()" placeholder="Rechercher..." 
          style="width: 100%; padding: 10px; border-radius: 4px; border: none; box-sizing: border-box; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-  </div>
-
-  <div id="counter-container" style="display: none; text-align: center; margin-bottom: 15px; font-weight: bold; color: #F5F5F5 !important; font-size: 16px;">
-    <span id="completed-count">0</span> / <span id="total-count">0</span> actions réalisées
-  </div>
-
-  <div class="legend-container" style="display: none;">
-    <div class="legend-item">
-      <span class="dot avant"></span> <span>Avant</span>
     </div>
-    <div class="legend-item">
-      <span class="dot veille"></span> <span>Veille</span>
-    </div>
-    <div class="legend-item">
-      <span class="dot jourj"></span> <span>Jour J</span>
-    </div>
-  </div>
 
-  <div id="list" style="display: none;"></div>
+    <div id="counter-container" style="display: none; text-align: center; margin-bottom: 15px; font-weight: bold; color: #F5F5F5 !important; font-size: 16px;">
+      <span id="completed-count">0</span> / <span id="total-count">0</span> actions réalisées
+    </div>
+
+    <div class="legend-container" style="display: none;">
+      <div class="legend-item">
+        <span class="dot avant"></span> <span>Avant</span>
+      </div>
+      <div class="legend-item">
+        <span class="dot veille"></span> <span>Veille</span>
+      </div>
+      <div class="legend-item">
+        <span class="dot jourj"></span> <span>Jour J</span>
+      </div>
+    </div>
+
+    <div id="list" style="display: none;"></div>
   
-  <div id="logistique-section" style="display: none; padding: 0 10px;">
-    <div class="contact-card" style="margin-bottom: 20px;">
-      <h3 style="color: var(--card); margin-bottom: 15px;">💰 Suivi du Budget</h3>
+  <div id="contact-section" style="display: none;">
+    <div class="contact-card">
+      <h3>👥 Responsables</h3>
+      <ul class="contact-list">
+        <li>
+          <span class="name">Papa</span>
+	  <div class="desc-container">
+        <span class="desc">Respo son, micro, lumières</span>
+		<span class="info-line">📞 07 48 14 76 75</span>
+	    <span class="note">Installer l'enceinte et préparer la playlist pour la Mairie avec Xavier.<br>Installer les enceintes à la Palombière d'Henri.<br>Tester Micro, rallonges, lumières du soir.</span>
+	  </div>
+        </li>
+        <li>
+	  <span class="name">Témoins Hanaleï</span>
+	  <div class="desc-container">
+	    <span class="desc">Respos musique & vidéo</span>
+		<span class="info-line">📞 06 33 74 73 83 (Léandra)<br>📞 06 04 16 24 01 (Ilona)</span>
+ 	    <span class="note">Discours Cérémonie laïque.<br>Lancer la musique pour la Cérémonie, le dîner, l'ouverture de bal et la danse surprise.<br>Installer trépied et Go Pro pour les vidéos de la cérémonie, ouverture de bal, et danse.<br>Charger la Go Pro entre la journée et la soirée.</span>
+          </div>
+        </li>
+        <li>
+          <span class="name">Témoins Adil</span>
+	  <div class="desc-container">
+	    <span class="desc">Respo Alliances</span>
+		<span class="info-line">📞 07 81 79 71 80 (Saban)</span>
+ 	    <span class="note">Discours Cérémonie laïque.<br>Apporter les alliances aux mariés à la Cérémonie laïque.</span>
+          </div>
+        </li>
+        <li>
+          <span class="name badge-special" onclick="openPinkModal()" style="cursor:pointer;">Demoiselles d'Honneur</span>
+	  <div class="desc-container">
+	    <span class="desc">Respo accueil et timing</span>
+ 	    <span class="note">Accueil invités à la mairie.<br>Accueil saxophoniste, traiteur, patissier.<br>Inviter les gens à passer à table à 21h.<br>Apporter la Pièce-Montée après l'ouverture de bal.</span>
+          </div>
+        </li>
+		<li>
+          <span class="name">Tony</span>
+	  <div class="desc-container">
+	    <span class="desc">Animateur cérémonie laïque</span>
+		<span class="info-line">📞 06 80 16 97 51</span>
+ 	    <span class="note">Texte préparé à l'avance.<br>Annoncer le vin d'honneur et le dîner qui suit.</span>
+          </div>
+        </li>
+		<li>
+          <span class="name">Maman</span>
+	  <div class="desc-container">
+	    <span class="desc">Respo fleurs et brunch</span>
+		<span class="info-line">📞 06 60 59 68 68</span>
+ 	    <span class="note">Bouquet de la mariée.<br>Pizza, viennoiseries, fruits, et boissons pour le brunch.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+    <div id="pinkModal" class="modal-overlay" onclick="closePinkModal()">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <h4 style="margin-top:0; color:var(--primary)">Dress Code</h4>
+        <div class="color-grid">
+          <div class="color-square" style="background: #FFB7C5;"></div>
+          <div class="color-square" style="background: #F49AC2;"></div>
+          <div class="color-square" style="background: #FF91A4;"></div>
+          <div class="color-square" style="background: #FC8EAC;"></div>
+          <div class="color-square" style="background: #F08080;"></div>
+          <div class="color-square" style="background: #DE5D83;"></div>
+          <div class="color-square" style="background: #C93886;"></div>
+          <div class="color-square" style="background: #C21E56;"></div>
+          <div class="color-square" style="background: #800844;"></div>
+        </div>
+	    <div style="text-align: center; width: 100%;">
+          <a href="https://hanaleibunn-eng.github.io/moodboard/" class="btn-moodboard"
+		  style="background-color: var(--primary) !important; color: white !important; display: inline-block;">
+  		  Voir les inspirations
+		  </a>
+        </div>
+        <button onclick="closePinkModal()" style="margin-top:20px; border:none; background:var(--primary); color:white; padding:8px 15px; cursor:pointer; border-radius:5px;">Fermer</button>
+      </div>
+    </div>
+  
+  <div id="logistique-section" style="display: none;">
+  <div id="timeline-section"><h3>💰 Suivi du Budget</h3></div>
+    <div class="contact-card">
       <div style="overflow-x: auto;">
         <table style="width: 100%; border-collapse: collapse; font-family: Verdana, sans-serif; font-size: 13px;">
           <thead>
             <tr style="border-bottom: 2px solid var(--primary); color: var(--card);">
               <th style="text-align: left; padding: 8px;">Poste</th>
               <th style="text-align: left; padding: 8px;">Statut</th>
-              <th style="text-align: left; padding: 8px;">Détails</th>
+              <th style="text-align: left; padding: 8px;">Echéance</th>
             </tr>
           </thead>
           <tbody style="color: white; opacity: 0.9;">
@@ -775,7 +966,7 @@
             <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
               <td style="padding: 10px;">Photographe</td>
               <td style="padding: 10px; font-weight: bold;">Non payé</td>
-              <td style="padding: 10px;">Jour J-Cash</td>
+              <td style="padding: 10px;">Jour J</td>
             </tr>
 			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
               <td style="padding: 10px;">Boissons</td>
@@ -795,7 +986,7 @@
 			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
               <td style="padding: 10px;">Saxophoniste</td>
               <td style="padding: 10px; font-weight: bold;">Non payé</td>
-              <td style="padding: 10px;">Jour J-Cash</td>
+              <td style="padding: 10px;">Jour J</td>
             </tr>
 			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
               <td style="padding: 10px;">Sono et lumières</td>
@@ -842,23 +1033,216 @@
       </div>
     </div>
   </div>
+  
+  <div id="guest-list-section" class="guest-section" style="display: none;">
+    <h3>✨ Liste des Invités</h3>
+	<ul class="guest-list">
+	  <li style="color: #808080;">Adil <span class="guest-role">(GROOM)</span></li>
+	  <li>Hanaleï <span class="guest-role">(BRIDE)</span></li>
+	  <li style="color: #808080;">Amina 🌱 <span class="guest-role">(Maman)</span></li>
+	  <li>Carole <span class="guest-role">(Maman)</span></li>
+	  <li>Christophe <span class="guest-role">(Papa)</span></li>
+	  <li>Léandra <span class="guest-role">(Soeur)</span></li>
+	  <li style="color: #808080;">Sofiane <span class="guest-role">(Frère)</span></li>
+	  <li>Ilona <span class="guest-role">(Témoin)</span></li>
+	  <li>Maxime</li>
+	  <li style="color: #808080;">Saban 🌱 <span class="guest-role">(Témoin)</span></li>
+	  <li style="color: #808080;">Nora 🌱</li>
+	  <li style="color: #808080;">Myriam 🌱 <span class="guest-role">(Tante)</span></li>
+	  <li style="color: #808080;">Zineb 🌱 <span class="guest-role">(Tante)</span></li>
+	  <li style="color: #808080;">Ghita 🌱 <span class="guest-role">(Cousine)</span></li>
+	  <li>Anthony B. <span class="guest-role">(Oncle)</span></li>
+	  <li>Gwen B.</li>
+	  <li>Indiana <span class="guest-role">(Cousine)</span></li>
+	  <li>Marc <span class="guest-role">(Papi)</span></li>
+	  <li>Rachel</li>
+	  <li>Annie <span class="guest-role">(Mamie)</span></li>
+	  <li>Hervé <span class="guest-role">(Oncle)</span></li>
+	  <li>Isabelle</li>
+	  <li>Thibault et Angelia</li>
+	  <li>Mathilde <span class="guest-role">(Dem.)</span></li>
+	  <li>Vincent</li>
+	  <li>Elsa <span class="guest-role">(Dem.)</span></li>
+	  <li>Thibault</li>
+	  <li>Marlène <span class="guest-role">(Dem.)</span></li>
+	  <li>Antoine Bu</li>
+	  <li>Delphine <span class="guest-role">(Dem.)</span></li>
+	  <li>Benjamin</li>
+	  <li>Juliette <span class="guest-role">(Dem.)</span></li>
+	  <li>Kevin</li>
+	  <li style="color: #808080;">Simon</li>
+	  <li style="color: #808080;">Fille de Simon</li>
+	  <li style="color: #808080;">Fille de Simon</li>
+	  <li>Stéphanie</li>
+	  <li>Julien</li>
+	  <li>Loralie</li>
+	  <li>Maxandre</li>
+	  <li>Marilyn</li>
+	  <li>Christian</li>
+	  <li>Carla</li>
+	  <li>Anthony et Célia</li>
+	  <li>Raymond</li>
+      <li>Corinne</li>
+	  <li>Alexis</li>
+      <li>Julien</li>
+	  <li>Martine</li>
+	  <li>Mathieu</li>
+	  <li>Marie-Noëlle</li>
+	  <li>Paule</li>
+	  <li>Olivier</li>
+	  <li>Laurent</li>
+	  <li style="color: #808080;">Karen</li>
+	  <li style="color: #808080;">Abdoul</li>
+	  <li style="color: #808080;">Moncef et sa femme</li>
+	  <li style="color: #808080;">Noussair</li>
+	  <li style="color: #808080;">Zeineb 🌱</li>
+	  <li style="color: #808080;">Mariam 🌱</li>
+	  <li style="color: #808080;">Lucas</li>
+	  <li style="color: #808080;">Alexandros</li>
+	  <li style="color: #808080;">Brice</li>
+	  <li>Noémie et Nico</li>
+	  <li>Nina et Egon</li>
+	  <li>Maïlys et P-G.</li>
+	  <li>Gwen et Hugo</li>
+	  <li>Justine et Malo</li>
+	  <li>Estelle</li>
+	  <li>Pauline et William</li>
+	  <li>Wijdane et Brice</li>
+	  <li>Soleil</li>
+	  <li>Manon</li>
+	  <li>Clara et Youssef</li>
+	  <li>Mohammed 🌱</li>
+	  <li>Taha 🌱</li>
+	  <li>Mathilde B.</li>
+	  <li>Mahoua et Axel</li>
+	<p style="text-align:center; font-size: 12px; color: #999; margin-top: 15px; font-style: italic;">Total : 90 personnes<br> <br> 
+    </p>
+	<p span class="guest-role"><span>Invités à la Cérémonie et au Vin d'honneur :</span></p>
+	<ul class="guest-list"> <li>Aline et Gilou</li>
+      <li>Luc et Sandrine</li>
+      <li>Christophe et Barbara</li>
+      <li>Sandrine</li>
+      <li>Alain et Solange</li>
+      <li>Anne et Philippe</li>
+      <li>Philippe et Nathalie</li>
+      <li>Bénédicte et Alex</li>
+      <li>Stéphane et Sandrine</li>
+    </ul>	 	  
+  </div>	
+  
+  <div id="seating-section" style="display: none; padding: 0 10px;">
+    <div id="timeline-section"><h3>🍽️ Plan de Table</h3></div>
+    <p style="text-align: center; font-size: 14px; color: #ffffff; font-style: italic; margin-bottom: 20px;">Prévisionnel</p>
 
-    <div id="inventory-section" style="display: none; padding: 0 10px;">
-      <div class="guest-section">
-        <h3>📦 Inventaire du Matériel</h3>
-        <ul class="guest-list">
-          <li>Enceinte Mairie <span class="guest-role">(Papa) - ✅ OK</span></li>
-          <li>Rallonges (x3) <span class="guest-role">(Adil) - ⏳ À trouver</span></li>
-          <li>GoPro + Trépied <span class="guest-role">(Léandra)</span></li>
-          <li>Ombrelles & Éventails <span class="guest-role">(Hanaleï)</span></li>
-          <li>Panier d'accueil toilettes <span class="guest-role">(Ilona)</span></li>
-          <li>Appareils Polaroïd <span class="guest-role">(Maman)</span></li>
-          <li>Livre d'or + Stylos <span class="guest-role">(Hanaleï)</span></li>
-        </ul>
+    <div class="seating-grid">
+      <div class="table-card honneur">
+        <div class="table-title">Table d'Honneur</div>
+        <div class="seats-list" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="seat">Amina</div><div class="seat">Adil</div><div class="seat">Hanaleï</div><div class="seat">Carole</div>
+          <div class="seat">Simon</div><div class="seat center-cercle"></div><div class="seat center-cercle"></div><div class="seat">Christophe</div>
+  		<div class="seat empty">Sofiane</div><div class="seat empty">Saban</div><div class="seat">Ilona</div><div class="seat">Léandra</div>
+        </div>
       </div>
-    </div>
 
-  <script type="module">
+      <div class="table-card">
+        <div class="table-title">Table 1</div>
+        <div class="seats-list">
+          <div class="seat">Gwen</div><div class="seat">Hugo</div><div class="seat empty">Maxime</div>
+          <div class="seat">Justine</div><div class="seat center-cercle">🌹</div><div class="seat empty">William</div>
+          <div class="seat">Malo</div><div class="seat empty">Estelle</div><div class="seat empty">Pauline</div>
+        </div>
+      </div>
+  	  <div class="table-card">
+        <div class="table-title">Table 2</div>
+        <div class="seats-list">
+          <div class="seat">Mariam</div><div class="seat">Zaineb</div><div class="seat">Taha</div>
+          <div class="seat empty">Mohammed</div><div class="seat center-cercle">🌺</div><div class="seat">Brice</div>
+          <div class="seat empty">Mathilde</div><div class="seat empty">Soleil</div><div class="seat">Wijdane</div>
+        </div>
+      </div>
+	  <div class="table-card">
+        <div class="table-title">Table 3</div>
+        <div class="seats-list">
+          <div class="seat">Karen</div><div class="seat empty">Axel</div><div class="seat empty">Mahoua</div>
+          <div class="seat">Abdoul</div><div class="seat center-cercle">🌻</div><div class="seat">Nora</div>
+          <div class="seat">Noussair</div><div class="seat empty">Moncef/Saban</div><div class="seat">Brice</div>
+        </div>
+      </div>
+	  <div class="table-card">
+        <div class="table-title">Table 4</div>
+        <div class="seats-list">
+          <div class="seat">Zineb</div><div class="seat">Gwen</div><div class="seat">Tony</div>
+          <div class="seat empty">Myriam</div><div class="seat center-cercle">🌼</div><div class="seat">Indiana</div>
+          <div class="seat">Ghita</div><div class="seat empty">Fille Simon</div><div class="seat empty">Fille Simon</div>
+        </div>
+      </div>
+	  <div class="table-card">
+        <div class="table-title">Table 5</div>
+        <div class="seats-list">
+          <div class="seat">Nicolas</div><div class="seat">Noémie</div><div class="seat">Egon</div>
+          <div class="seat center-hole"></div><div class="seat center-cercle">🌷</div><div class="seat center-hole"></div>
+          <div class="seat">Maïlys</div><div class="seat">P-G.</div><div class="seat">Nina</div>
+        </div>
+      </div>
+	  <div class="table-card">
+        <div class="table-title">Table 6</div>
+        <div class="seats-list">
+          <div class="seat">Mathilde</div><div class="seat">Vincent</div><div class="seat empty">Alexandros</div>
+          <div class="seat">Thibault</div><div class="seat center-cercle">🪻</div><div class="seat empty">Lucas</div>
+          <div class="seat">Elsa</div><div class="seat">Juliette</div><div class="seat">Kevin</div>
+        </div>
+      </div>
+	  <div class="table-card">
+        <div class="table-title">Table 7</div>
+        <div class="seats-list">
+          <div class="seat">Marlène</div><div class="seat">Delphine</div><div class="seat">Benjamin</div>
+          <div class="seat">Youssef</div><div class="seat center-cercle">🌹</div><div class="seat">Antoine</div>
+          <div class="seat">Clara</div><div class="seat empty">Manon</div><div class="seat center-hole"></div>
+        </div>
+      </div>
+	  <div class="table-card">
+        <div class="table-title">Table 8</div>
+        <div class="seats-list">
+          <div class="seat">Hervé</div><div class="seat">Isabelle</div><div class="seat">Angelia</div>
+          <div class="seat">Marc</div><div class="seat center-cercle">🌸</div><div class="seat">Thibault</div>
+          <div class="seat empty">Rachel</div><div class="seat empty">Paule</div><div class="seat">Laurent</div>
+        </div>
+      </div>
+	  <div class="table-card">
+        <div class="table-title">Table 9</div>
+        <div class="seats-list">
+          <div class="seat">Julien</div><div class="seat empty">Mathieu</div><div class="seat empty">Marie-Noëlle</div>
+          <div class="seat">Stéphanie</div><div class="seat center-cercle">💐</div><div class="seat">Martine</div>
+          <div class="seat">Maxandre</div><div class="seat">Loralie</div><div class="seat center-hole"></div>
+        </div>
+      </div>
+	  <div class="table-card">
+        <div class="table-title">Table 10</div>
+        <div class="seats-list">
+          <div class="seat">Christian</div><div class="seat">Marilyn</div><div class="seat">Célia</div>
+          <div class="seat">Carla</div><div class="seat center-cercle">🌹</div><div class="seat">Anthony</div>
+          <div class="seat empty">Annie</div><div class="seat">Raymond</div><div class="seat">Corinne</div>
+        </div>
+      </div>
+	  <div class="table-card">
+        <div class="table-title">   </div>
+        <div class="seats-list">
+          <div class="seat empty">Alexis</div>
+		  <div class="seat empty">Julien</div>
+		  <div class="seat empty">Femme Moncef</div>
+          <div class="seat empty">Olivier</div>
+        </div>
+      </div>
+    
+      </div>
+  </div>
+  
+  <footer>
+    <p>&copy;2026 Hanaleï et Adil<br>Tous droits réservés</p>
+    <p>Contact : <a href="mailto:votre@email.com">hanalei.bunn@gmail.com</a><br>Tél Hanaleï : <a href="tel:+33600000000">06 12 92 50 22</a><br>Tél Adil : <a href="tel:+33600000000">06 15 82 41 22</a></p>
+  </footer>
+
+<script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
   import { 
     getDatabase, ref, onValue, push, set, remove, update 
@@ -1013,6 +1397,7 @@
   };
   
   window.showTab = function(tabName) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     const isHome = !tabName;
     const isTimeline = tabName === 'timeline';
     const isChecklist = tabName === 'checklist';
@@ -1059,6 +1444,10 @@
     // 4. État actif des boutons du menu
     const btns = document.querySelectorAll('.tab-btn');
     btns.forEach(btn => btn.classList.remove('active'));
+	if (tabName) {
+        const clickedBtn = document.querySelector(`.tab-btn[onclick*="${tabName}"]`);
+        if (clickedBtn) clickedBtn.classList.add('active');
+    }
   };
   
   function updateCountdown() {
@@ -1088,410 +1477,6 @@
   };
 
 </script>
-
-  <div id="timeline-section" style="display: none;">
-    <div class="timeline-card">
-      <h3>🕒 Planning de la journée</h3>
-      <ul class="timeline-list">
-        <li>
-          <span class="time">13:30</span>
-	  <div class="desc-container">
-	    <span class="desc">Préparation des Mariés</span>
-		<span class="info-line">📍 Larressingle - Maison</span>
-        <span class="note">Coiffure et Maquillage pour la mariée.<br>Présence de Laetitia (coiffeuse), Fanny (maquilleuse), Maman, Léandra.</span>
-	  </div>
-        </li>
-        <li>
-          <span class="time">15:30</span>
-	  <div class="desc-container">
-        <span class="desc">Habillage</span>
-		<span class="info-line">📍 Larressingle - Maison</span>
-	    <span class="note">Arrivée des Demoiselles d'honneur et Témoins à la maison.<br>Photographe présent pour les derniers préparatifs de la mariée (à vérifier).</span>
-	  </div>
-        </li>
-        <li>
-	  <span class="time">16:00</span>
-	  <div class="desc-container">
-	    <span class="desc">Cérémonie Civile</span>
-		<span class="info-line">📍 Larressingle - Mairie</span>
- 	    <span class="note">Distribution d'éventails et ombrelles à l'arrivée des invités si nécessaire.<br>Arrivée du marié vers 16h.<br> Arrivée de la mariée vers 16h15.</span>
-          </div>
-        </li>
-        <li>
-          <span class="time">16:45</span>
-	  <div class="desc-container">
-	    <span class="desc">Photos des Mariés</span>
-		<span class="info-line">📍 Larressingle - Château<br>📞 Photographe - David : <a href="tel:0684366712" style="color: inherit; text-decoration: none; font-weight: bold;">06 84 36 67 12</a></span>
- 	    <span class="note">Les invités partent pour la Palombière d'Henri à Moncrabeau - 20 minutes en voiture.</span>
-          </div>
-        </li>
-        <li>
-          <span class="time">17:45</span>
-	  <div class="desc-container">
-	    <span class="desc">Cérémonie Laïque</span>
-		<span class="info-line">📍 Palombière d'Henri</span>
- 	    <span class="note">Accueil des invités avec musique de fond.<br>Introduction de Tony - 5 min.<br> Discours des témoins et des parents - 15 min.<br> Echange des alliances, voeux, rituel symbolique - 10 min.<br>Remerciements par Tony et sortie des mariés en musique - 5 min.</span>
-          </div>
-        </li>
-        <li>
-          <span class="time">18:30</span>
-	  <div class="desc-container">
-	    <span class="desc">Vin d'Honneur</span>
-		<span class="info-line">📍 Palombière d'Henri<br>📞 Saxophoniste - Pierre : <a href="tel:0780239409" style="color: inherit; text-decoration: none; font-weight: bold;">07 80 23 94 09</a></span>
- 	    <span class="note">Cocktail et bouchées (4 serveurs).<br>Musique d'ambiance : saxophoniste.<br>Activités : photos avec le photographe, pétanque, mur des invités, polaroïd.</span>
-          </div>
-        </li>
-        <li>
-          <span class="time">20:30</span>
-	  <div class="desc-container">
-	    <span class="desc">Dîner</span>
-		<span class="info-line">📞 Traiteur - M. Ducousseau : <a href="tel:0687129468" style="color: inherit; text-decoration: none; font-weight: bold;">06 87 12 94 68</a></span>
- 	    <span class="note">Plat principal + Assiette de fromage.<br>Discours des amis et jeux.<br>Musique en fond.</span>
-          </div>
-        </li>
-        <li>
-          <span class="time">22:15</span>
-	  <div class="desc-container">
-	    <span class="desc">Ouverture de Bal</span>
-		<span class="info-line">📍 Palombière d'Henri</span>
- 	    <span class="note">Danse avec Papa et Adil.<br>Responsable musique : Léandra.</span>
-          </div>
-        </li>
-        <li>
-          <span class="time">22:30</span>
-	  <div class="desc-container">
-	    <span class="desc">Pièce-Montée</span>
-		<span class="info-line">📞 Pâtisserie - C. Garnier : <a href="tel:0562281133" style="color: inherit; text-decoration: none; font-weight: bold;">05 62 28 11 33</a></span>
- 	    <span class="note">Livraison par le patissier directement.<br>Changement de robe pour la mariée.</span>
-          </div>
-        </li>
-        <li>
-          <span class="time time-party" onclick="openSoireeModal()" style="cursor: pointer;">23:00</span>
-	  <div class="desc-container">
-	    <span class="desc">SOIRÉE</span>
-		<span class="info-line">📍 Palombière d'Henri</span>
-          </div>
-        </li>
-		<li>
-          <span class="time">Dimanche 11:00</span>
-	  <div class="desc-container">
-	    <span class="desc">Brunch</span>
-		<span class="info-line">📍 Palombière d'Henri</span>
- 	    <span class="note">Brunch du dimanche avec tous les invités intéressés.</span>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-  
-  <div id="soireeModal" class="modal-overlay" onclick="closeSoireeModal()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-      <h2 style="font-family: 'Playfair Display', serif; color: var(--primary);">✨ Programme de la Nuit</h2>
-      <hr style="border: 0; border-top: 1px solid #eee; margin: 5px 0;">
-    
-      <p style="font-family: Verdana, sans-serif; font-size: 14px; text-align: left; line-height: 1.6;">
-        <strong>Au menu des festivités :</strong><br><br>
-        💃 Ouverture surprise du dancefloor<br>
-        🎧 Playlist faite par les invités<br>
-        🥂 Boissons & pâtisseries<br>
-        📸 Circulation d'une Go Pro tout au long de la nuit<br>
-      </p>
-
-      <button onclick="closeSoireeModal()" style="margin-top: 20px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer;">Fermer</button>
-    </div>
-  </div>
-  
-  <div id="contact-section" style="display: none;">
-    <div class="contact-card">
-      <h3>Responsables</h3>
-      <ul class="contact-list">
-        <li>
-          <span class="name">Papa</span>
-	  <div class="desc-container">
-        <span class="desc">Respo son, micro, lumières</span>
-		<span class="info-line">📞 07 48 14 76 75</span>
-	    <span class="note">Installer l'enceinte et préparer la playlist pour la Mairie avec Xavier.<br>Installer les enceintes à la Palombière d'Henri.<br>Tester Micro, rallonges, lumières du soir.</span>
-	  </div>
-        </li>
-        <li>
-	  <span class="name">Témoins Hanaleï</span>
-	  <div class="desc-container">
-	    <span class="desc">Respos musique & vidéo</span>
-		<span class="info-line">📞 06 33 74 73 83 (Léandra)<br>📞 06 04 16 24 01 (Ilona)</span>
- 	    <span class="note">Discours Cérémonie laïque.<br>Lancer la musique pour la Cérémonie, le dîner, l'ouverture de bal et la danse surprise.<br>Installer trépied et Go Pro pour les vidéos de la cérémonie, ouverture de bal, et danse.<br>Charger la Go Pro entre la journée et la soirée.</span>
-          </div>
-        </li>
-        <li>
-          <span class="name">Témoins Adil</span>
-	  <div class="desc-container">
-	    <span class="desc">Respo Alliances</span>
-		<span class="info-line">📞 07 81 79 71 80 (Saban)</span>
- 	    <span class="note">Discours Cérémonie laïque.<br>Apporter les alliances aux mariés à la Cérémonie laïque.</span>
-          </div>
-        </li>
-        <li>
-          <span class="name badge-special" onclick="openPinkModal()" style="cursor:pointer;">Demoiselles d'Honneur</span>
-	  <div class="desc-container">
-	    <span class="desc">Respo accueil et timing</span>
- 	    <span class="note">Accueil invités à la mairie.<br>Accueil saxophoniste, traiteur, patissier.<br>Inviter les gens à passer à table à 21h.<br>Apporter la Pièce-Montée après l'ouverture de bal.</span>
-          </div>
-        </li>
-		<li>
-          <span class="name">Tony</span>
-	  <div class="desc-container">
-	    <span class="desc">Animateur cérémonie laïque</span>
-		<span class="info-line">📞 06 80 16 97 51</span>
- 	    <span class="note">Texte préparé à l'avance.<br>Annoncer le vin d'honneur et le dîner qui suit.</span>
-          </div>
-        </li>
-		<li>
-          <span class="name">Maman</span>
-	  <div class="desc-container">
-	    <span class="desc">Respo fleurs et brunch</span>
-		<span class="info-line">📞 06 60 59 68 68</span>
- 	    <span class="note">Bouquet de la mariée.<br>Pizza, viennoiseries, fruits, et boissons pour le brunch.</span>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-  
-  <div id="pinkModal" class="modal-overlay" onclick="closePinkModal()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-      <h4 style="margin-top:0; color:var(--primary)">Dress Code</h4>
-      <div class="color-grid">
-        <div class="color-square" style="background: #FFB7C5;"></div>
-        <div class="color-square" style="background: #F49AC2;"></div>
-        <div class="color-square" style="background: #FF91A4;"></div>
-        <div class="color-square" style="background: #FC8EAC;"></div>
-        <div class="color-square" style="background: #F08080;"></div>
-        <div class="color-square" style="background: #DE5D83;"></div>
-        <div class="color-square" style="background: #C93886;"></div>
-        <div class="color-square" style="background: #C21E56;"></div>
-        <div class="color-square" style="background: #800844;"></div>
-      </div>
-	  <div style="text-align: center; width: 100%;">
-        <a href="https://hanaleibunn-eng.github.io/moodboard/" class="btn-moodboard"
-		style="background-color: var(--primary) !important; color: white !important; display: inline-block;">
-		Voir les inspirations
-		</a>
-      </div>
-      <button onclick="closePinkModal()" style="margin-top:20px; border:none; background:var(--primary); color:white; padding:8px 15px; cursor:pointer; border-radius:5px;">Fermer</button>
-    </div>
-  </div>
-  
-  <div id="guest-list-section" class="guest-section" style="display: none;">
-    <h3>✨ Liste des Invités</h3>
-	<ul class="guest-list">
-	  <li style="color: #808080;">Adil <span class="guest-role">(GROOM)</span></li>
-	  <li>Hanaleï <span class="guest-role">(BRIDE)</span></li>
-	  <li style="color: #808080;">Amina 🌱 <span class="guest-role">(Maman)</span></li>
-	  <li>Carole <span class="guest-role">(Maman)</span></li>
-	  <li>Christophe <span class="guest-role">(Papa)</span></li>
-	  <li>Léandra <span class="guest-role">(Soeur)</span></li>
-	  <li style="color: #808080;">Sofiane <span class="guest-role">(Frère)</span></li>
-	  <li>Ilona <span class="guest-role">(Témoin)</span></li>
-	  <li>Maxime</li>
-	  <li style="color: #808080;">Saban 🌱 <span class="guest-role">(Témoin)</span></li>
-	  <li style="color: #808080;">Nora 🌱</li>
-	  <li style="color: #808080;">Myriam 🌱 <span class="guest-role">(Tante)</span></li>
-	  <li style="color: #808080;">Zineb 🌱 <span class="guest-role">(Tante)</span></li>
-	  <li style="color: #808080;">Ghita 🌱 <span class="guest-role">(Cousine)</span></li>
-	  <li>Anthony B. <span class="guest-role">(Oncle)</span></li>
-	  <li>Gwen B.</li>
-	  <li>Indiana <span class="guest-role">(Cousine)</span></li>
-	  <li>Marc <span class="guest-role">(Papi)</span></li>
-	  <li>Rachel</li>
-	  <li>Annie <span class="guest-role">(Mamie)</span></li>
-	  <li>Hervé <span class="guest-role">(Oncle)</span></li>
-	  <li>Isabelle</li>
-	  <li>Thibault et Angelia</li>
-	  <li>Mathilde <span class="guest-role">(Dem.)</span></li>
-	  <li>Vincent</li>
-	  <li>Elsa <span class="guest-role">(Dem.)</span></li>
-	  <li>Thibault</li>
-	  <li>Marlène <span class="guest-role">(Dem.)</span></li>
-	  <li>Antoine Bu</li>
-	  <li>Delphine <span class="guest-role">(Dem.)</span></li>
-	  <li>Benjamin</li>
-	  <li>Juliette <span class="guest-role">(Dem.)</span></li>
-	  <li>Kevin</li>
-	  <li style="color: #808080;">Simon</li>
-	  <li style="color: #808080;">Fille de Simon</li>
-	  <li style="color: #808080;">Fille de Simon</li>
-	  <li>Stéphanie</li>
-	  <li>Julien</li>
-	  <li>Loralie</li>
-	  <li>Maxandre</li>
-	  <li>Marilyn</li>
-	  <li>Christian</li>
-	  <li>Carla</li>
-	  <li>Anthony et Célia</li>
-	  <li>Raymond</li>
-      <li>Corinne</li>
-	  <li>Alexis</li>
-      <li>Julien</li>
-	  <li>Martine</li>
-	  <li>Mathieu</li>
-	  <li>Marie-Noëlle</li>
-	  <li>Paule</li>
-	  <li>Olivier</li>
-	  <li>Laurent</li>
-	  <li style="color: #808080;">Karen</li>
-	  <li style="color: #808080;">Abdoul</li>
-	  <li style="color: #808080;">Moncef et sa femme</li>
-	  <li style="color: #808080;">Noussair</li>
-	  <li style="color: #808080;">Zeineb 🌱</li>
-	  <li style="color: #808080;">Mariam 🌱</li>
-	  <li style="color: #808080;">Lucas</li>
-	  <li style="color: #808080;">Alexandros</li>
-	  <li style="color: #808080;">Brice</li>
-	  <li>Noémie et Nico</li>
-	  <li>Nina et Egon</li>
-	  <li>Maïlys et P-G.</li>
-	  <li>Gwen et Hugo</li>
-	  <li>Justine et Malo</li>
-	  <li>Estelle</li>
-	  <li>Pauline et William</li>
-	  <li>Wijdane et Brice</li>
-	  <li>Soleil</li>
-	  <li>Manon</li>
-	  <li>Clara et Youssef</li>
-	  <li>Mohammed 🌱</li>
-	  <li>Taha 🌱</li>
-	  <li>Mathilde B.</li>
-	  <li>Mahoua et Axel</li>
-	<p style="text-align:center; font-size: 12px; color: #999; margin-top: 15px; font-style: italic;">Total : 90 personnes<br> <br> 
-    </p>
-	<p span class="guest-role"><span>Invités à la Cérémonie et au Vin d'honneur :</span></p>
-	<ul class="guest-list"> <li>Aline et Gilou</li>
-      <li>Luc et Sandrine</li>
-      <li>Christophe et Barbara</li>
-      <li>Sandrine</li>
-      <li>Alain et Solange</li>
-      <li>Anne et Philippe</li>
-      <li>Philippe et Nathalie</li>
-      <li>Bénédicte et Alex</li>
-      <li>Stéphane et Sandrine</li>
-    </ul>	 
-    <div id="seating-btn-container" style="padding: 0 15px; margin-top: 20px; display: block;">
-      <button class="tab-btn" onclick="showTab('seating')" style="width: 100%; padding: 15px; background: #A3B18A; color: white;">
-      🍽️ Voir le Plan de Table
-      </button>
-    </div>	  
-  </div>	
-  
-  <div id="seating-section" style="display: none; padding: 0 10px;">
-    <div id="timeline-section"><h3>Plan de Table</h3></div>
-    <p style="text-align: center; font-size: 14px; color: #ffffff; font-style: italic; margin-bottom: 20px;">Prévisionnel</p>
-
-  <div class="seating-grid">
-    <div class="table-card honneur">
-      <div class="table-title">Table d'Honneur</div>
-      <div class="seats-list" style="grid-template-columns: repeat(4, 1fr);">
-        <div class="seat">Amina</div><div class="seat">Adil</div><div class="seat">Hanaleï</div><div class="seat">Carole</div>
-        <div class="seat">Simon</div><div class="seat center-cercle"></div><div class="seat center-cercle"></div><div class="seat">Christophe</div>
-		<div class="seat empty">Sofiane</div><div class="seat empty">Saban</div><div class="seat">Ilona</div><div class="seat">Léandra</div>
-      </div>
-    </div>
-
-    <div class="table-card">
-      <div class="table-title">Table 1</div>
-      <div class="seats-list">
-        <div class="seat">Gwen</div><div class="seat">Hugo</div><div class="seat empty">Maxime</div>
-        <div class="seat">Justine</div><div class="seat center-cercle">🌹</div><div class="seat empty">William</div>
-        <div class="seat">Malo</div><div class="seat empty">Estelle</div><div class="seat empty">Pauline</div>
-      </div>
-    </div>
-	<div class="table-card">
-      <div class="table-title">Table 2</div>
-      <div class="seats-list">
-        <div class="seat">Mariam</div><div class="seat">Zaineb</div><div class="seat">Taha</div>
-        <div class="seat empty">Mohammed</div><div class="seat center-cercle">🌺</div><div class="seat">Brice</div>
-        <div class="seat empty">Mathilde</div><div class="seat empty">Soleil</div><div class="seat">Wijdane</div>
-      </div>
-    </div>
-	<div class="table-card">
-      <div class="table-title">Table 3</div>
-      <div class="seats-list">
-        <div class="seat">Karen</div><div class="seat empty">Axel</div><div class="seat empty">Mahoua</div>
-        <div class="seat">Abdoul</div><div class="seat center-cercle">🌻</div><div class="seat">Nora</div>
-        <div class="seat">Noussair</div><div class="seat empty">Moncef/Saban</div><div class="seat">Brice</div>
-      </div>
-    </div>
-	<div class="table-card">
-      <div class="table-title">Table 4</div>
-      <div class="seats-list">
-        <div class="seat">Zineb</div><div class="seat">Gwen</div><div class="seat">Tony</div>
-        <div class="seat empty">Myriam</div><div class="seat center-cercle">🌼</div><div class="seat">Indiana</div>
-        <div class="seat">Ghita</div><div class="seat empty">Fille Simon</div><div class="seat empty">Fille Simon</div>
-      </div>
-    </div>
-	<div class="table-card">
-      <div class="table-title">Table 5</div>
-      <div class="seats-list">
-        <div class="seat">Nicolas</div><div class="seat">Noémie</div><div class="seat">Egon</div>
-        <div class="seat center-hole"></div><div class="seat center-cercle">🌷</div><div class="seat center-hole"></div>
-        <div class="seat">Maïlys</div><div class="seat">P-G.</div><div class="seat">Nina</div>
-      </div>
-    </div>
-	<div class="table-card">
-      <div class="table-title">Table 6</div>
-      <div class="seats-list">
-        <div class="seat">Mathilde</div><div class="seat">Vincent</div><div class="seat empty">Alexandros</div>
-        <div class="seat">Thibault</div><div class="seat center-cercle">🪻</div><div class="seat empty">Lucas</div>
-        <div class="seat">Elsa</div><div class="seat">Juliette</div><div class="seat">Kevin</div>
-      </div>
-    </div>
-	<div class="table-card">
-      <div class="table-title">Table 7</div>
-      <div class="seats-list">
-        <div class="seat">Marlène</div><div class="seat">Delphine</div><div class="seat">Benjamin</div>
-        <div class="seat">Youssef</div><div class="seat center-cercle">🌹</div><div class="seat">Antoine</div>
-        <div class="seat">Clara</div><div class="seat empty">Manon</div><div class="seat center-hole"></div>
-      </div>
-    </div>
-	<div class="table-card">
-      <div class="table-title">Table 8</div>
-      <div class="seats-list">
-        <div class="seat">Hervé</div><div class="seat">Isabelle</div><div class="seat">Angelia</div>
-        <div class="seat">Marc</div><div class="seat center-cercle">🌸</div><div class="seat">Thibault</div>
-        <div class="seat empty">Rachel</div><div class="seat empty">Paule</div><div class="seat">Laurent</div>
-      </div>
-    </div>
-	<div class="table-card">
-      <div class="table-title">Table 9</div>
-      <div class="seats-list">
-        <div class="seat">Julien</div><div class="seat empty">Mathieu</div><div class="seat empty">Marie-Noëlle</div>
-        <div class="seat">Stéphanie</div><div class="seat center-cercle">💐</div><div class="seat">Martine</div>
-        <div class="seat">Maxandre</div><div class="seat">Loralie</div><div class="seat center-hole"></div>
-      </div>
-    </div>
-	<div class="table-card">
-      <div class="table-title">Table 10</div>
-      <div class="seats-list">
-        <div class="seat">Christian</div><div class="seat">Marilyn</div><div class="seat">Célia</div>
-        <div class="seat">Carla</div><div class="seat center-cercle">🌹</div><div class="seat">Anthony</div>
-        <div class="seat empty">Annie</div><div class="seat">Raymond</div><div class="seat">Corinne</div>
-      </div>
-    </div>
-	<div class="table-card">
-      <div class="table-title">   </div>
-      <div class="seats-list">
-        <div class="seat empty">Alexis</div>
-		<div class="seat empty">Julien</div>
-		<div class="seat empty">Femme Moncef</div>
-        <div class="seat empty">Olivier</div>
-      </div>
-    </div>
-    
-    </div>
-</div>
-  
-  <footer>
-    <p>&copy;2026 Hanaleï et Adil<br>Tous droits réservés</p>
-    <p>Contact : <a href="mailto:votre@email.com">hanalei.bunn@gmail.com</a><br>Tél Hanaleï : <a href="tel:+33600000000">06 12 92 50 22</a><br>Tél Adil : <a href="tel:+33600000000">06 15 82 41 22</a></p>
-  </footer>
 
 </body>
 </html>
