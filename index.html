@@ -11,7 +11,7 @@
 	  --primary-dark: #4A0E0E;    /* Bordeaux foncé */
       --secondary: #D2BF81;  /* Jaune */
       --success: #847949;    /* Vert olive */
-      --card: #F7F7F2;    /* Blanc vert */
+      --card: #FCF9F2;    /* Ivoire */
 	  --card-input: #F0EAD8;    /* Beige */
     }
 
@@ -24,35 +24,49 @@
       color: #3d2b2b;
       max-width: 600px;
       margin: auto;
-      padding: 50px 15px 20px 15px;
-	  font-size: 14px;
-	  display: flow-root;
+      padding: 0 0 20px 0; /* On retire le padding-top de 50px */
+      font-size: 14px;
+      display: flow-root;
     }
 
-	h1 { 
+    /* Style du nouveau bandeau */
+    .main-header {
+      background-color: var(--card); /* Couleur crème/ivoire */
+      width: 100vw;              /* Prend toute la largeur de l'écran */
+      position: relative;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;        /* Technique pour sortir du max-width du body */
+      margin-right: -50vw;
+      padding: 40px 0;           /* Espace aéré autour du titre */
+      margin-bottom: 2px;          /* Collé aux onglets */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 { 
       text-align: center; 
-      color: var(--card);
+      color: var(--primary);     /* Le titre devient bordeaux */
       font-weight: 700;
-      margin-top: 0;      /* Remis à 0 car le body s'en occupe */
-      margin-bottom: 25px;
-      font-family: 'Playfair Display', 'Didot', 'Georgia', serif; 
+      margin: 0;                 /* Reset des marges */
+      font-family: 'Playfair Display', serif; 
       font-size: 32px;
-      letter-spacing: 2px;
+      letter-spacing: 4px;       /* Un peu plus d'espacement pour l'élégance */
       position: relative;
       padding-bottom: 15px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-	
-	h1::after {
+      text-shadow: none;         /* On enlève l'ombre portée */
+    }
+
+    /* La ligne sous le titre (on la passe en bordeaux aussi) */
+    h1::after {
       content: "";
       position: absolute;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 80px;
-      height: 3px;
-      background-color: var(--card);
-      border-radius: 2px;
+      width: 60px;
+      height: 2px;
+      background-color: var(--primary); /* Ligne bordeaux */
+      opacity: 0.5;
     }
 	
 	#welcome-message {
@@ -663,7 +677,9 @@
 </head>
 <body>
 
-  <h1 onclick="showTab()" style="cursor: pointer;">MARIAGE H x A</h1>
+  <header class="main-header">
+    <h1 onclick="showTab()" style="cursor: pointer;">MARIAGE H x A</h1>
+  </header>
   
   <div class="tabs grid-tabs">
     <button class="tab-btn" onclick="showTab('timeline')">Déroulé</button>
