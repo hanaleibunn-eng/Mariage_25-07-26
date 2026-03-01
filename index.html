@@ -21,16 +21,21 @@
 	
 	html {
      background-color: var(--card); /* La couleur de ton header */
+	 margin: 0;
+     padding: 0;
     }
 
     body { 
       background: var(--primary-dark);
       color: #3d2b2b;
       max-width: 600px;
-      margin: auto;
+      margin: 0 auto;
       padding: 0 15px 0 15px;
 	  font-size: 14px;
 	  display: flow-root;
+	  min-height: 100vh; /* S'assure que le bordeaux descend jusqu'en bas */
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
     }
 	
 	.main-header {
@@ -39,6 +44,7 @@
       position: relative;
       left: 50%;
       right: 50%;
+	  margin-top: 0;
       margin-left: -50vw;        /* Technique pour sortir du max-width du body */
       margin-right: -50vw;
       padding: 40px 0;           /* Espace aéré autour du titre */
