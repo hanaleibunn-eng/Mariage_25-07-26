@@ -18,44 +18,23 @@
     body, button, input, select, textarea { 
       font-family: Verdana, sans-serif; 
     }
-	
-	html {
-     background-color: var(--card); /* La couleur de ton header */
-	 margin: 0;
-     padding: 0;
-    }
 
     body { 
       background: var(--primary-dark);
       color: #3d2b2b;
       max-width: 600px;
       margin: 0 auto;
-      padding: 0 15px 0 15px;
+      padding: 50px 15px 20px 15px;
 	  font-size: 14px;
 	  display: flow-root;
-	  min-height: 100vh; /* S'assure que le bordeaux descend jusqu'en bas */
-      overflow-x: hidden;
-      -webkit-tap-highlight-color: transparent;
-    }
-	
-	.main-header {
-      background-color: var(--card);
-      width: 100vw;              /* Prend toute la largeur de l'écran */
-      position: relative;
-      left: 50%;
-      right: 50%;
-	  margin-top: 0;
-      margin-left: -50vw;        /* Technique pour sortir du max-width du body */
-      margin-right: -50vw;
-      padding: 40px 0;           /* Espace aéré autour du titre */
-      margin-bottom: 0;
     }
 
 	h1 { 
       text-align: center; 
-      color: var(--primary);
+      color: var(--card);
       font-weight: 700;
-      margin: 0;      /* Remis à 0 car le body s'en occupe */
+      margin: 0;
+	  margin-bottom: 25px;
       font-family: 'Playfair Display', 'Didot', 'Georgia', serif; 
       font-size: 32px;
       letter-spacing: 2px;
@@ -72,7 +51,7 @@
       transform: translateX(-50%);
       width: 80px;
       height: 3px;
-      background-color: var(--primary);
+      background-color: var(--card);
       border-radius: 2px;
     }
 	
@@ -645,7 +624,7 @@
     .grid-tabs {
       display: grid !important;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0;
+      gap: 2px;
       margin-left: -15px;      /* Annule le padding gauche du body */
       margin-right: -15px;     /* Annule le padding droit du body */
       width: calc(100% + 30px);
@@ -666,23 +645,16 @@
 	.tab-btn.active { background: var(--success) !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 	
 	footer {
-      background-color: var(--card); 
-      width: 100vw;
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-	  text-align: center; /* Centre le texte */
-      padding: 2px;      /* Ajoute de l'espace autour */
+      text-align: center; /* Centre le texte */
+      padding: 0;
       font-size: 0.8rem;  /* Rend le texte plus petit (1rem est la taille normale) */
-      color: var(--primary-dark);
-	  margin-top: 50px;
-      margin-bottom: 0;
+      color: rgba(255, 255, 255, 0.7);
+      border-top: 1px solid #eee; /* Une petite ligne de séparation optionnelle */
+	  margin-top: 50px; /* Donne de l'air après la liste */
     }
 
     footer a {
-      color: var(--primary);
+      color: #ffffff;
       text-decoration: underline;
     }
 
@@ -705,13 +677,13 @@
 
   <div id="welcome-message" style="display: block;">
     <div style="text-align: center; color: var(--card); margin-top: 35px;">
+	  <p style="font-size: 14px; font-family: Verdana, sans-serif; margin-bottom: 15px;">Samedi 25 Juillet 2026<br> </p>
       <div class="welcome-card">
         <p style="margin: 0; line-height: 1.6; letter-spacing: 1.5px; font-style: italic; font-size: 20px; color: var(--card);">
           Mariage Civil et Laïque d'Hanaleï et Adil
           <span style="font-weight: 400; font-size: 12px; font-family: Verdana, sans-serif; font-style: normal; letter-spacing: 0.2px; opacity: 0.9;"><br>Nombre d'invités : <strong>90</strong></span>
         </p>
       </div>
-	  <p style="font-size: 16px; font-family: Verdana, sans-serif; margin-bottom: 15px;">Samedi 25 Juillet 2026<br> </p>
       <div id="countdown" style="display: flex; justify-content: center; font-family: Verdana, sans-serif; gap: 10px; margin-top: 35px;">
         <div class="countdown-box">
           <span id="days">00</span>
@@ -1149,7 +1121,7 @@
   </div>
   
   <div id="guest-list-section" class="guest-section" style="display: none;">
-    <h3>✨ Liste des Invités ✨</h3>
+    <h3>Liste des Invités</h3>
 	<ul class="guest-list">
 	  <li>Adil <span class="guest-role">(GROOM)</span></li>
 	  <li>Hanaleï <span class="guest-role">(BRIDE)</span></li>
