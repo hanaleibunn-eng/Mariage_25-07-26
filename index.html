@@ -257,6 +257,14 @@
       border: 1px solid rgba(255, 255, 255, 0.5);
     }
 	
+	.time.time-ceremony {
+      background: linear-gradient(135deg, #800020, #a35b68, #8b2d38, #b5707a, #800020) !important;
+      color: #ffffff !important; /* Texte blanc pour une lisibilité parfaite sur fond sombre */
+      box-shadow: 0 4px 15px rgba(128, 0, 32, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      font-weight: bold;
+    }
+	
 	/* --- TITRES DE SECTIONS (Planning & Contacts) --- */
     #timeline-section h3, 
     #contact-section h3 {
@@ -748,11 +756,10 @@
           </div>
         </li>
         <li>
-          <span class="time">17:45</span>
+          <span class="time time-ceremony" onclick="openCeremonyModal()" style="cursor: pointer;">17:45</span>
 	  <div class="desc-container">
 	    <span class="desc">Cérémonie Laïque</span>
 		<span class="info-line">📍 Palombière d'Henri</span>
- 	    <span class="note">Accueil des invités avec musique de fond.<br>Introduction de Tony - 5 min.<br> Discours des témoins et des parents - 15 min.<br> Echange des alliances, voeux, rituel symbolique - 10 min.<br>Remerciements par Tony et sortie des mariés en musique - 5 min.</span>
           </div>
         </li>
         <li>
@@ -820,6 +827,26 @@
         </p>
 
         <button onclick="closeSoireeModal()" style="margin-top: 20px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer;">Fermer</button>
+      </div>
+    </div>
+	
+	<div id="ceremonyModal" class="modal-overlay" onclick="closeCeremonyModal()">
+      <div class="modal-content" onclick="event.stopPropagation()" style="width: 80%; max-width: 550px;">
+        <h2 style="font-family: 'Playfair Display', serif; color: var(--primary);">La Cérémonie Laïque</h2>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 10px 0;">
+    
+        <p style="font-family: Verdana, sans-serif; font-size: 14px; text-align: left; line-height: 1.6;">
+          <strong>Déroulé :</strong><br><br>
+          ● Accueil des invités avec musique de fond (jusqu'à 17h45)<br>
+		  ● Introduction par Tony (5 min)<br>
+          ● Discours des parents et des témoins (15 min)<br>
+          ● Échange des alliances et vœux (5 min)<br>
+          ● Rituel symbolique de l'union (5 min)<br>
+		  ● Remerciements par Tony (2 min)<br>
+		  ● Sortie des mariés en musique (3 min)
+        </p>
+
+        <button onclick="closeCeremonyModal()" style="margin-top: 20px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer;">Fermer</button>
       </div>
     </div>
   
@@ -1542,6 +1569,14 @@
 
   window.closeSoireeModal = () => {
     document.getElementById('soireeModal').style.display = 'none';
+  };
+  
+  window.openCeremonyModal = () => {
+    document.getElementById('ceremonyModal').style.display = 'flex';
+  };
+
+  window.closeCeremonyModal = () => {
+    document.getElementById('ceremonyModal').style.display = 'none';
   };
 
 </script>
