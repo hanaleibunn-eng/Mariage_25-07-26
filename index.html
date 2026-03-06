@@ -230,14 +230,6 @@
       border: 1px solid rgba(255, 255, 255, 0.5);
     }
 	
-	.time.time-ceremony {
-      background: linear-gradient(135deg, #800020, #a35b68, #8b2d38, #b5707a, #800020) !important;
-      color: #ffffff !important; /* Texte blanc pour une lisibilité parfaite sur fond sombre */
-      box-shadow: 0 4px 15px rgba(128, 0, 32, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      font-weight: bold;
-    }
-	
 	/* --- TITRES DE SECTIONS (Planning & Contacts) --- */
     #timeline-section h3, 
     #contact-section h3 {
@@ -636,7 +628,7 @@
 	  position: sticky;
       top: 0;              /* Se colle au bord haut */
       z-index: 1000;       /* Reste au-dessus du contenu qui défile */
-      background: var(--card);-
+      background: var(--card);
     }
 	
     .grid-tabs .tab-btn {
@@ -684,7 +676,7 @@
     <div style="text-align: center; color: var(--card); margin-top: 50px;">
 	  <p style="font-size: 14px; font-family: Verdana, sans-serif; margin-bottom: 15px;">Samedi 25 Juillet 2026<br> </p>
       <div class="welcome-card">
-        <p style="margin: 0; line-height: 1.8; letter-spacing: 1.6px; font-style: italic; font-size: 20px; color: var(--success);">
+        <p style="margin: 8px; line-height: 1.8; letter-spacing: 1.6px; font-style: italic; font-size: 21px; color: var(--success);">
           Mariage Civil et Laïque d'Hanaleï et Adil
           <span style="font-weight: 400; font-size: 12px; font-family: Verdana, sans-serif; font-style: normal; letter-spacing: 0.2px; opacity: 0.9;"><br>Nombre d'invités : <strong>90</strong></span>
         </p>
@@ -754,7 +746,7 @@
           </div>
         </li>
         <li>
-          <span class="time time-ceremony" onclick="openCeremonyModal()" style="cursor: pointer;">17:45</span>
+          <span class="time time-party" onclick="openCeremonyModal()" style="cursor: pointer;">17:45</span>
 	  <div class="desc-container">
 	    <span class="desc">Cérémonie Laïque</span>
 		<span class="info-line">📍 Palombière d'Henri</span>
@@ -927,7 +919,7 @@
           <span class="name">Témoins Adil</span>
 	  <div class="desc-container">
 	    <span class="desc">Respo Alliances</span>
-		<span class="info-line">📞 07 81 79 71 80 (Saban)</span>
+		<span class="info-line">📞 07 81 79 71 80 (Saban)<br>📞 xx xx xx xx xx (Sofiane)</span>
  	    <span class="note">Discours Cérémonie laïque.<br>Apporter les alliances aux mariés à la Cérémonie laïque.</span>
           </div>
         </li>
