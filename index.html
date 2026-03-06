@@ -208,33 +208,6 @@
       background: #dfe6e9; /* Devient un peu plus foncé au survol */
     }
 
-    .tabs {
-	  display: flex;
-	  gap: 4px;
-	  margin-bottom: 25px;
-	  width: 100%;
-	}
-	
-    .tab-btn { 
-      flex: 1;
-	  padding: 10px 4px;
-	  border: none;
-	  font-family: inherit;
-	  border-radius: 4px; 
-      background: var(--primary-dark);
-	  cursor: pointer;
-	  font-weight: bold;
-	  color: var(--card);
-	  font-size: 11px;
-	  text-transform: uppercase;
-	  white-space: nowrap;
-	  display: flex;
-	  align-items: center;
-	  justify-content: center;
-	  gap: 6px;
-	  transition: all 0.3s ease;
-    }
-
     /* Le Badge de l'heure */
     .time { 
       background: var(--primary); 
@@ -626,6 +599,32 @@
 	/* Masquer toutes les tables sauf la table d'honneur */
     .seating-grid .table-card:not(.honneur) { display: none; }
 
+    .tabs {
+	  display: flex;
+	  gap: 4px;
+	  margin-bottom: 25px;
+	  width: 100%;
+	}
+	
+    .tab-btn { 
+      flex: 1;
+	  padding: 10px 4px;
+	  border: none;
+	  font-family: inherit;
+	  border-radius: 4px; 
+      background: var(--primary-dark);
+	  cursor: pointer;
+	  font-weight: bold;
+	  color: var(--card);
+	  font-size: 11px;
+	  text-transform: uppercase;
+	  white-space: nowrap;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  gap: 6px;
+	  transition: all 0.3s ease;
+    }
 	
     .grid-tabs {
       display: grid !important;
@@ -646,6 +645,16 @@
       font-size: 11px; /* Légèrement réduit pour mobile */
       padding: 8px 2px;
       white-space: nowrap;
+    }
+	
+	/* Style pour la première ligne (les 3 premiers boutons) */
+    .grid-tabs .tab-btn:nth-child(-n+3) {
+      background: #E0D09F;
+      color: #4a0e0e;      /* Texte bordeaux foncé pour le contraste */
+    }
+	
+	.grid-tabs .tab-btn:nth-child(n+4) {
+      background: #400505;
     }
 	
 	.tab-btn.active { background: var(--card) !important; color: var(--success) !important; }
