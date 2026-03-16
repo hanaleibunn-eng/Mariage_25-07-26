@@ -589,7 +589,7 @@
 	}
 	
 	/* Masquer toutes les tables sauf la table d'honneur */
-    .seating-grid .table-card:not(.honneur) { display: none; }
+    /* .seating-grid .table-card:not(.honneur) { display: none; } */
 
     .tabs {
 	  display: flex;
@@ -1000,12 +1000,12 @@
             </tr>
 			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
               <td style="padding: 10px;">Alliances</td>
-              <td style="padding: 10px; font-weight: bold;">Non payé</td>
+              <td style="padding: 10px; font-weight: bold;">Payé</td>
               <td style="padding: 10px;">Mars</td>
             </tr>
 			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
               <td style="padding: 10px;">Fiançailles Maroc</td>
-              <td style="padding: 10px; font-weight: bold;">Non payé</td>
+              <td style="padding: 10px; font-weight: bold;">Payé</td>
               <td style="padding: 10px;">Mars-Avril</td>
             </tr>
 			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -1015,8 +1015,8 @@
             </tr>
 			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
               <td style="padding: 10px;">Son et lumières</td>
-              <td style="padding: 10px; font-weight: bold;">Non payé</td>
-              <td style="padding: 10px;">Juillet</td>
+              <td style="padding: 10px; font-weight: bold;">Payé</td>
+              <td style="padding: 10px;">Mars</td>
             </tr>
 			<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
               <td style="padding: 10px;">Brunch</td>
@@ -1204,11 +1204,10 @@
     </p>
 	<p span class="guest-role"><span>Invités à la Cérémonie et au Vin d'honneur :</span></p>
 	<ul class="guest-list"> <li>Aline et Gilou</li>
-      <li>Luc et Sandrine</li>
       <li>Christophe et Barbara</li>
       <li>Sandrine</li>
       <li>Alain et Solange</li>
-      <li>Anne et Philippe</li>
+      <li>Patrick et Sandrine</li>
       <li>Philippe et Nathalie</li>
       <li>Bénédicte et Alex</li>
       <li>Stéphane et Sandrine</li>
@@ -1230,35 +1229,35 @@
       </div>
 
       <div class="table-card">
-        <div class="table-title">Table 1</div>
-      <div class="seats-list">
-        <div class="seat">Gwen</div><div class="seat">Hugo</div><div class="seat empty">Lucas</div>
-        <div class="seat">Justine</div><div class="seat center-cercle">🌻</div><div class="seat empty">Alexandros</div>
-        <div class="seat">Malo</div><div class="seat empty">Manon</div><div class="seat empty">Maxime</div>
-      </div>
-      </div>
-  	  <div class="table-card">
-        <div class="table-title">Table 2</div>
-		<div class="seats-list" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="table-title">Table 1</div>
+        <div class="seats-list" style="grid-template-columns: repeat(4, 1fr);">
           <div class="seat">Mariam</div><div class="seat">Zaineb</div><div class="seat">Taha</div><div class="seat">Clara</div>
           <div class="seat empty">Mohammed</div><div class="seat center-cercle">🌹️</div><div class="seat center-cercle">🌹️</div><div class="seat">Youssef</div>
-  		<div class="seat empty">Mathilde</div><div class="seat empty">Soleil</div><div class="seat">Wijdane</div><div class="seat">Brice</div>
+  		  <div class="seat">Mathilde</div><div class="seat">Soleil</div><div class="seat">Wijdane</div><div class="seat">Brice</div>
         </div>
       </div>
-	  <div class="table-card">
-        <div class="table-title">Table 3</div>
-        <div class="seats-list" style="grid-template-columns: repeat(4, 1fr);">
+  	  <div class="table-card">
+          <div class="table-title">Table 2</div>
+		<div class="seats-list" style="grid-template-columns: repeat(4, 1fr);">
           <div class="seat">Mathilde</div><div class="seat">Vincent</div><div class="seat">Kevin</div><div class="seat">Juliette</div>
           <div class="seat">Elsa</div><div class="seat center-cercle">🌼️</div><div class="seat center-cercle">🌼️</div><div class="seat">Marlène</div>
-  		<div class="seat">Thibault</div><div class="seat">Antoine</div><div class="seat">Benjamin</div><div class="seat">Delphine</div>
+  		  <div class="seat">Thibault</div><div class="seat">Antoine</div><div class="seat">Benjamin</div><div class="seat">Delphine</div>
         </div>
-      </div>
+	  </div>
+	  <div class="table-card">
+          <div class="table-title">Table 3</div>
+		<div class="seats-list">
+          <div class="seat">Gwen</div><div class="seat">Hugo</div><div class="seat empty">Lucas</div>
+          <div class="seat">Justine</div><div class="seat center-cercle">🌻</div><div class="seat empty">Alexandros</div>
+          <div class="seat">Malo</div><div class="seat empty">Manon</div><div class="seat empty">Maxime</div>
+        </div>
+	  </div>
 	  <div class="table-card">
         <div class="table-title">Table 4</div>
         <div class="seats-list" style="grid-template-columns: repeat(4, 1fr);">
           <div class="seat empty">Noussair</div><div class="seat">Abdoul</div><div class="seat">Karen</div><div class="seat empty">Brice</div>
-          <div class="seat empty">Moncef</div><div class="seat center-cercle">🏵️</div><div class="seat center-cercle">🏵️</div>
-  		<div class="seat empty">Femme Moncef</div><div class="seat empty">Axel</div><div class="seat empty">Mahoua</div><div class="seat">Nora</div>
+          <div class="seat empty">Moncef</div><div class="seat center-cercle">🏵️</div><div class="seat center-cercle">🏵️</div><div class="seat empty">Nora</div>
+  		  <div class="seat empty">Femme Moncef</div><div class="seat empty">Axel</div><div class="seat empty">Mahoua</div>
         </div>
       </div>
 	  <div class="table-card">
@@ -1274,7 +1273,7 @@
         <div class="seats-list" style="grid-template-columns: repeat(4, 1fr);">
           <div class="seat">Noémie</div><div class="seat">Nina</div><div class="seat empty">Egon</div><div class="seat">William</div>
           <div class="seat empty">Nicolas</div><div class="seat center-cercle">🌷</div><div class="seat center-cercle">🌷</div><div class="seat">Pauline</div>
-  		<div class="seat empty">P-G.</div><div class="seat">Maïlys</div><div class="seat">Estelle</div>
+  		  <div class="seat empty">P-G.</div><div class="seat">Maïlys</div><div class="seat">Estelle</div>
         </div>
       </div>
 	  <div class="table-card">
@@ -1282,7 +1281,7 @@
         <div class="seats-list" style="grid-template-columns: repeat(4, 1fr);">
           <div class="seat">Anthony</div><div class="seat">Carla</div><div class="seat">Loralie</div><div class="seat">Maxandre</div>
           <div class="seat">Célia</div><div class="seat center-cercle">🪻️</div><div class="seat center-cercle">🪻️</div><div class="seat empty">Julien</div>
-  		<div class="seat">Angelia</div><div class="seat">Thibault</div><div class="seat empty">Alexis</div>
+  		  <div class="seat">Angelia</div><div class="seat">Thibault</div><div class="seat empty">Alexis</div>
         </div>
       </div>
 	  <div class="table-card">
@@ -1298,7 +1297,7 @@
         <div class="seats-list" style="grid-template-columns: repeat(4, 1fr);">
           <div class="seat">Hervé</div><div class="seat">Isabelle</div><div class="seat empty">Marie-Noëlle</div><div class="seat empty">Olivier</div>
           <div class="seat">Marc</div><div class="seat center-cercle">🌹️</div><div class="seat center-cercle">🌹️</div><div class="seat">Laurent</div>
-  		<div class="seat empty">Rachel</div><div class="seat">Martine</div><div class="seat empty">Paule</div>
+  		  <div class="seat empty">Rachel</div><div class="seat">Martine</div><div class="seat empty">Paule</div>
         </div>
       </div>
     
